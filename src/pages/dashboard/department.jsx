@@ -47,7 +47,7 @@ export function Department() {
       ...editData,
     };
     axios
-      .put(`http://127.0.0.1:3000/departments/${updatedDepartment.id}`, updatedDepartment)
+      .put(`http://127.0.0.1:3001/departments/${updatedDepartment.id}`, updatedDepartment)
       .then((response) => {
         console.log("Department updated successfully:", response.data);
         // You may want to update your state or close the modal here.
@@ -62,6 +62,7 @@ export function Department() {
   //DELETE DEPARTMENT
   // Define a function to open the delete modal
   const openDeleteModal = (department) => {
+    console.log("Selected Department:", selectedDepartment);
     setSelectedDepartment(department);
     setDeleteModalOpen(true);
   };
@@ -70,10 +71,12 @@ export function Department() {
   const deleteDepartment = () => {
   if (selectedDepartment) {
     const departmentId = selectedDepartment.id;
+    // console.log("Selected Department:", selectedDepartment);
 
     axios
-      .delete(`http://127.0.0.1:3000/departments/${departmentId}`)
+      .delete(`http://127.0.0.1:3001/departments/${departmentId}`)
       .then((response) => {
+        // console.log("Selected Department:", selectedDepartment);
         console.log(`Department with ID ${departmentId} deleted successfully.`);
         setDeleteModalOpen(false);
       })
@@ -103,7 +106,7 @@ export function Department() {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:3000/departments")
+      .get("http://127.0.0.1:3001/departments")
       .then((response) => {
         // console.log("API Response:", response.data);
         setDepartments(response.data);
@@ -136,6 +139,7 @@ export function Department() {
 
   const handleDelete = (id) => {
     console.log("Delete button clicked");
+    console.log("Delete button clicked", selectedDepartment);
     setDeleteModalOpen(true);
   };
 
@@ -220,6 +224,7 @@ export function Department() {
                         >
                           Edit
                         </button>
+                        
                         <button
                           onClick={() => handleDelete(id)}
                           className="bg-red-500 text-white py-1 px-3 rounded-md"
@@ -321,13 +326,13 @@ export function Department() {
                 className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none"
                 onClick={deleteDepartment}
               >
-                Yes
+                Delete
               </button>
               <button
                 onClick={() => setDeleteModalOpen(false)}
                 className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none"
               >
-                No
+                Cancel
               </button>
             </div>
           </div>
