@@ -6,9 +6,12 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
 
 export function Department() {
   const [departments, setDepartments] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const departmentsPerPage = 12;
 
   useEffect(() => {
     // Fetch departments from the API using Axios
@@ -23,6 +26,18 @@ export function Department() {
       });
   }, []);
 
+  const pageCount = Math.ceil(departments.length / departmentsPerPage);
+  const offset = currentPage * departmentsPerPage;
+
+  const currentDepartments = departments.slice(
+    offset,
+    offset + departmentsPerPage
+  );
+
+  const handlePageClick = (data) => {
+    setCurrentPage(data.selected);
+  };
+
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
       <Card>
@@ -35,28 +50,33 @@ export function Department() {
           <table className="w-full min-w-[640px] table-auto">
             <thead>
               <tr>
-                {["Department Name", "Department Code", "Head of Department", "Total Assets"].map(
-                  (el) => (
-                    <th
-                      key={el}
-                      className="border-b border-blue-gray-50 py-3 px-5 text-left"
+                {[
+                  "Department Name",
+                  "Department Code",
+                  "Head of Department",
+                  "Total Assets",
+                  "Total Asset Value",
+                  "Actions",
+                ].map((el) => (
+                  <th
+                    key={el}
+                    className="border-b border-blue-gray-50 py-3 px-5 text-left"
+                  >
+                    <Typography
+                      variant="small"
+                      className="text-[11px] font-bold uppercase text-blue-gray-400"
                     >
-                      <Typography
-                        variant="small"
-                        className="text-[11px] font-bold uppercase text-blue-gray-400"
-                      >
-                        {el}
-                      </Typography>
-                    </th>
-                  )
-                )}
+                      {el}
+                    </Typography>
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              {departments.map(
-                ({ id, department_name, department_code, head_of_department, asset_total_value }, key) => {
+              {currentDepartments.map(
+                ({ id, department_name, department_code, head_of_department, total_assets, asset_total_value }, key) => {
                   const className = `py-3 px-5 ${
-                    key === departments.length - 1
+                    key === currentDepartments.length - 1
                       ? ""
                       : "border-b border-blue-gray-50"
                   }`;
@@ -84,8 +104,17 @@ export function Department() {
                       </td>
                       <td className={className}>
                         <Typography className="text-xs font-semibold text-blue-gray-600">
+                          {total_assets}
+                        </Typography>
+                      </td>
+                      <td className={className}>
+                        <Typography className="text-xs font-semibold text-blue-gray-600">
                           {asset_total_value}
                         </Typography>
+                      </td>
+                      <td className={className}>
+                        <button onClick={() => handleEdit(id)}>Edit</button>
+                        <button onClick={() => handleDelete(id)}>Delete</button>
                       </td>
                     </tr>
                   );
@@ -95,8 +124,22 @@ export function Department() {
           </table>
         </CardBody>
       </Card>
+
+      <ReactPaginate
+        previousLabel={"previous"}
+        nextLabel={"next"}
+        breakLabel={"..."}
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination"}
+        subContainerClassName={"pages pagination"}
+        activeClassName={"active"}
+      />
     </div>
   );
 }
 
 export default Department;
+
