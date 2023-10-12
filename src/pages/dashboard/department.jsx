@@ -68,19 +68,37 @@ export function Department() {
 
   // Define a function to delete a department and // Implement the API delete request here
   const deleteDepartment = () => {
+  if (selectedDepartment) {
     const departmentId = selectedDepartment.id;
-   
+
     axios
       .delete(`http://127.0.0.1:3000/departments/${departmentId}`)
       .then((response) => {
         console.log(`Department with ID ${departmentId} deleted successfully.`);
-        
         setDeleteModalOpen(false);
       })
       .catch((error) => {
         console.error(`Error deleting department with ID ${departmentId}:`, error);
       });
-  };
+  } else {
+    // Handle the case where selectedDepartment is null or undefined
+    console.error("Cannot delete department: selectedDepartment is null or undefined.");
+  }
+};
+  // const deleteDepartment = () => {
+  //   const departmentId = selectedDepartment.id;
+   
+  //   axios
+  //     .delete(`http://127.0.0.1:3000/departments/${departmentId}`)
+  //     .then((response) => {
+  //       console.log(`Department with ID ${departmentId} deleted successfully.`);
+        
+  //       setDeleteModalOpen(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error(`Error deleting department with ID ${departmentId}:`, error);
+  //     });
+  // };
   
 
   useEffect(() => {
@@ -289,7 +307,7 @@ export function Department() {
           </div>
         </Modal>
 
-        
+
         <Modal
           isOpen={isDeleteModalOpen}
           onRequestClose={() => setDeleteModalOpen(false)}
