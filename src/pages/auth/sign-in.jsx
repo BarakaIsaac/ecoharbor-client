@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import React, { useState } from 'react';
 
 import {
   Card,
@@ -13,6 +14,24 @@ import {
 } from "@material-tailwind/react";
 
 export function SignIn() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSignIn = async () => {
+    try {
+      const response = await axios.post('your_authentication_endpoint', {
+        email: email,
+        password: password,
+      });
+
+      // Handle the successful sign-in here, e.g., redirect to another page.
+      console.log('Sign-in successful', response.data);
+    } catch (error) {
+      // Handle sign-in errors, e.g., display an error message.
+      console.error('Sign-in failed', error);
+    }
+  };
+
   return (
     <>
       <img
@@ -32,14 +51,14 @@ export function SignIn() {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input type="email" label="Email" size="lg" />
-            <Input type="password" label="Password" size="lg" />
+            <Input type="email" label="Email" size="lg" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <Input type="password" label="Password" size="lg" value={password} onChange={(e) => setPassword(e.target.value)} />
             <div className="-ml-2.5">
               <Checkbox label="Remember Me" />
             </div>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" fullWidth>
+            <Button variant="gradient" fullWidth onClick={handleSignIn}>
               Sign In
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">
