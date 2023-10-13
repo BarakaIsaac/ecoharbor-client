@@ -1,13 +1,15 @@
-import {
-  HomeIcon,
-  UserCircleIcon,
-  TableCellsIcon,
-  BellIcon,
-  ArrowRightOnRectangleIcon,
-  UserPlusIcon,
-} from "@heroicons/react/24/solid";
+import { HomeIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import HomeWorkIcon from '@mui/icons-material/HomeWork';
+import StorageIcon from '@mui/icons-material/Storage';
+import HandymanIcon from '@mui/icons-material/Handyman';
+import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
+
 import { Profile } from "./pages/dashboard/profile";
-import { Tables } from "./pages/dashboard/tables";
+// import { Tables } from "./pages/dashboard/tables";
 import { Home } from "./pages/dashboard/home";
 import { Department } from "./pages/dashboard/department";
 import { SignIn } from "./pages/auth/sign-in";
@@ -42,47 +44,48 @@ export const routes = [
         element: <Profile />,
       },
       {
-        icon: <BellIcon {...icon} />,
-        name: "Employee List",
-        path: "/EmployeeList",
-        element: <EmployeeList />,
-      },
-      {
-        icon: <TableCellsIcon {...icon} />,
-        name: "Department List",
-        path: "/departmentlist",
-        element: <DepartmentList />,
-      },
-      {
-        icon: <BellIcon {...icon} />,
-        name: "Asset Directory",
-        path: "/AssetDirectory",
-        element: <AssetDirectory />,
-      },
-      {
-        icon: <TableCellsIcon {...icon} />,
-        name: "Asset Repairs",
-        path: "/repairs",
-        element: <Repairs />,
-      },
-      {
-        icon: <TableCellsIcon {...icon} />,
-        name: "Asset Requests",
-        path: "/assetrequests",
-        element: <Assetrequest />,
-      },
-      {
-        icon: <TableCellsIcon {...icon} />,
-        name: "Procurement Requests",
-        path: "/requests",
-        element: <Requests />,
-      },
-      {
         icon: <InventoryIcon {...icon} />,
         name: "My Assets",
         path: "/my-assets",
         element: <myassets />,
       },
+      {
+        icon: <PeopleAltIcon {...icon} />,
+        name: "Employee List",
+        path: "/EmployeeList",
+        element: <EmployeeList />,
+      },
+      {
+        icon: <HomeWorkIcon {...icon} />,
+        name: "Department List",
+        path: "/departmentlist",
+        element: <DepartmentList />,
+      },
+      {
+        icon: <StorageIcon {...icon} />,
+        name: "Asset Directory",
+        path: "/AssetDirectory",
+        element: <AssetDirectory />,
+      },
+      {
+        icon: <HandymanIcon {...icon} />,
+        name: "Asset Repairs",
+        path: "/repairs",
+        element: <Repairs />,
+      },
+      {
+        icon: <RequestQuoteIcon {...icon} />,
+        name: "Asset Requests",
+        path: "/assetrequests",
+        element: <Assetrequest />,
+      },
+      {
+        icon: <ShoppingBagIcon {...icon} />,
+        name: "Procurement Requests",
+        path: "/requests",
+        element: <Requests />,
+      },
+     
       // {
       //   icon: <TableCellsIcon {...icon} />,
       //   name: "tables",
@@ -96,14 +99,14 @@ export const routes = [
     layout: "auth",
     pages: [
       {
-        icon: <ArrowRightOnRectangleIcon {...icon} />,
+        icon: <LoginIcon {...icon} />,
         name: "sign in",
         path: "/sign-in",
         element: <SignIn />,
       },
       {
-        icon: <UserPlusIcon {...icon} />,
-        name: "sign up",
+        icon: <LogoutIcon {...icon} />,
+        name: "Log Out",
         path: "/sign-up",
         element: <SignUp />,
       },
