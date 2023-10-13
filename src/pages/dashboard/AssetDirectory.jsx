@@ -11,24 +11,24 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
-const Api_Url = 'http://127.0.0.1:3001/employees';
-// const Api_Urldep = 'http://127.0.0.1:3001/departments';
+const Api_Url = 'http://127.0.0.1:3001/assets_directorys';
 
-Modal.setAppElement('#root'); 
+Modal.setAppElement('#root');
 
-const EmployeeList = () => {
-    const [employees, setEmployees] = useState([]);
-    const [selectedEmployee, setSelectedEmployee] = useState(null);
-    const [editedEmployee, setEditedEmployee] = useState({
-        first_name: '',
-        last_name: '',
-        email: '',
-        phone_number: '',
-        username: '',
-        password: '',
-        employment_date: '',
+function AssetDirectory() {
+    const [assets, setAssets] = useState([]);
+    const [selectedAsset, setSelectedAsset] = useState(null);
+    const [editedAsset, setEditedAsset] = useState({
+        asset_name: '',
+        category_name: '',
+        category_code: '',
+        condition: '',
+        status: '',
+        purchase_value: '',
+        current_value: '',
+        quantity_in_stock: '',
         department_id: '',
-        employee_role: '',
+        asset_image: '',
                 
     });
     const [showEditModal, setShowEditModal] = useState(false);
@@ -41,56 +41,56 @@ const EmployeeList = () => {
         
         axios.get(Api_Url)
             .then(response => {
-                setEmployees(response.data);
+                setAssets(response.data);
             })
             .catch(error => {
-                console.error('Error fetching Employees record: ', error);
+                console.error('Error fetching Asset record: ', error);
             });
     }, []);
 
-    const handleEditClick = (employee) => {
-        setSelectedEmployee(employee);
-        setEditedEmployee({
-            first_name: employee.first_name,
-            last_name: employee.last_name,
-            email: employee.email,
-            phone_number: employee.phone_number,
-            username: employee.username,
-            password: employee.password,
-            employment_date: employee.employment_date,
-            department_id: employee.department_id,
-            employee_role: employee.employee_role,
-            
+    const handleEditClick = (asset) => {
+        setSelectedAsset(asset);
+        setEditedAsset({
+            asset_name: asset.asset_name,
+            category_name: asset.category_name,
+            category_code: asset.category_code,
+            condition: asset.condition,
+            status: asset.status,
+            purchase_value: asset.purchase_value,
+            current_value: asset.current_value,
+            quantity_in_stock: asset.quantity_in_stock,
+            department_id: asset.department_id,
+            asset_image: asset.asset_image,            
         });
         setShowEditModal(true);
     };
 
     const handleSaveEdit = () => {
-        axios.put(`${Api_Url}/${selectedEmployee.id}`, editedEmployee)
+        axios.put(`${Api_Url}/${selectedAsset.id}`, editedAsset)
             .then(response => {
-                setEmployees(departments.map(emp => emp.id === selectedEmployee.id ? response.data : emp));
+                setAssets(assets.map(ast => ast.id === selectedAsset.id ? response.data : ast));
                 setShowEditModal(false);
             })
             .catch(error => {
-                console.error('Error updating employee record: ', error);
+                console.error('Error updating asset record: ', error);
             });
     };
 
-    const handleDeleteClick = (employee) => {
-        setSelectedEmployee(employee);
+    const handleDeleteClick = (asset) => {
+        setSelectedAsset(asset);
         setShowDeleteModal(true);
     };
 
     const handleConfirmDelete = () => {
        
-        axios.delete(`${Api_Url}/${selectedEmployee.id}`)
+        axios.delete(`${Api_Url}/${selectedAsset.id}`)
             .then(() => {
                 
-                setEmployees(employees.filter(emp => emp.id !== selectedEmployee.id));
+                setAssets(assets.filter(ast => ast.id !== selectedAsset.id));
                 setShowDeleteModal(false);
             })
             .catch(error => {
-                console.error('Error deleting employee record: ', error);
+                console.error('Error deleting asset record: ', error);
             });
     };
 
@@ -103,14 +103,14 @@ const EmployeeList = () => {
         setPage(0);
     };
 
-    const paginatedEmployees = employees.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+    const paginatedAssets = assets.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
 
     return (
         <div className="mt-12 mb-8 flex flex-col gap-12">
         <Card>
             <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
           <Typography variant="h6" color="white">
-           Employee List
+           Assets Directory
           </Typography>
         </CardHeader>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
@@ -118,81 +118,88 @@ const EmployeeList = () => {
                 <thead>
                     <tr>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
-                            First Name</Typography></th>
+                            Name</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
-                            Last Name</Typography></th>
+                            Category</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
-                            Email </Typography></th>
+                            Category Code </Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
-                            Phone Number</Typography></th>
+                            Condition</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
-                            Username</Typography></th>
-                        {/* <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
-                            Password</Typography></th> */}
+                            Status</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
-                            Employment Date</Typography></th>
+                            Purchase Value [KES]</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
-                            Department ID</Typography></th>
+                            Current value [KES]</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
-                            Employee Role</Typography></th>
+                            Quantity</Typography></th>
+                        <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
+                            Owning Dept</Typography></th>
+                        <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
+                            Asset Image</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
                             Actions</Typography></th>
              
                     </tr>
                 </thead>
                 <tbody>
-                    {paginatedEmployees.map((employee) => (
-                        <tr key={employee.id} className="border-t">
+                  {paginatedAssets.map((asset) => (
+                        <tr key={asset.id} className="border-t">
                         <td>
                             <Typography color="blue-gray" className="font-semibold text-xs text-blue-gray-500">
-                            {employee.first_name}
+                            {asset.asset_name}
                             </Typography>
                         </td>
                         <td>
                             <Typography className="text-xs font-normal text-blue-gray-500">
-                            {employee.last_name}
+                            {asset.category_name}
                             </Typography>
                         </td>
                         <td>
                             <Typography className="text-xs font-semibold text-blue-gray-600">
-                            {employee.email}
+                            {asset.category_code}
                             </Typography>
                         </td>
                         <td>
                             <Typography className="text-xs font-semibold text-blue-gray-600">
-                            {employee.phone_number}
+                            {asset.condition}
                             </Typography>
                         </td>
                         <td>
                             <Typography className="text-xs font-semibold text-blue-gray-600">
-                            {employee.username}
-                            </Typography>
-                        </td>
-                        {/* <td>
-                            <Typography className="text-center text-xs font-semibold text-blue-gray-600">
-                            {employee.password}
-                            </Typography>
-                        </td> */}
-                        <td>
-                            <Typography className="text-center text-xs font-semibold text-blue-gray-600">
-                            {employee.employment_date}
+                            {asset.status}
                             </Typography>
                         </td>
                         <td>
                             <Typography className="text-center text-xs font-semibold text-blue-gray-600">
-                            {employee.department_id}
+                            {asset.purchase_value}
+                            </Typography>
+                        </td>
+                        <td>
+                            <Typography className="text-center text-xs font-semibold text-blue-gray-600">
+                            {asset.current_value}
+                            </Typography>
+                        </td>
+                        <td>
+                            <Typography className="text-center text-xs font-semibold text-blue-gray-600">
+                            {asset.quantity_in_stock}
                             </Typography>
                         </td>
                         <td>
                             <Typography className="text-xs font-semibold text-blue-gray-600">
-                            {employee.employee_role}
+                            {asset.department_id}
                             </Typography>
                         </td>
                         <td>
-                            <button onClick={() => handleEditClick(employee)} className="bg-blue-500 text-white py-1 px-3 rounded-md mb-2">
+                            <Typography className="text-xs font-semibold text-blue-gray-600">
+                            {asset.asset_image}
+                            </Typography>
+                        </td>
+                        <td>
+                            <button onClick={() => handleEditClick(asset)} className="bg-blue-500 text-white py-1 px-3 rounded-md mb-2">
                             Edit
                             </button>
-                            <button onClick={() => handleDeleteClick(employee)} className="bg-red-500 text-white py-1 px-3 rounded-md">
+                            <button onClick={() => handleDeleteClick(asset)} className="bg-red-500 text-white py-1 px-3 rounded-md">
                             Delete
                             </button>
                         </td>
@@ -205,93 +212,91 @@ const EmployeeList = () => {
         <Modal
             isOpen={showEditModal}
             onRequestClose={() => setShowEditModal(false)}
-            contentLabel="Edit Employee Modal"
+            contentLabel="Edit Asset Modal"
             className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-opacity-75 bg-black"
             >
             <div className="bg-white w-1/3 p-6 rounded-lg">
                 <h2 className="text-2xl font-semibold mb-4">Edit {" "}
                             <span className="font-bold text-blue-600 underline">
-                                {selectedEmployee?.first_name} {selectedEmployee?.last_name}
-                            </span>{" "}</h2>
+                                {selectedAsset?.asset_name}</span>{" "}</h2>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">First Name</label>
+                    <label className="block text-sm font-medium text-gray-700">Asset Name</label>
                     <input
                     type="text"
-                    value={editedEmployee.first_name}
-                    onChange={e => setEditedEmployee({ ...editedEmployee, first_name: e.target.value })}
+                    value={editedAsset.asset_name}
+                    onChange={e => setEditedAsset({ ...editedAsset, asset_name: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
                 </div>
 
                 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Last Name</label>
+                    <label className="block text-sm font-medium text-gray-700">Category</label>
                     <input
                     type="text"
-                    value={editedEmployee.last_name}
-                    onChange={e => setEditedEmployee({ ...editedEmployee, last_name: e.target.value })}
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                </div>
-
-                
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Email</label>
-                    <input
-                    type="text"
-                    value={editedEmployee.email}
-                    onChange={e => setEditedEmployee({ ...editedEmployee, email: e.target.value })}
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                </div>
-
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Email</label>
-                    <input
-                    type="text"
-                    value={editedEmployee.email}
-                    onChange={e => setEditedEmployee({ ...editedEmployee, email: e.target.value })}
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                </div>
-
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Phone Number</label>
-                    <input
-                    type="text"
-                    value={editedEmployee.phone_number}
-                    onChange={e => setEditedEmployee({ ...editedEmployee, phone_number: e.target.value })}
+                    value={editedAsset.category_name}
+                    onChange={e => setEditedAsset({ ...editedAsset, category_name: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
                 </div>
                 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Username</label>
+                    <label className="block text-sm font-medium text-gray-700">Category Code</label>
                     <input
                     type="text"
-                    value={editedEmployee.username}
-                    onChange={e => setEditedEmployee({ ...editedEmployee, username: e.target.value })}
+                    value={editedAsset.category_code}
+                    onChange={e => setEditedAsset({ ...editedAsset, category_code: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Password</label>
+                    <label className="block text-sm font-medium text-gray-700">Asset Condition</label>
                     <input
                     type="text"
-                    value={editedEmployee.password}
-                    onChange={e => setEditedEmployee({ ...editedEmployee, password: e.target.value })}
+                    value={editedAsset.condition}
+                    onChange={e => setEditedAsset({ ...editedAsset, condition: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Employment Date</label>
+                    <label className="block text-sm font-medium text-gray-700">Asset Status</label>
                     <input
                     type="text"
-                    value={editedEmployee.employment_date}
-                    onChange={e => setEditedEmployee({ ...editedEmployee, employment_date: e.target.value })}
+                    value={editedAsset.status}
+                    onChange={e => setEditedAsset({ ...editedAsset, status: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+                
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Purchase Value [KES]</label>
+                    <input
+                    type="text"
+                    value={editedAsset.purchase_value}
+                    onChange={e => setEditedEAsset({ ...editedAsset, purchase_value: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Current Value [KES]</label>
+                    <input
+                    type="text"
+                    value={editedAsset.current_value}
+                    onChange={e => setEditedAsset({ ...editedAsset, current_value: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Quantity</label>
+                    <input
+                    type="text"
+                    value={editedAsset.quantity_in_stock}
+                    onChange={e => setEditedAsset({ ...editedAsset, quantity_in_stock: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
                 </div>
@@ -300,18 +305,18 @@ const EmployeeList = () => {
                     <label className="block text-sm font-medium text-gray-700">Department ID</label>
                     <input
                     type="text"
-                    value={editedEmployee.department_id}
-                    onChange={e => setEditedEmployee({ ...editedEmployee, department_id: e.target.value })}
+                    value={editedAsset.department_id}
+                    onChange={e => setEditedAsset({ ...editedAsset, department_id: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Employee Role</label>
+                    <label className="block text-sm font-medium text-gray-700">Asset Image</label>
                     <input
                     type="text"
-                    value={editedEmployee.employee_role}
-                    onChange={e => setEditedEmployee({ ...editedEmployee, employee_role: e.target.value })}
+                    value={editedAsset.asset_image}
+                    onChange={e => setEditedAsset({ ...editedAsset, asset_image: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
                 </div>
@@ -334,15 +339,10 @@ const EmployeeList = () => {
                 className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-opacity-75 bg-black"
             >
                 <div className="bg-white w-1/3 p-6 rounded-lg">
-                    <h2 className="text-2xl font-semibold mb-4 text-center">Delete Employee</h2>
+                    <h2 className="text-2xl font-semibold mb-4 text-center">Delete Asset</h2>
                     <p className="text-gray-700 mb-4 text-center">
-                            Are you sure you want to delete the{" "}
-                            <span className="font-bold text-blue-600">
-                                {selectedEmployee?.first_name} {selectedEmployee?.last_name}
-                            </span>{" "}
-                            from {" "}<span className="font-bold text-blue-600">
-                                {selectedEmployee?.department_id}
-                            </span> ?</p>
+                            Are you sure you want to delete the{" "} <span className="font-bold text-blue-600">
+                                {selectedAsset?.asset_name} </span>{" "}?</p>
                     <div className="flex justify-between">
                         <button onClick={handleConfirmDelete} className="bg-red-500 text-white py-2 px-4 rounded-md text-xs hover:bg-red-600 focus:outline-none">
                             Delete
@@ -357,7 +357,7 @@ const EmployeeList = () => {
         <div className="my-4 flex justify-between items-center">
         <TablePagination
             component="div"
-            count={employees.length}
+            count={assets.length}
             page={page}
             onPageChange={handleChangePage}
             rowsPerPage={rowsPerPage}
@@ -369,4 +369,4 @@ const EmployeeList = () => {
     );
 };
 
-export default EmployeeList
+export default AssetDirectory
