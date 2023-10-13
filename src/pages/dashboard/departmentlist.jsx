@@ -241,20 +241,24 @@ const DepartmentList = () => {
                             </span>
                             ?
                             </p>
-
-                    {/* <p className="text-gray-700 mb-4 bold text-center">Are you sure you want to delete the 
-                    {selectedDepartment?.department_name} 
-                    department which is headed by 
-                    {selectedDepartment?.head_of_department}?</p> */}
-
                     <div className="flex justify-between">
-                    <button onClick={handleConfirmDelete} className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none ">
-                        Delete</button>
-                    <button onClick={() => setShowDeleteModal(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none">
-                        Cancel</button>
+                        <button onClick={handleConfirmDelete} className="bg-red-500 text-white py-2 px-4 rounded-md text-xs hover:bg-red-600 focus:outline-none">
+                            Delete
+                        </button>
+                        <button onClick={() => setShowDeleteModal(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md text-xs hover:bg-gray-400 focus:outline-none">
+                            Cancel
+                        </button>
                     </div>
+
+                    {/* <div className="flex justify-between">
+                        <button onClick={handleConfirmDelete} className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none ">
+                            Delete</button>
+                        <button onClick={() => setShowDeleteModal(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none">
+                            Cancel</button>
+                    </div> */}
                 </div>
         </Modal>
+        <div className="my-4 flex justify-between items-center">
         <TablePagination
             component="div"
             count={departments.length}
@@ -262,7 +266,9 @@ const DepartmentList = () => {
             onPageChange={handleChangePage}
             rowsPerPage={rowsPerPage}
             onRowsPerPageChange={handleChangeRowsPerPage}
+            className="text-blue-500"
         />
+        </div>
         </div>
     );
 };
