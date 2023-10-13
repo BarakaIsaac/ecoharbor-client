@@ -13,26 +13,62 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
+const api_url = 'http://127.0.0.1:3001/departments';
+
+Modal.setAppElement('#root'); 
 
 export function Department() {
   const [departments, setDepartments] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const departmentsPerPage = 8;
-  const [isEditModalOpen, setEditModalOpen] = useState(false);
-  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
-
-  
-  //UPDATE DEPARTMENT
-  const [editData, setEditData] = useState({
-      department_name: "",
-      department_code: "",
-      head_of_department: "",
+  const [editedDepartment, setEditedDepartment] = useState({
+        department_name: '',
+        department_code: '',
+        head_of_department: '',
     });
 
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const departmentsPerPage = 8;
+
+  useEffect(() => {
+    axios
+      .get(api_url)
+      .then((response) => {
+        setDepartments(response.data);
+        })
+      .catch((error) => {
+        console.error("Error fetching departments:", error);
+      });
+  }, []);
+
+  const handleEditClick = (department) => {
+        setSelectedDepartment(department);
+        setEditedDepartment({
+            department_name: department.department_name,
+            department_code: department.department_code,
+            head_of_department: department.head_of_department,
+        });
+        setShowEditModal(true);
+  };
+
+  const handleSaveEdit = () => {
+      axios.put(`${api_url}/${selectedDepartment.id}`, editedDepartment)
+            .then(response => {
+                // Update the local departments list with the updated data
+                setDepartments(departments.map(dep => dep.id === selectedDepartment.id ? response.data : dep));
+                setShowEditModal(false);
+            })
+            .catch(error => {
+                console.error('Error updating department: ', error);
+            });
+  };
+
+  //UPDATE DEPARTMENT
   const openEditModal = (department) => {
     setSelectedDepartment(department);
-    setEditData({
+    setEditedDepartment({
       department_name: department.department_name,
       department_code: department.department_code,
       head_of_department: department.head_of_department,
@@ -40,81 +76,24 @@ export function Department() {
     setEditModalOpen(true);
   };
 
-   // Define a function to update a department and Implement the API update request here
-  const updateDepartment = () => {
-    const updatedDepartment = {
-      ...selectedDepartment,
-      ...editData,
+  const handleDeleteClick = (department) => {
+        setSelectedDepartment(department);
+        setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = () => {
+        // Send a DELETE request to delete the department
+        axios.delete(`${api_url}/${selectedDepartment.id}`)
+            .then(() => {
+                // Update the local departments list by removing the deleted department
+                setDepartments(departments.filter(dep => dep.id !== selectedDepartment.id));
+                setShowDeleteModal(false);
+            })
+            .catch(error => {
+                console.error('Error deleting department: ', error);
+            });
     };
-    axios
-      .put(`http://127.0.0.1:3001/departments/${updatedDepartment.id}`, updatedDepartment)
-      .then((response) => {
-        console.log("Department updated successfully:", response.data);
-        // You may want to update your state or close the modal here.
-        setEditModalOpen(false);
-      })
-      .catch((error) => {
-        console.error("Error updating department:", error);
-      });
-  };
 
-
-  //DELETE DEPARTMENT
-  // Define a function to open the delete modal
-  const openDeleteModal = (department) => {
-    console.log("Selected Department:", selectedDepartment);
-    setSelectedDepartment(department);
-    setDeleteModalOpen(true);
-  };
-
-  // Define a function to delete a department and // Implement the API delete request here
-  const deleteDepartment = () => {
-  if (selectedDepartment) {
-    const departmentId = selectedDepartment.id;
-    // console.log("Selected Department:", selectedDepartment);
-
-    axios
-      .delete(`http://127.0.0.1:3001/departments/${departmentId}`)
-      .then((response) => {
-        // console.log("Selected Department:", selectedDepartment);
-        console.log(`Department with ID ${departmentId} deleted successfully.`);
-        setDeleteModalOpen(false);
-      })
-      .catch((error) => {
-        console.error(`Error deleting department with ID ${departmentId}:`, error);
-      });
-  } else {
-    // Handle the case where selectedDepartment is null or undefined
-    console.error("Cannot delete department: selectedDepartment is null or undefined.");
-  }
-};
-  // const deleteDepartment = () => {
-  //   const departmentId = selectedDepartment.id;
-   
-  //   axios
-  //     .delete(`http://127.0.0.1:3000/departments/${departmentId}`)
-  //     .then((response) => {
-  //       console.log(`Department with ID ${departmentId} deleted successfully.`);
-        
-  //       setDeleteModalOpen(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error(`Error deleting department with ID ${departmentId}:`, error);
-  //     });
-  // };
-  
-
-  useEffect(() => {
-    axios
-      .get("http://127.0.0.1:3001/departments")
-      .then((response) => {
-        // console.log("API Response:", response.data);
-        setDepartments(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
 
   const pageCount = Math.ceil(departments.length / departmentsPerPage);
   const offset = currentPage * departmentsPerPage;
@@ -123,25 +102,22 @@ export function Department() {
     offset,
     offset + departmentsPerPage
   );
-
-
-
   const handlePageClick = (data) => {
     setCurrentPage(data.selected);
   };
 
 
 
-  const handleEdit = (id) => {
-    console.log("Edit button clicked");
-    setEditModalOpen(true);
-  };
+  // const handleEditClick = (id) => {
+  //   console.log("Edit button clicked");
+  //   setShowEditModal(true);
+  // };
 
-  const handleDelete = (id) => {
-    console.log("Delete button clicked");
-    console.log("Delete button clicked", selectedDepartment);
-    setDeleteModalOpen(true);
-  };
+  // const handleDelete = (id) => {
+  //   // setSelectedDepartment("");
+  //   console.log("Delete button clicked", selectedDepartment);
+  //   setShowDeleteModal(true);
+  // };
 
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -219,14 +195,14 @@ export function Department() {
                       </td>
                       <td className={className}>
                         <button
-                          onClick={() => handleEdit(id)}
+                          onClick={() => handleEditClick(department)}
                           className="bg-blue-500 text-white py-1 px-3 rounded-md mb-2"
                         >
                           Edit
                         </button>
                         
                         <button
-                          onClick={() => handleDelete(id)}
+                          onClick={() => handleDeleteClick(department)}
                           className="bg-red-500 text-white py-1 px-3 rounded-md"
                         >
                           Delete
@@ -261,8 +237,8 @@ export function Department() {
       
    
         <Modal
-          isOpen={isEditModalOpen}
-          onRequestClose={() => setEditModalOpen(false)}
+          isOpen={showEditModal}
+          onRequestClose={() => setShowEditModal(false)}
           contentLabel="Edit Department Modal"
           className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-opacity-75 bg-black"
         >
@@ -272,8 +248,8 @@ export function Department() {
               <label className="block text-sm font-medium text-gray-700">Department Name:</label>
               <input
                 type="text"
-                value={editData.department_name}
-                onChange={(e) => setEditData({ ...editData, department_name: e.target.value })}
+                value={editedDepartment.department_name}
+                onChange={(e) => setEditedDepartment({ ...editedDepartment, department_name: e.target.value })}
                 className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
               />
             </div>
@@ -281,8 +257,8 @@ export function Department() {
               <label className="block text-sm font-medium text-gray-700">Department Code:</label>
               <input
                 type="text"
-                value={editData.department_code}
-                onChange={(e) => setEditData({ ...editData, department_code: e.target.value })}
+                value={editedDepartment.department_code}
+                onChange={(e) => setEditedDepartment({ ...editedDepartment, department_code: e.target.value })}
                 className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
               />
             </div>
@@ -290,20 +266,20 @@ export function Department() {
               <label className="block text-sm font-medium text-gray-700">Head of Department:</label>
               <input
                 type="text"
-                value={editData.head_of_department}
-                onChange={(e) => setEditData({ ...editData, head_of_department: e.target.value })}
+                value={editedDepartment.head_of_department}
+                onChange={(e) => setEditedDepartment({ ...editedDepartment, head_of_department: e.target.value })}
                 className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
               />
             </div>
             <div className="flex justify-between">
               <button
-                onClick={updateDepartment}
+                onClick={handleSaveEdit}
                 className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none"
               >
                 Update
               </button>
               <button
-                onClick={() => setEditModalOpen(false)}
+                onClick={() => setShowEditModal(false)}
                 className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none"
               >
                 Cancel
@@ -314,8 +290,8 @@ export function Department() {
 
 
         <Modal
-          isOpen={isDeleteModalOpen}
-          onRequestClose={() => setDeleteModalOpen(false)}
+          isOpen={showDeleteModal}
+          onRequestClose={() => setShowDeleteModal(false)}
           className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-opacity-75 bg-black"
         >
           <div className="bg-white w-1/3 p-6 rounded-lg">
@@ -324,12 +300,12 @@ export function Department() {
             <div className="flex justify-between">
               <button
                 className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none"
-                onClick={deleteDepartment}
+                onClick={handleConfirmDelete}
               >
                 Delete
               </button>
               <button
-                onClick={() => setDeleteModalOpen(false)}
+                onClick={() => setShowDeleteModal(false)}
                 className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none"
               >
                 Cancel
@@ -337,6 +313,9 @@ export function Department() {
             </div>
           </div>
         </Modal>
+
+      
+      
 
     </div>
   );
