@@ -18,6 +18,7 @@ import Repairs from "./pages/dashboard/repairs.jsx";
 import Assetrequest from "./pages/dashboard/assetrequest.jsx";
 import InventoryIcon from '@mui/icons-material/Inventory';
 import myassets from "./pages/dashboard/myassets";
+import EmployeeList from "./pages/dashboard/EmployeeList";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -63,18 +64,24 @@ export const routes = [
         path: "/departmentlist",
         element: <DepartmentList />,
       },
+       {
+        icon: <BellIcon {...icon} />,
+        name: "Employee List",
+        path: "/EmployeeList",
+        element: <EmployeeList />,
+      },
       {
         icon: <TableCellsIcon {...icon} />,
         name: "Asset Requests",
         path: "/assetrequests",
         element: <Assetrequest />,
       },
-      {
-        icon: <BellIcon {...icon} />,
-        name: "Department List",
-        path: "/department",
-        element: <Department />,
-      },
+      // {
+      //   icon: <BellIcon {...icon} />,
+      //   name: "Department List",
+      //   path: "/department",
+      //   element: <Department />,
+      // },
       // {
       //   icon: <BellIcon {...icon} />,
       //   name: "Asset Directory",

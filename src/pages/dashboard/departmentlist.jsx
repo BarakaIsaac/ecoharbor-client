@@ -13,7 +13,7 @@ import {
 
 const Api_Url = 'http://127.0.0.1:3001/departments';
 
-Modal.setAppElement('#root'); // Set the root element for accessibility
+Modal.setAppElement('#root'); 
 
 const DepartmentList = () => {
     const [departments, setDepartments] = useState([]);
@@ -39,7 +39,7 @@ const DepartmentList = () => {
                 setDepartments(response.data);
             })
             .catch(error => {
-                console.error('Error fetching departments: ', error);
+                console.error('Error fetching departments record: ', error);
             });
     }, []);
 
@@ -62,7 +62,7 @@ const DepartmentList = () => {
                 setShowEditModal(false);
             })
             .catch(error => {
-                console.error('Error updating department: ', error);
+                console.error('Error updating department record: ', error);
             });
     };
 
@@ -80,7 +80,7 @@ const DepartmentList = () => {
                 setShowDeleteModal(false);
             })
             .catch(error => {
-                console.error('Error deleting department: ', error);
+                console.error('Error deleting department record: ', error);
             });
     };
 
