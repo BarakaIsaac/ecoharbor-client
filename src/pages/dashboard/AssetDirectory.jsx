@@ -6,6 +6,8 @@ import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react
 
 import AssetViewModal from './Modals/AssetViewModal';
 import AssetCreateModal from './Modals/AssetCreateModal';
+import AssetDeleteModal from './Modals/AssetDeleteModal';
+
 
 const Api_Url = 'http://127.0.0.1:3001/assets_directorys';
 const Api_Url_dep = 'http://127.0.0.1:3001/departments';
@@ -462,29 +464,15 @@ function AssetDirectory() {
             </div>
         </Modal>
 
-
-        <Modal
-                isOpen={showDeleteModal}
-                onRequestClose={() => setShowDeleteModal(false)}
-                className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-opacity-75 bg-black"
-            >
-                <div className="bg-white w-1/3 p-6 rounded-lg">
-                    <h2 className="text-2xl font-semibold mb-4 text-center">Delete Asset</h2>
-                    <p className="text-gray-700 mb-4 text-center">
-                            Are you sure you want to delete the{" "} <span className="font-bold text-blue-600">
-                                {selectedAsset?.asset_name} </span>{" "}?</p>
-                    <div className="flex justify-between">
-                        <button onClick={handleConfirmDelete} className="bg-red-500 text-white py-2 px-4 rounded-md text-xs hover:bg-red-600 focus:outline-none">
-                            Delete
-                        </button>
-                        <button onClick={() => setShowDeleteModal(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md text-xs hover:bg-gray-400 focus:outline-none">
-                            Cancel
-                        </button>
-                    </div>
-                  
-                </div>
-        </Modal>
-
+        
+        <AssetDeleteModal
+            isOpen={showDeleteModal}
+            onClose={() => setShowDeleteModal(false)}
+            onConfirm={handleConfirmDelete}
+            assetName={selectedAsset?.asset_name}
+                
+            />
+        
         <AssetCreateModal
                 showCreateModal={showCreateModal}
                 setShowCreateModal={setShowCreateModal}
@@ -506,15 +494,15 @@ function AssetDirectory() {
 
 
         <div className="my-4 flex justify-between items-center">
-        <TablePagination
-            component="div"
-            count={assets.length}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            className="text-blue-500"
-        />
+            <TablePagination
+                component="div"
+                count={assets.length}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                className="text-blue-500"
+            />
         </div>
          {/* Conditionally render the success message  */}
         {successMessage && <SuccessMessage message={successMessage}  />}
