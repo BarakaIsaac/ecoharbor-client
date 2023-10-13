@@ -12,6 +12,7 @@ import {
 } from "@material-tailwind/react";
 
 const Api_Url = 'http://127.0.0.1:3001/assets_directorys';
+const Api_Url_dep = 'http://127.0.0.1:3001/departments';
 
 Modal.setAppElement('#root');
 
@@ -37,16 +38,40 @@ function AssetDirectory() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    useEffect(() => {
+    const [departmentNames, setDepartmentNames] = useState({});
+
+    // useEffect(() => {
         
+    //     axios.get(Api_Url)
+    //         .then(response => {
+    //             setAssets(response.data);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching Asset record: ', error);
+    //         });
+    // }, []);
+    useEffect(() => {
         axios.get(Api_Url)
             .then(response => {
-                setAssets(response.data);
+            setAssets(response.data);
             })
             .catch(error => {
-                console.error('Error fetching Asset record: ', error);
+            console.error('Error fetching Asset record: ', error);
             });
-    }, []);
+
+        // Fetch department data to get department names
+        axios.get(Api_Url_dep)
+            .then(response => {
+            const departmentNameMap = {};
+            response.data.forEach(department => {
+                departmentNameMap[department.id] = department.department_name;
+            });
+            setDepartmentNames(departmentNameMap);
+            })
+            .catch(error => {
+            console.error('Error fetching department data: ', error);
+            });
+        }, []);
 
     const handleEditClick = (asset) => {
         setSelectedAsset(asset);
@@ -187,7 +212,7 @@ function AssetDirectory() {
                         </td>
                         <td>
                             <Typography className="text-xs font-semibold text-blue-gray-600">
-                            {asset.department_id}
+                            {departmentNames[asset.department_id]}
                             </Typography>
                         </td>
                         <td>
