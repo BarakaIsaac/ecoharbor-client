@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
-import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import TablePagination from '@mui/material/TablePagination';
-import ReactPaginate from "react-paginate";
 import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react";
+
+import AssetViewModal from './Modals/AssetViewModal';
 
 const Api_Url = 'http://127.0.0.1:3001/assets_directorys';
 const Api_Url_dep = 'http://127.0.0.1:3001/departments';
@@ -177,8 +177,6 @@ function AssetDirectory() {
         </div>
     );
     };
-    // const [viewAssetModalOpen, setViewAssetModalOpen] = useState(false);
-    // const [selectedAssetForView, setSelectedAssetForView] = useState(null);
 
     const handleViewClick = (asset) => {
       
@@ -186,11 +184,10 @@ function AssetDirectory() {
         setViewAssetModalOpen(true);
     };
 
-
-    // const openViewAssetModal = (asset) => {
-    //     setSelectedAssetForView(asset);
-    //     setViewAssetModalOpen(true);
-    // };
+      const closeViewModal = () => {
+        setSelectedAssetForView(null);
+        setViewAssetModalOpen(false);
+    };
 
     return (
         <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -657,71 +654,14 @@ function AssetDirectory() {
             </div>
         </Modal>
 
-        {/* "View Asset" Modal */}
-        <Modal
+        <AssetViewModal 
             isOpen={viewAssetModalOpen}
-            onRequestClose={() => setViewAssetModalOpen(false)}
-            contentLabel="View Asset Modal"
-            className="bg-[#2E3C43] fixed top-0 left-0 flex items-center justify-center w-full h-full bg-opacity-75 bg-black"
-            style={{
-                overlay: {
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: 'rgba(0, 0, 0, 0.75)',
-                    zIndex: 1000,
-                },
-                content: {
-                    position: 'relative',
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                    borderRadius: '0.25rem',
-                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-                    maxWidth: '70%',
-                    
-                },
-            }}
-        >
-            {selectedAssetForView && (
-                <div className="bg-white w-2/3 p-6 rounded-lg " >
-                    <Card>
-                        <CardHeader variant="gradient" color="blue" className="mb-2 p-2">
-                            <div className="flex items-center">
-                            <h2 className="text-center text-2xl font-semibold mb-4">{selectedAssetForView.asset_name}</h2>
-                            </div>
-                        </CardHeader>           
-                    
-                    
-                    {/* Display asset image here */}
-                    <div>
-                        {selectedAssetForView.asset_image && (
-                            <img src={selectedAssetForView.asset_image} alt="Asset Image" className="max-w-full my-4" />
-                        )}
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <p className="text-xs text-[#2F3D44] mb-2"><strong>Category:</strong> {selectedAssetForView.category_name}</p>
-                            <p className="text-xs text-[#2F3D44] mb-2"><strong>Category Code:</strong> {selectedAssetForView.category_code}</p>
-                            <p className="text-xs text-[#2F3D44] mb-2"><strong>Condition:</strong> {selectedAssetForView.condition}</p>
-                            <p className="text-xs text-[#2F3D44] mb-2"><strong>Status:</strong> {selectedAssetForView.status}</p>
-                        </div>
-                        <div>
-                            <p className="text-xs text-[#2F3D44] mb-2"><strong>Purchase Value [KES]:</strong> {selectedAssetForView.purchase_value}</p>
-                            <p className="text-xs text-[#2F3D44] mb-2"><strong>Current Value [KES]:</strong> {selectedAssetForView.current_value}</p>
-                            <p className="text-xs text-[#2F3D44] mb-2"><strong>Quantity:</strong> {selectedAssetForView.quantity_in_stock}</p>
-                            <p className="text-xs text-[#2F3D44]"><strong>Owning Dept:</strong> {departmentNames[selectedAssetForView.department_id]}</p>
-                        </div>
-                    </div>
-                    
-                    <div className="flex justify-end">
-                        <button onClick={() => setViewAssetModalOpen(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none">
-                            Close
-                        </button>
-                    </div>
-                    </Card>
-                </div>
-            )}
-        </Modal>
+            onClose={closeViewModal}
+            asset={selectedAssetForView}
+            departmentNames={departmentNames}
+        
+        />
+
 
         <div className="my-4 flex justify-between items-center">
         <TablePagination
