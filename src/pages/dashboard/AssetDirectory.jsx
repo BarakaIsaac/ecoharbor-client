@@ -40,16 +40,8 @@ function AssetDirectory() {
 
     const [departmentNames, setDepartmentNames] = useState({});
 
-    // useEffect(() => {
-        
-    //     axios.get(Api_Url)
-    //         .then(response => {
-    //             setAssets(response.data);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching Asset record: ', error);
-    //         });
-    // }, []);
+    const [successMessage, setSuccessMessage] = useState(null);
+
     useEffect(() => {
         axios.get(Api_Url)
             .then(response => {
@@ -95,6 +87,7 @@ function AssetDirectory() {
             .then(response => {
                 setAssets(assets.map(ast => ast.id === selectedAsset.id ? response.data : ast));
                 setShowEditModal(false);
+                showSuccessMessage('Asset record updated successfully!');
             })
             .catch(error => {
                 console.error('Error updating asset record: ', error);
@@ -113,6 +106,7 @@ function AssetDirectory() {
                 
                 setAssets(assets.filter(ast => ast.id !== selectedAsset.id));
                 setShowDeleteModal(false);
+                showSuccessMessage('Asset record deleted successfully!');
             })
             .catch(error => {
                 console.error('Error deleting asset record: ', error);
@@ -129,6 +123,22 @@ function AssetDirectory() {
     };
 
     const paginatedAssets = assets.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+
+    const showSuccessMessage = (message) => {
+        setSuccessMessage(message);
+
+        setTimeout(() => {
+            setSuccessMessage(null);
+        }, 5000); 
+        };
+
+    const SuccessMessage = ({ message }) => {
+    return (
+        <div className="fixed top-1/20 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#2E3D44] text-white py-2 px-4 rounded-md z-50 transition-transform duration-500 shadow-md text-center">
+         {message}
+        </div>
+    );
+    };
 
     return (
         <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -390,6 +400,8 @@ function AssetDirectory() {
             className="text-blue-500"
         />
         </div>
+         {/* Conditionally render the success message  */}
+        {successMessage && <SuccessMessage message={successMessage}  />}
         </div>
     );
 };

@@ -32,6 +32,8 @@ const DepartmentList = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
+    const [successMessage, setSuccessMessage] = useState(null);
+
     useEffect(() => {
         
         axios.get(Api_Url)
@@ -60,6 +62,8 @@ const DepartmentList = () => {
             .then(response => {
                 setDepartments(departments.map(dep => dep.id === selectedDepartment.id ? response.data : dep));
                 setShowEditModal(false);
+
+                showSuccessMessage('Department record updated successfully!');
             })
             .catch(error => {
                 console.error('Error updating department record: ', error);
@@ -78,6 +82,8 @@ const DepartmentList = () => {
                 
                 setDepartments(departments.filter(dep => dep.id !== selectedDepartment.id));
                 setShowDeleteModal(false);
+
+                showSuccessMessage('Department record deleted successfully!');
             })
             .catch(error => {
                 console.error('Error deleting department record: ', error);
@@ -94,6 +100,22 @@ const DepartmentList = () => {
     };
 
     const paginatedDepartments = departments.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+
+    const showSuccessMessage = (message) => {
+        setSuccessMessage(message);
+
+        setTimeout(() => {
+            setSuccessMessage(null);
+        }, 5000); 
+        };
+
+    const SuccessMessage = ({ message }) => {
+    return (
+        <div className="fixed top-1/20 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#2E3D44] text-white py-2 px-4 rounded-md z-50 transition-transform duration-500 shadow-md text-center">
+         {message}
+        </div>
+    );
+    };
 
     return (
         <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -269,6 +291,8 @@ const DepartmentList = () => {
             className="text-blue-500"
         />
         </div>
+        {/* Conditionally render the success message  */}
+        {successMessage && <SuccessMessage message={successMessage}  />}
         </div>
     );
 };

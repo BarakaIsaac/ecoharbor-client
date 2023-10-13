@@ -39,6 +39,8 @@ const EmployeeList = () => {
 
     const [departmentNames, setDepartmentNames] = useState({});
 
+    const [successMessage, setSuccessMessage] = useState(null);
+
     useEffect(() => {
         axios.get(Api_Url)
             .then(response => {
@@ -63,7 +65,6 @@ const EmployeeList = () => {
         }, []);
 
     
-
     const handleEditClick = (employee) => {
         setSelectedEmployee(employee);
         setEditedEmployee({
@@ -84,8 +85,10 @@ const EmployeeList = () => {
     const handleSaveEdit = () => {
         axios.put(`${Api_Url}/${selectedEmployee.id}`, editedEmployee)
             .then(response => {
-                setEmployees(departments.map(emp => emp.id === selectedEmployee.id ? response.data : emp));
+                setEmployees(employees.map(emp => emp.id === selectedEmployee.id ? response.data : emp));
                 setShowEditModal(false);
+
+                showSuccessMessage('Employee record updated successfully!');
             })
             .catch(error => {
                 console.error('Error updating employee record: ', error);
@@ -104,6 +107,7 @@ const EmployeeList = () => {
                 
                 setEmployees(employees.filter(emp => emp.id !== selectedEmployee.id));
                 setShowDeleteModal(false);
+                showSuccessMessage('Employee record deleted successfully!');
             })
             .catch(error => {
                 console.error('Error deleting employee record: ', error);
@@ -120,6 +124,22 @@ const EmployeeList = () => {
     };
 
     const paginatedEmployees = employees.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+
+    const showSuccessMessage = (message) => {
+        setSuccessMessage(message);
+
+        setTimeout(() => {
+            setSuccessMessage(null);
+        }, 5000); 
+        };
+
+    const SuccessMessage = ({ message }) => {
+    return (
+        <div className="fixed top-1/20 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#2E3D44] text-white py-2 px-4 rounded-md z-50 transition-transform duration-500 shadow-md text-center">
+         {message}
+        </div>
+    );
+    };
 
     return (
         <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -381,6 +401,9 @@ const EmployeeList = () => {
             className="text-blue-500"
         />
         </div>
+        {/* Conditionally render the success message  */}
+        {successMessage && <SuccessMessage message={successMessage}  />}
+        
         </div>
     );
 };
