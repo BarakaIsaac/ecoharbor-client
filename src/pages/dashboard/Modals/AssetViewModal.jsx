@@ -37,15 +37,15 @@ function AssetViewModal({ isOpen, onClose, asset, departmentNames }) {
             {asset && (
                 <div className="bg-white w-2/3 p-6 rounded-lg " >
                     <Card>
-                        <CardHeader variant="gradient" color="blue" className="mb-2 p-2">
+                        <CardHeader variant="gradient" color="blue" className="mb-2 p-2 text-center">
                             <div className="flex items-center">
-                            <h2 className="text-center text-2xl font-semibold mb-4">{asset.asset_name}</h2>
+                            <h2 className="text-center text-2xl font-semibold mb-4"style={{ textAlign: 'center' }}>{asset.asset_name}</h2>
                             </div>
                         </CardHeader>           
                     
-                    <div>
+                    <div className="flex items-center justify-center">
                         {asset.asset_image && (
-                            <img src={asset.asset_image} alt="Asset Image" className="max-w-full my-4" />
+                            <img src={asset.asset_image} alt="Asset Image" className="max-w-[500px] max-h-[500px] my-4 border-4 border-blue-500 rounded-lg shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out"  />
                         )}
                     </div>
                     <div className="grid grid-cols-2 gap-4">
