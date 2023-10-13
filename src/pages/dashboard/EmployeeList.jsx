@@ -357,7 +357,7 @@ const EmployeeList = () => {
                                 {selectedEmployee?.first_name} {selectedEmployee?.last_name}
                             </span>{" "}
                             from {" "}<span className="font-bold text-blue-600">
-                                {selectedEmployee?.department_id}
+                                {departmentNames[selectedEmployee?.department_id]}
                             </span> ?</p>
                     <div className="flex justify-between">
                         <button onClick={handleConfirmDelete} className="bg-red-500 text-white py-2 px-4 rounded-md text-xs hover:bg-red-600 focus:outline-none">
