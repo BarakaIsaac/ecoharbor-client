@@ -1,15 +1,3 @@
-// import React from 'react';
-
-// const Assetdirectory = () => {
-//     return (
-//         <div>
-//             <p>Hi</p>
-//         </div>
-//     );
-// };
-
-// export default Assetdirectory;
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
@@ -41,7 +29,7 @@ const DepartmentList = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     useEffect(() => {
-        // Fetch the list of departments when the component mounts
+        
         axios.get(Api_Url)
             .then(response => {
                 setDepartments(response.data);
@@ -57,17 +45,15 @@ const DepartmentList = () => {
             department_name: department.department_name,
             department_code: department.department_code,
             head_of_department: department.head_of_department,
-            assets: department.total_assets, // Use the fetched values
+            assets: department.total_assets, 
             asset_value: department.asset_total_value,
         });
         setShowEditModal(true);
     };
 
     const handleSaveEdit = () => {
-        // Send a PUT request to update the department
         axios.put(`${Api_Url}/${selectedDepartment.id}`, editedDepartment)
             .then(response => {
-                // Update the local departments list with the updated data
                 setDepartments(departments.map(dep => dep.id === selectedDepartment.id ? response.data : dep));
                 setShowEditModal(false);
             })
@@ -106,41 +92,59 @@ const DepartmentList = () => {
             <table className="w-full min-w-[640px] table-auto">
                 <thead>
                     <tr>
-                        <th><Typography variant="small" className="text-[11px] font-bold uppercase text-blue-gray-400">
+                        <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
                             Department Name</Typography></th>
-                        <th><Typography variant="small" className="text-[11px] font-bold uppercase text-blue-gray-400">
+                        <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
                             Department Code</Typography></th>
-                        <th><Typography variant="small" className="text-[11px] font-bold uppercase text-blue-gray-400">
+                        <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
                             Head of Department</Typography></th>
-                        <th><Typography variant="small" className="text-[11px] font-bold uppercase text-blue-gray-400">
+                        <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
                             Total No. Assets</Typography></th>
-                        <th><Typography variant="small" className="text-[11px] font-bold uppercase text-blue-gray-400">
+                        <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
                             Asset Total Value (KES)</Typography></th>
-                        <th><Typography variant="small" className="text-[11px] font-bold uppercase text-blue-gray-400">
+                        <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
                             Actions</Typography></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {departments.map(department => (
-                        <tr key={department.id}>
-                            <td><Typography
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-semibold"
-                                    >{department.department_name}</Typography></td>
-                            <td><Typography className="text-xs font-normal text-blue-gray-500">{department.department_code}</Typography></td>
-                            <td><Typography className="text-xs font-semibold text-blue-gray-600">{department.head_of_department}</Typography></td>
-                            <td><Typography className="text-xs font-semibold text-blue-gray-600">{department.total_assets}</Typography></td>
-                            <td><Typography className="text-xs font-semibold text-blue-gray-600">{department.asset_total_value}</Typography></td>
-                            <td>
-                                <button onClick={() => handleEditClick(department)} className="bg-blue-500 text-white py-1 px-3 rounded-md mb-2">
-                                    Edit</button>
-                                <button onClick={() => handleDeleteClick(department)} className="bg-red-500 text-white py-1 px-3 rounded-md">
-                                    Delete</button>
-                            </td>
+                    {departments.map((department) => (
+                        <tr key={department.id} className="border-t">
+                        <td>
+                            <Typography color="blue-gray" className="font-semibold text-xs text-blue-gray-500 uppercase">
+                            {department.department_name}
+                            </Typography>
+                        </td>
+                        <td>
+                            <Typography className="text-xs font-normal text-blue-gray-500">
+                            {department.department_code}
+                            </Typography>
+                        </td>
+                        <td>
+                            <Typography className="text-xs font-semibold text-blue-gray-600">
+                            {department.head_of_department}
+                            </Typography>
+                        </td>
+                        <td>
+                            <Typography className="text-center text-xs font-semibold text-blue-gray-600">
+                            {department.total_assets}
+                            </Typography>
+                        </td>
+                        <td>
+                            <Typography className="text-center text-xs font-semibold text-blue-gray-600">
+                            {department.asset_total_value}
+                            </Typography>
+                        </td>
+                        <td>
+                            <button onClick={() => handleEditClick(department)} className="bg-blue-500 text-white py-1 px-3 rounded-md mb-2">
+                            Edit
+                            </button>
+                            <button onClick={() => handleDeleteClick(department)} className="bg-red-500 text-white py-1 px-3 rounded-md">
+                            Delete
+                            </button>
+                        </td>
                         </tr>
                     ))}
-                </tbody>
+                    </tbody>
             </table>
             </CardBody>
         </Card>

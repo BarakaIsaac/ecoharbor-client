@@ -12,7 +12,7 @@ import { Home } from "./pages/dashboard/home";
 import { Department } from "./pages/dashboard/department";
 import { SignIn } from "./pages/auth/sign-in";
 import { SignUp } from "./pages/auth/sign-up";
-import Assetdirectory from "./pages/dashboard/assetdirectory";
+import DepartmentList from "./pages/dashboard/departmentlist";
 import Requests from "./pages/dashboard/requests.jsx";
 import Repairs from "./pages/dashboard/repairs.jsx";
 import Assetrequest from "./pages/dashboard/assetrequest.jsx";
@@ -59,9 +59,9 @@ export const routes = [
       },
       {
         icon: <TableCellsIcon {...icon} />,
-        name: "Asset Directory",
-        path: "/assetdirectory",
-        element: <Assetdirectory />,
+        name: "Department List",
+        path: "/departmentlist",
+        element: <DepartmentList />,
       },
       {
         icon: <TableCellsIcon {...icon} />,
@@ -75,12 +75,12 @@ export const routes = [
         path: "/department",
         element: <Department />,
       },
-      {
-        icon: <BellIcon {...icon} />,
-        name: "Asset Directory",
-        path: "/asset-directory",
-        element: <Assetdirectory />,
-      },
+      // {
+      //   icon: <BellIcon {...icon} />,
+      //   name: "Asset Directory",
+      //   path: "/asset-directory",
+      //   element: <Assetdirectory />,
+      // },
       {
         icon: <InventoryIcon {...icon} />,
         name: "My Assets",
