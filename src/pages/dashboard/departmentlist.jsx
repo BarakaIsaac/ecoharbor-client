@@ -29,6 +29,15 @@ const DepartmentList = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+    const [showCreateModal, setShowCreateModal] = useState(false);
+    const [newDepartment, setNewDepartment] = useState({
+        department_name: '',
+        department_code: '',
+        head_of_department: '',
+        assets: 0,
+        asset_value: 0,
+    });
+
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -117,14 +126,38 @@ const DepartmentList = () => {
     );
     };
 
+    const handleCreateDepartment = () => {
+        axios.post(Api_Url, newDepartment)
+            .then(response => {
+            const createdDepartment = response.data;
+            
+                setDepartments([...departments, createdDepartment]);
+                setShowCreateModal(false);
+
+                showSuccessMessage('Department created successfully!');
+            })
+            .catch(error => {
+            console.error('Error creating department: ', error);
+            });
+        };
+
     return (
         <div className="mt-12 mb-8 flex flex-col gap-12">
         <Card>
             <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
-          <Typography variant="h6" color="white">
-            Department List
-          </Typography>
-        </CardHeader>
+                <div className="flex items-center">
+                    <Typography variant="h6" color="white">
+                        Department List
+                    </Typography>
+                    <button
+                        onClick={() => setShowCreateModal(true)}
+                        className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none"
+                    >
+                        Create
+                    </button>
+                </div>
+            </CardHeader>
+
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
             <table className="w-full min-w-[640px] table-auto">
                 <thead>
@@ -280,6 +313,60 @@ const DepartmentList = () => {
                     </div> */}
                 </div>
         </Modal>
+
+        <Modal
+            isOpen={showCreateModal}
+            onRequestClose={() => setShowCreateModal(false)}
+            contentLabel="Create Department Modal"
+            className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-opacity-75 bg-black"
+            >
+            <div className="bg-white w-1/3 p-6 rounded-lg">
+                <h2 className="text-2xl font-semibold mb-4">Create Department</h2>
+
+                <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Department Name</label>
+                <input
+                    type="text"
+                    value={newDepartment.department_name}
+                    onChange={e => setNewDepartment({ ...newDepartment, department_name: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Department Code</label>
+                    <input
+                    type="text"
+                    value={newDepartment.department_code}
+                    onChange={e => setNewDepartment({ ...newDepartment, department_code: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                
+                </div>
+
+                
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Head of Department</label>
+                    <input
+                    type="text"
+                    value={newDepartment.head_of_department}
+                    onChange={e => setNewDepartment({ ...newDepartment, head_of_department: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                
+                </div>
+
+                <div className="flex justify-between">
+                <button onClick={handleCreateDepartment} className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none">
+                    Create
+                </button>
+                <button onClick={() => setShowCreateModal(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none">
+                    Cancel
+                </button>
+                </div>
+            </div>
+        </Modal>
+
         <div className="my-4 flex justify-between items-center">
         <TablePagination
             component="div"
