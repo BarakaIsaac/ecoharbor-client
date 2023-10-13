@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import TablePagination from '@mui/material/TablePagination';
 import ReactPaginate from "react-paginate";
 import {
   Card,
@@ -27,6 +28,9 @@ const DepartmentList = () => {
     });
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     useEffect(() => {
         
@@ -80,6 +84,17 @@ const DepartmentList = () => {
             });
     };
 
+    const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+
+    const paginatedDepartments = departments.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+
     return (
         <div className="mt-12 mb-8 flex flex-col gap-12">
         <Card>
@@ -107,7 +122,7 @@ const DepartmentList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {departments.map((department) => (
+                    {paginatedDepartments.map((department) => (
                         <tr key={department.id} className="border-t">
                         <td>
                             <Typography color="blue-gray" className="font-semibold text-xs text-blue-gray-500 uppercase">
@@ -155,10 +170,13 @@ const DepartmentList = () => {
             className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-opacity-75 bg-black"
             >
             <div className="bg-white w-1/3 p-6 rounded-lg">
-                <h2 className="text-2xl font-semibold mb-4">Edit Department</h2>
+                <h2 className="text-2xl font-semibold mb-4">Edit {" "}
+                            <span className="font-bold text-blue-600 underline">
+                                {selectedDepartment?.department_name}
+                            </span>{" "} Department</h2>
 
                 <div className="mb-4">
-                <div>
+                
                     <label className="block text-sm font-medium text-gray-700">Department Name</label>
                     <input
                     type="text"
@@ -166,10 +184,10 @@ const DepartmentList = () => {
                     onChange={e => setEditedDepartment({ ...editedDepartment, department_name: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
-                </div>
+                
                 </div>
 
-                <div className="mb-4">
+                
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Department Code</label>
                     <input
@@ -178,10 +196,10 @@ const DepartmentList = () => {
                     onChange={e => setEditedDepartment({ ...editedDepartment, department_code: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
-                </div>
+                
                 </div>
 
-                <div className="mb-4">
+                
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Head of Department</label>
                     <input
@@ -190,14 +208,14 @@ const DepartmentList = () => {
                     onChange={e => setEditedDepartment({ ...editedDepartment, head_of_department: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
-                </div>
+                
                 </div>
 
                 <div className="flex justify-between">
-                <button onClick={handleSaveEdit} className="bg-blue-500 text-white py-2 px-4 rounded-md hover-bg-blue-600 focus:outline-none">
+                <button onClick={handleSaveEdit} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none">
                     Update
                 </button>
-                <button onClick={() => setShowEditModal(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover-bg-gray-400 focus:outline-none">
+                <button onClick={() => setShowEditModal(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none">
                     Cancel
                 </button>
                 </div>
@@ -211,16 +229,40 @@ const DepartmentList = () => {
                 className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-opacity-75 bg-black"
             >
                 <div className="bg-white w-1/3 p-6 rounded-lg">
-                    <h2 className="text-2xl font-semibold mb-4">Delete Department</h2>
-                    <p className="text-gray-700 mb-4 bold">Are you sure you want to delete the {selectedDepartment?.department_name} department?</p>
+                    <h2 className="text-2xl font-semibold mb-4 text-center">Delete Department</h2>
+                    <p className="text-gray-700 mb-4 text-center">
+                            Are you sure you want to delete the{" "}
+                            <span className="font-bold text-blue-600">
+                                {selectedDepartment?.department_name}
+                            </span>{" "}
+                            department which is headed by{" "}
+                            <span className="font-bold text-blue-600">
+                                {selectedDepartment?.head_of_department}
+                            </span>
+                            ?
+                            </p>
+
+                    {/* <p className="text-gray-700 mb-4 bold text-center">Are you sure you want to delete the 
+                    {selectedDepartment?.department_name} 
+                    department which is headed by 
+                    {selectedDepartment?.head_of_department}?</p> */}
+
                     <div className="flex justify-between">
-                    <button onClick={handleConfirmDelete} className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none">
+                    <button onClick={handleConfirmDelete} className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none ">
                         Delete</button>
                     <button onClick={() => setShowDeleteModal(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none">
                         Cancel</button>
                     </div>
                 </div>
         </Modal>
+        <TablePagination
+            component="div"
+            count={departments.length}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+        />
         </div>
     );
 };
