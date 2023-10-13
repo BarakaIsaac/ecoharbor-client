@@ -4,7 +4,7 @@ import CreateAsset from '../../Components/createassetform'
 const Createasset = () => {
     return (
         <div>
-            <CreateAsset />
+           {} <CreateAsset />
         </div>
     );
 };
