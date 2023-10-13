@@ -35,6 +35,20 @@ function AssetDirectory() {
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+    const [showCreateModal, setShowCreateModal] = useState(false);
+    const [newAsset, setNewAsset] = useState({
+        asset_name: '',
+        category_name: '',
+        category_code: '',
+        condition: '',
+        status: '',
+        purchase_value: '',
+        current_value: '',
+        quantity_in_stock: '',
+        department_id: '',
+        asset_image: '',
+    });
+
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -42,10 +56,23 @@ function AssetDirectory() {
 
     const [successMessage, setSuccessMessage] = useState(null);
 
+    const [uniqueAssetCategories, setUniqueAssetCategories] = useState([]);   
+    
+    const [showCustomCategoryInput, setShowCustomCategoryInput] = useState(false);
+    const [customCategory, setCustomCategory] = useState('');
+
+    const [assetConditions, setAssetConditions] = useState([]); // State to store asset conditions
+
     useEffect(() => {
         axios.get(Api_Url)
             .then(response => {
             setAssets(response.data);
+
+            // Extract unique asset category names
+                const uniqueCategories = [...new Set(response.data.map(asset => asset.category_name))];
+                setUniqueAssetCategories(uniqueCategories);
+
+                setAssetConditions(response.data);
             })
             .catch(error => {
             console.error('Error fetching Asset record: ', error);
@@ -54,14 +81,14 @@ function AssetDirectory() {
         // Fetch department data to get department names
         axios.get(Api_Url_dep)
             .then(response => {
-            const departmentNameMap = {};
-            response.data.forEach(department => {
-                departmentNameMap[department.id] = department.department_name;
-            });
-            setDepartmentNames(departmentNameMap);
-            })
+                const departmentNameMap = {};
+                response.data.forEach(department => {
+                    departmentNameMap[department.id] = department.department_name;
+                });
+                setDepartmentNames(departmentNameMap);
+                })
             .catch(error => {
-            console.error('Error fetching department data: ', error);
+                console.error('Error fetching department data: ', error);
             });
         }, []);
 
@@ -113,6 +140,21 @@ function AssetDirectory() {
             });
     };
 
+    const handleCreateAsset = () => {
+        axios.post(Api_Url, newAsset)
+            .then(response => {
+            const createdAsset = response.data;
+            
+                setAssets([...assets, createdAsset]);
+                setShowCreateModal(false);
+
+                showSuccessMessage('Asset record created successfully!');
+            })
+            .catch(error => {
+            console.error('Error creating asset record: ', error);
+            });
+    };
+
     const handleChangePage = (event, newPage) => {
     setPage(newPage);
     };
@@ -144,10 +186,18 @@ function AssetDirectory() {
         <div className="mt-12 mb-8 flex flex-col gap-12">
         <Card>
             <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
-          <Typography variant="h6" color="white">
-           Assets Directory
-          </Typography>
-        </CardHeader>
+                            <div className="flex items-center">
+                                <Typography variant="h6" color="white">
+                                    Asset Directory
+                                </Typography>
+                                <button
+                                    onClick={() => setShowCreateModal(true)}
+                                    className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none"
+                                >
+                                    Create
+                                </button>
+                            </div>
+            </CardHeader>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
             <table className="w-full min-w-[640px] table-auto">
                 <thead>
@@ -265,16 +315,41 @@ function AssetDirectory() {
                     />
                 </div>
 
-                
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Category</label>
-                    <input
-                    type="text"
-                    value={editedAsset.category_name}
-                    onChange={e => setEditedAsset({ ...editedAsset, category_name: e.target.value })}
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                </div>
+                        <label className="block text-sm font-medium text-gray-700">Asset Category</label>
+                        <select
+                            value={showCustomCategoryInput ? 'Other' : editedAsset.category_name}
+                            onChange={e => {
+                                if (e.target.value === 'Other') {
+                                    setShowCustomCategoryInput(true);
+                                } else {
+                                    setShowCustomCategoryInput(false);
+                                    setEditedAsset({ ...editedAsset, category_name: e.target.value });
+                                }
+                            }}
+                            className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                        >
+                            <option value="" disabled>Select an Asset Category</option>
+                            {uniqueAssetCategories.map((category, index) => (
+                                <option key={index} value={category}>
+                                    {category}
+                                </option>
+                            ))}
+                            <option value="Other">Other (Enter custom category)</option>
+                        </select>
+                    </div>
+
+                    {showCustomCategoryInput && (
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Custom Asset Category</label>
+                            <input
+                                type="text"
+                                value={customCategory}
+                                onChange={e => setCustomCategory(e.target.value)}
+                                className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                            />
+                        </div>
+                    )}
                 
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Category Code</label>
@@ -296,6 +371,7 @@ function AssetDirectory() {
                     />
                 </div>
 
+
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Asset Status</label>
                     <input
@@ -311,7 +387,7 @@ function AssetDirectory() {
                     <input
                     type="text"
                     value={editedAsset.purchase_value}
-                    onChange={e => setEditedEAsset({ ...editedAsset, purchase_value: e.target.value })}
+                    onChange={e => setEditedAsset({ ...editedAsset, purchase_value: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
                 </div>
@@ -337,14 +413,21 @@ function AssetDirectory() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Department ID</label>
-                    <input
-                    type="text"
-                    value={editedAsset.department_id}
-                    onChange={e => setEditedAsset({ ...editedAsset, department_id: e.target.value })}
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    />
+                    <label className="block text-sm font-medium text-gray-700">Department</label>
+                    <select
+                        value={editedAsset.department_id}
+                        onChange={e => setEditedAsset({ ...editedAsset, department_id: e.target.value })}
+                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    >
+                        <option value="" disabled className="text-grey-100" style={{ opacity: 0.6 }}>Select a Department</option>
+                        {Object.keys(departmentNames).map(departmentId => (
+                            <option key={departmentId} value={departmentId}>
+                                {departmentNames[departmentId]}
+                            </option>
+                        ))}
+                    </select>
                 </div>
+
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Asset Image</label>
@@ -389,6 +472,176 @@ function AssetDirectory() {
                   
                 </div>
         </Modal>
+
+        <Modal
+            isOpen={showCreateModal}
+            onRequestClose={() => setShowCreateModal(false)}
+            contentLabel="Create Asset Modal"
+            className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-opacity-75 bg-black"
+            >
+            <div className="bg-white w-1/3 p-6 rounded-lg">
+                <h2 className="text-2xl font-semibold mb-4">Create New Asset</h2>
+
+                <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Asset Name</label>
+                <input
+                    type="text"
+                    value={newAsset.asset_name}
+                    onChange={e => setNewAsset({ ...newAsset, asset_name: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                />
+                </div>
+
+                {/* <div>
+                    <label className="block text-sm font-medium text-gray-700">Asset Category</label>
+                    <select
+                            value={newAsset.category_name}
+                            onChange={e => setNewAsset({ ...newAsset, category_name: e.target.value })}
+                            className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                        >
+                            <option value="" disabled>Select an Asset Category</option>
+                            {uniqueAssetCategories.map((category, index) => (
+                                <option key={index} value={category}>
+                                    {category}
+                                </option>
+                            ))}
+                        </select>
+                </div> */}
+
+                <div>
+                        <label className="block text-sm font-medium text-gray-700">Asset Category</label>
+                        <select
+                            value={showCustomCategoryInput ? 'Other' : newAsset.category_name}
+                            onChange={e => {
+                                if (e.target.value === 'Other') {
+                                    setShowCustomCategoryInput(true);
+                                } else {
+                                    setShowCustomCategoryInput(false);
+                                    setNewAsset({ ...newAsset, category_name: e.target.value });
+                                }
+                            }}
+                            className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                        >
+                            <option value="" disabled>Select an Asset Category</option>
+                            {uniqueAssetCategories.map((category, index) => (
+                                <option key={index} value={category}>
+                                    {category}
+                                </option>
+                            ))}
+                            <option value="Other">Other (Enter custom category)</option>
+                        </select>
+                    </div>
+
+                    {showCustomCategoryInput && (
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Custom Asset Category</label>
+                            <input
+                                type="text"
+                                value={customCategory}
+                                onChange={e => setCustomCategory(e.target.value)}
+                                className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                            />
+                        </div>
+                    )}
+
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Category Code</label>
+                    <input
+                    type="text"
+                    value={newAsset.category_code}
+                    onChange={e => setNewAsset({ ...newAsset, category_code: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Asset Condition</label>
+                    <input
+                    type="text"
+                    value={newAsset.condition}
+                    onChange={e => setNewAsset({ ...newAsset, condition: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Asset Status</label>
+                    <input
+                    type="text"
+                    value={newAsset.status}
+                    onChange={e => setNewAsset({ ...newAsset, status: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Asset Purchase Value [KES]</label>
+                    <input
+                    type="text"
+                    value={newAsset.purchase_value}
+                    onChange={e => setNewAsset({ ...newAsset, purchase_value: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+                
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Asset Current Value [KES] </label>
+                    <input
+                    type="currency"
+                    value={newAsset.current_value}
+                    onChange={e => setNewAsset({ ...newAsset, current_value: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Quantity</label>
+                    <input
+                    type="text"
+                    value={newAsset.quantity_in_stock}
+                    onChange={e => setNewAsset({ ...newAsset, quantity_in_stock: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Department</label>
+                    <select
+                        value={newAsset.department_id}
+                        onChange={e => setNewAsset({ ...newAsset, department_id: e.target.value })}
+                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    >
+                        <option value="" disabled className="text-grey-100" style={{ opacity: 0.6 }}>Select a Department</option>
+                        {Object.keys(departmentNames).map(departmentId => (
+                            <option key={departmentId} value={departmentId}>
+                                {departmentNames[departmentId]}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Asset Image</label>
+                    <input
+                    type="text"
+                    value={newAsset.asset_image}
+                    onChange={e => setNewAsset({ ...newAsset, asset_image: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+
+                <div className="flex justify-between">
+                <button onClick={handleCreateAsset} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none">
+                    Create
+                </button>
+                <button onClick={() => setShowCreateModal(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none">
+                    Cancel
+                </button>
+                </div>
+            </div>
+        </Modal>
+
         <div className="my-4 flex justify-between items-center">
         <TablePagination
             component="div"
