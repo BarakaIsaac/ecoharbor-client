@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // Component for Repair Request Form
 export default function RepairRequestForm() {
     // State for form data management
-    const [formData, setFormData] = useState({
+    const initialFormData = {
         assetDetails: '',
         description: '',
         department: '',
         date: '',
         urgency: 'low',
-    });
+    };
 
+    const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState('');
+   
 
     // Handle form input changes
     const handleInputChange = (e) => {
@@ -38,7 +40,19 @@ export default function RepairRequestForm() {
       setError('');
       return true;
     };
-  
+
+  // setting the current date in the data field when component mounts
+    useEffect(() => {
+      const currentDate = new Date().toISOString().split('T')[0]; // Get the current date in 'YYYY-MM-DD' format
+      setFormData({
+        ...formData,
+        date: currentDate,
+      });
+    }, []); 
+  //Successful Form submission handler
+    const handleFormSubmitSuccess = () => {
+      setFormData(initialFormData)
+    };
  // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -54,6 +68,7 @@ export default function RepairRequestForm() {
                 // Make a POST request using Axios to API endpoint
                 const response = await axios.post('my api end point', requestData);
                 console.log('Request submitted successfully:', response.data);
+                handleFormSubmitSuccess();
             } catch (error) {
                 console.error('Error submitting request:', error);
                 setError('Failed to submit request. Please try again later')
