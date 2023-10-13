@@ -125,7 +125,7 @@ const DepartmentList = () => {
                     {paginatedDepartments.map((department) => (
                         <tr key={department.id} className="border-t">
                         <td>
-                            <Typography color="blue-gray" className="font-semibold text-xs text-blue-gray-500 uppercase">
+                            <Typography color="blue-gray" className="pl-2 font-semibold text-xs text-blue-gray-500 uppercase">
                             {department.department_name}
                             </Typography>
                         </td>

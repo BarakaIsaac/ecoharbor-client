@@ -12,7 +12,7 @@ import {
 } from "@material-tailwind/react";
 
 const Api_Url = 'http://127.0.0.1:3001/employees';
-// const Api_Urldep = 'http://127.0.0.1:3001/departments';
+const Api_Url_dep = 'http://127.0.0.1:3001/departments';
 
 Modal.setAppElement('#root'); 
 
@@ -37,16 +37,32 @@ const EmployeeList = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
+    const [departmentNames, setDepartmentNames] = useState({});
+
     useEffect(() => {
-        
         axios.get(Api_Url)
             .then(response => {
-                setEmployees(response.data);
+            setEmployees(response.data);
             })
             .catch(error => {
-                console.error('Error fetching Employees record: ', error);
+            console.error('Error fetching Employees record: ', error);
             });
-    }, []);
+
+        // Fetch department data to get department names
+        axios.get(Api_Url_dep)
+            .then(response => {
+            const departmentNameMap = {};
+            response.data.forEach(department => {
+                departmentNameMap[department.id] = department.department_name;
+            });
+            setDepartmentNames(departmentNameMap);
+            })
+            .catch(error => {
+            console.error('Error fetching department data: ', error);
+            });
+        }, []);
+
+    
 
     const handleEditClick = (employee) => {
         setSelectedEmployee(employee);
@@ -132,7 +148,7 @@ const EmployeeList = () => {
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
                             Employment Date</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
-                            Department ID</Typography></th>
+                            Department</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
                             Employee Role</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
@@ -144,7 +160,7 @@ const EmployeeList = () => {
                     {paginatedEmployees.map((employee) => (
                         <tr key={employee.id} className="border-t">
                         <td>
-                            <Typography color="blue-gray" className="font-semibold text-xs text-blue-gray-500">
+                            <Typography color="blue-gray" className="pl-2 font-semibold text-xs text-blue-gray-500">
                             {employee.first_name}
                             </Typography>
                         </td>
@@ -179,8 +195,8 @@ const EmployeeList = () => {
                             </Typography>
                         </td>
                         <td>
-                            <Typography className="text-center text-xs font-semibold text-blue-gray-600">
-                            {employee.department_id}
+                            <Typography className="text-xs font-semibold text-blue-gray-600">
+                            {departmentNames[employee.department_id]}
                             </Typography>
                         </td>
                         <td>

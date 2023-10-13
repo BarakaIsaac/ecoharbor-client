@@ -146,7 +146,7 @@ function AssetDirectory() {
                   {paginatedAssets.map((asset) => (
                         <tr key={asset.id} className="border-t">
                         <td>
-                            <Typography color="blue-gray" className="font-semibold text-xs text-blue-gray-500">
+                            <Typography color="blue-gray" className="pl-2 font-semibold text-xs text-blue-gray-500">
                             {asset.asset_name}
                             </Typography>
                         </td>
