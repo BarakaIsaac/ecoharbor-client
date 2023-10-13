@@ -4,12 +4,7 @@ import Modal from 'react-modal';
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import TablePagination from '@mui/material/TablePagination';
 import ReactPaginate from "react-paginate";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Typography,
-} from "@material-tailwind/react";
+import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react";
 
 const Api_Url = 'http://127.0.0.1:3001/assets_directorys';
 const Api_Url_dep = 'http://127.0.0.1:3001/departments';
@@ -61,7 +56,8 @@ function AssetDirectory() {
     const [showCustomCategoryInput, setShowCustomCategoryInput] = useState(false);
     const [customCategory, setCustomCategory] = useState('');
 
-    const [assetConditions, setAssetConditions] = useState([]); // State to store asset conditions
+    const [viewAssetModalOpen, setViewAssetModalOpen] = useState(false);
+    const [selectedAssetForView, setSelectedAssetForView] = useState(null);
 
     useEffect(() => {
         axios.get(Api_Url)
@@ -181,6 +177,20 @@ function AssetDirectory() {
         </div>
     );
     };
+    // const [viewAssetModalOpen, setViewAssetModalOpen] = useState(false);
+    // const [selectedAssetForView, setSelectedAssetForView] = useState(null);
+
+    const handleViewClick = (asset) => {
+      
+        setSelectedAssetForView(asset);
+        setViewAssetModalOpen(true);
+    };
+
+
+    // const openViewAssetModal = (asset) => {
+    //     setSelectedAssetForView(asset);
+    //     setViewAssetModalOpen(true);
+    // };
 
     return (
         <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -220,8 +230,8 @@ function AssetDirectory() {
                             Quantity</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
                             Owning Dept</Typography></th>
-                        <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
-                            Asset Image</Typography></th>
+                        {/* <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
+                            Asset Image</Typography></th> */}
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
                             Actions</Typography></th>
              
@@ -275,13 +285,16 @@ function AssetDirectory() {
                             {departmentNames[asset.department_id]}
                             </Typography>
                         </td>
-                        <td>
+                        {/* <td>
                             <Typography className="text-xs font-semibold text-blue-gray-600">
                             {asset.asset_image}
                             </Typography>
-                        </td>
+                        </td> */}
                         <td>
-                            <button onClick={() => handleEditClick(asset)} className="bg-blue-500 text-white py-1 px-3 rounded-md mb-2">
+                            
+                            <button onClick={() => handleViewClick(asset)} className="bg-brown-500 text-white py-1 px-3 rounded-md mb-2">
+                            View
+                            </button><button onClick={() => handleEditClick(asset)} className="bg-blue-500 text-white py-1 px-3 rounded-md mb-2">
                             Edit
                             </button>
                             <button onClick={() => handleDeleteClick(asset)} className="bg-red-500 text-white py-1 px-3 rounded-md">
@@ -420,6 +433,7 @@ function AssetDirectory() {
                         className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     >
                         <option value="" disabled className="text-grey-100" style={{ opacity: 0.6 }}>Select a Department</option>
+                        <option value="" key="blank"></option>
                         {Object.keys(departmentNames).map(departmentId => (
                             <option key={departmentId} value={departmentId}>
                                 {departmentNames[departmentId]}
@@ -613,6 +627,7 @@ function AssetDirectory() {
                         className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     >
                         <option value="" disabled className="text-grey-100" style={{ opacity: 0.6 }}>Select a Department</option>
+                        <option value="" key="blank"></option>
                         {Object.keys(departmentNames).map(departmentId => (
                             <option key={departmentId} value={departmentId}>
                                 {departmentNames[departmentId]}
@@ -640,6 +655,72 @@ function AssetDirectory() {
                 </button>
                 </div>
             </div>
+        </Modal>
+
+        {/* "View Asset" Modal */}
+        <Modal
+            isOpen={viewAssetModalOpen}
+            onRequestClose={() => setViewAssetModalOpen(false)}
+            contentLabel="View Asset Modal"
+            className="bg-[#2E3C43] fixed top-0 left-0 flex items-center justify-center w-full h-full bg-opacity-75 bg-black"
+            style={{
+                overlay: {
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                    zIndex: 1000,
+                },
+                content: {
+                    position: 'relative',
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    borderRadius: '0.25rem',
+                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+                    maxWidth: '70%',
+                    
+                },
+            }}
+        >
+            {selectedAssetForView && (
+                <div className="bg-white w-2/3 p-6 rounded-lg " >
+                    <Card>
+                        <CardHeader variant="gradient" color="blue" className="mb-2 p-2">
+                            <div className="flex items-center">
+                            <h2 className="text-center text-2xl font-semibold mb-4">{selectedAssetForView.asset_name}</h2>
+                            </div>
+                        </CardHeader>           
+                    
+                    
+                    {/* Display asset image here */}
+                    <div>
+                        {selectedAssetForView.asset_image && (
+                            <img src={selectedAssetForView.asset_image} alt="Asset Image" className="max-w-full my-4" />
+                        )}
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <p className="text-xs text-[#2F3D44] mb-2"><strong>Category:</strong> {selectedAssetForView.category_name}</p>
+                            <p className="text-xs text-[#2F3D44] mb-2"><strong>Category Code:</strong> {selectedAssetForView.category_code}</p>
+                            <p className="text-xs text-[#2F3D44] mb-2"><strong>Condition:</strong> {selectedAssetForView.condition}</p>
+                            <p className="text-xs text-[#2F3D44] mb-2"><strong>Status:</strong> {selectedAssetForView.status}</p>
+                        </div>
+                        <div>
+                            <p className="text-xs text-[#2F3D44] mb-2"><strong>Purchase Value [KES]:</strong> {selectedAssetForView.purchase_value}</p>
+                            <p className="text-xs text-[#2F3D44] mb-2"><strong>Current Value [KES]:</strong> {selectedAssetForView.current_value}</p>
+                            <p className="text-xs text-[#2F3D44] mb-2"><strong>Quantity:</strong> {selectedAssetForView.quantity_in_stock}</p>
+                            <p className="text-xs text-[#2F3D44]"><strong>Owning Dept:</strong> {departmentNames[selectedAssetForView.department_id]}</p>
+                        </div>
+                    </div>
+                    
+                    <div className="flex justify-end">
+                        <button onClick={() => setViewAssetModalOpen(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none">
+                            Close
+                        </button>
+                    </div>
+                    </Card>
+                </div>
+            )}
         </Modal>
 
         <div className="my-4 flex justify-between items-center">
