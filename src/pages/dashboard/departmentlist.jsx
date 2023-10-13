@@ -357,7 +357,7 @@ const DepartmentList = () => {
                 </div>
 
                 <div className="flex justify-between">
-                <button onClick={handleCreateDepartment} className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none">
+                <button onClick={handleCreateDepartment} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none">
                     Create
                 </button>
                 <button onClick={() => setShowCreateModal(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none">

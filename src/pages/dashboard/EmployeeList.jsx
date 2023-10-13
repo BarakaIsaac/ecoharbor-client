@@ -34,6 +34,19 @@ const EmployeeList = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+    const [showCreateModal, setShowCreateModal] = useState(false);
+    const [newEmployee, setNewEmployee] = useState({
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone_number: '',
+        username: '',
+        password: '',
+        employment_date: '',
+        department_id: '',
+        employee_role: '',
+    });
+
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -114,6 +127,21 @@ const EmployeeList = () => {
             });
     };
 
+    const handleCreateEmployee = () => {
+        axios.post(Api_Url, newEmployee)
+            .then(response => {
+            const createdEmployee = response.data;
+            
+                setEmployees([...employees, createdEmployee]);
+                setShowCreateModal(false);
+
+                showSuccessMessage('Employee record created successfully!');
+            })
+            .catch(error => {
+            console.error('Error creating employee record: ', error);
+            });
+        };
+
     const handleChangePage = (event, newPage) => {
     setPage(newPage);
     };
@@ -144,11 +172,19 @@ const EmployeeList = () => {
     return (
         <div className="mt-12 mb-8 flex flex-col gap-12">
         <Card>
-            <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
-          <Typography variant="h6" color="white">
-           Employee List
-          </Typography>
-        </CardHeader>
+           <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
+                <div className="flex items-center">
+                    <Typography variant="h6" color="white">
+                        Employee List
+                    </Typography>
+                    <button
+                        onClick={() => setShowCreateModal(true)}
+                        className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none"
+                    >
+                        Create
+                    </button>
+                </div>
+            </CardHeader>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
             <table className="w-full min-w-[640px] table-auto">
                 <thead>
@@ -271,8 +307,28 @@ const EmployeeList = () => {
                     />
                 </div>
 
-                
                 <div>
+                    <label className="block text-sm font-medium text-gray-700">Username</label>
+                    <input
+                    type="text"
+                    value={editedEmployee.username}
+                    onChange={e => setEditedEmployee({ ...editedEmployee, username: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Password</label>
+                    <input
+                    type="password"
+                    value={editedEmployee.password}
+                    onChange={e => setEditedEmployee({ ...editedEmployee, password: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+
+                
+                {/* <div>
                     <label className="block text-sm font-medium text-gray-700">Email</label>
                     <input
                     type="text"
@@ -280,12 +336,12 @@ const EmployeeList = () => {
                     onChange={e => setEditedEmployee({ ...editedEmployee, email: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
-                </div>
+                </div> */}
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Email</label>
                     <input
-                    type="text"
+                    type="email"
                     value={editedEmployee.email}
                     onChange={e => setEditedEmployee({ ...editedEmployee, email: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
@@ -303,53 +359,45 @@ const EmployeeList = () => {
                 </div>
                 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Username</label>
-                    <input
-                    type="text"
-                    value={editedEmployee.username}
-                    onChange={e => setEditedEmployee({ ...editedEmployee, username: e.target.value })}
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                </div>
-
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Password</label>
-                    <input
-                    type="text"
-                    value={editedEmployee.password}
-                    onChange={e => setEditedEmployee({ ...editedEmployee, password: e.target.value })}
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                </div>
-
-                <div>
                     <label className="block text-sm font-medium text-gray-700">Employment Date</label>
                     <input
-                    type="text"
+                    type="date"
                     value={editedEmployee.employment_date}
                     onChange={e => setEditedEmployee({ ...editedEmployee, employment_date: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
                 </div>
 
+                
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Department ID</label>
-                    <input
-                    type="text"
-                    value={editedEmployee.department_id}
-                    onChange={e => setEditedEmployee({ ...editedEmployee, department_id: e.target.value })}
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    />
+                    <label className="block text-sm font-medium text-gray-700">Department</label>
+                    <select
+                        value={departmentNames[editedEmployee.department_id]}
+                        onChange={e => setEditedEmployee({ ...editedEmployee, department_id: e.target.value })}
+                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    >
+                        <option value="" disabled className="text-grey-100" style={{ opacity: 0.6 }}>Select a Department</option>
+                        {Object.keys(departmentNames).map(departmentId => (
+                            <option key={departmentId} value={departmentId}>
+                                {departmentNames[departmentId]}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Employee Role</label>
-                    <input
-                    type="text"
-                    value={editedEmployee.employee_role}
-                    onChange={e => setEditedEmployee({ ...editedEmployee, employee_role: e.target.value })}
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    />
+                    <select
+                        value={editedEmployee.employee_role}
+                        onChange={e => setEditedEmployee({ ...editedEmployee, employee_role: e.target.value })}
+                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    >
+                        <option value="" disabled className="text-grey-100" style={{ opacity: 0.6 }}>Select a Role</option>
+                        <option value="Procurement Manager">Procurement Manager</option>
+                        <option value="Normal Employee">Normal Employee</option>
+                        <option value="Finance">Finance</option>
+                    </select>
+                    
                 </div>
 
                 <div className="flex justify-between">
@@ -390,16 +438,141 @@ const EmployeeList = () => {
                   
                 </div>
         </Modal>
+        <Modal
+            isOpen={showCreateModal}
+            onRequestClose={() => setShowCreateModal(false)}
+            contentLabel="Create Employee Modal"
+            className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-opacity-75 bg-black"
+            >
+            <div className="bg-white w-1/3 p-6 rounded-lg">
+                <h2 className="text-2xl font-semibold mb-4">Create Employee</h2>
+
+                <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">First Name</label>
+                <input
+                    type="text"
+                    value={newEmployee.first_name}
+                    onChange={e => setNewEmployee({ ...newEmployee, first_name: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Last Name</label>
+                    <input
+                    type="text"
+                    value={newEmployee.last_name}
+                    onChange={e => setNewEmployee({ ...newEmployee, last_name: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Username</label>
+                    <input
+                    type="text"
+                    value={newEmployee.username}
+                    onChange={e => setNewEmployee({ ...newEmployee, username: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Password</label>
+                    <input
+                    type="password"
+                    value={newEmployee.password}
+                    onChange={e => setNewEmployee({ ...newEmployee, password: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">E-mail</label>
+                    <input
+                    type="email"
+                    value={newEmployee.email}
+                    onChange={e => setNewEmployee({ ...newEmployee, email: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+
+
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Phone Number</label>
+                    <input
+                    type="text"
+                    value={newEmployee.phone_number}
+                    onChange={e => setNewEmployee({ ...newEmployee, phone_number: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+                
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Employment Date</label>
+                    <input
+                    type="date"
+                    value={newEmployee.employment_date}
+                    onChange={e => setNewEmployee({ ...newEmployee, employment_date: e.target.value })}
+                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Department</label>
+                    <select
+                        value={newEmployee.department_id}
+                        onChange={e => setNewEmployee({ ...newEmployee, department_id: e.target.value })}
+                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    >
+                        <option value="" disabled className="text-grey-100" style={{ opacity: 0.6 }}>Select a Department</option>
+                        {Object.keys(departmentNames).map(departmentId => (
+                            <option key={departmentId} value={departmentId}>
+                                {departmentNames[departmentId]}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Employee Role</label>
+                    <select
+                        value={newEmployee.employee_role}
+                        onChange={e => setNewEmployee({ ...newEmployee, employee_role: e.target.value })}
+                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    >
+                        <option value="" disabled>Select a Role</option>
+                        <option value="Procurement Manager">Procurement Manager</option>
+                        <option value="Normal Employee">Normal Employee</option>
+                        <option value="Finance">Finance</option>
+                    </select>
+                </div>
+
+
+
+                <div className="flex justify-between">
+                <button onClick={handleCreateEmployee} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none">
+                    Create
+                </button>
+                <button onClick={() => setShowCreateModal(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none">
+                    Cancel
+                </button>
+                </div>
+            </div>
+        </Modal>
+
         <div className="my-4 flex justify-between items-center">
-        <TablePagination
-            component="div"
-            count={employees.length}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            className="text-blue-500"
-        />
+            <TablePagination
+                component="div"
+                count={employees.length}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                className="text-blue-500"
+            />
         </div>
         {/* Conditionally render the success message  */}
         {successMessage && <SuccessMessage message={successMessage}  />}
