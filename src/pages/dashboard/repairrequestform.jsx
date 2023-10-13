@@ -1,18 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react';
 import axios from 'axios';
 
-export default function repairrequestform() {
+// Component for Repair Request Form
+export default function RepairRequestForm() {
     // State for form data management
     const [formData, setFormData] = useState({
         assetDetails: '',
         description: '',
         department: '',
         date: '',
-        urgency: 'low', // Default urgency
-        
+        urgency: 'low',
     });
 
-    //Handle form input changes
+    const [error, setError] = useState('');
+
+    // Handle form input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -21,38 +23,45 @@ export default function repairrequestform() {
         });
     };
 
-    // Handle Form submission
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (isFormValid()) {
-      const requestData = {
-        assetDetails: formData.assetDetails,
-        description: formData.description,
-        department: formData.department,
-        date: formData.date,
-        urgency: formData.urgency,
-      };
-
-      // Make a POST request using Axios
-      axios
-        .post('YOUR_API_ENDPOINT_HERE', requestData)
-        .then((response) => {
-          console.log('Request submitted successfully:', response.data);
-          // You can handle any success behavior here.
-        })
-        .catch((error) => {
-          console.error('Error submitting request:', error);
-          // You can handle any error behavior here.
-        });
-    }
-
-    
+    // Form input Validation
+    const isFormValid = () => {
+      if (
+        !formData.assetDetails ||
+        !formData.description ||
+        !formData.department ||
+        !formData.date
+      ) {
+        setError('Please fill in all required fields.');
+        return false;
+      }
+  
+      setError('');
+      return true;
     };
   
+ // Handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (isFormValid()) {
+            const requestData = {
+                assetDetails: formData.assetDetails,
+                description: formData.description,
+                department: formData.department,
+                date: formData.date,
+                urgency: formData.urgency,
+            };
+            try {
+                // Make a POST request using Axios to API endpoint
+                const response = await axios.post('my api end point', requestData);
+                console.log('Request submitted successfully:', response.data);
+            } catch (error) {
+                console.error('Error submitting request:', error);
+                setError('Failed to submit request. Please try again later')
+            }
+        }
+    };
+
+  // Render the form
     return (
         <div className="bg-white p-4 shadow-md rounded-lg">
           <h2 className="text-2xl font-semibold mb-4">Repair Request Form</h2>
@@ -126,10 +135,10 @@ export default function repairrequestform() {
             </div>
             <div>
               <button type="submit" className="bg-blue-500 text-white p-2 rounded-lg">
-                Submit Request
+                Submit
               </button>
             </div>
           </form>
         </div>
       );
-    }
+}
