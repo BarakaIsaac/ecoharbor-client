@@ -13,13 +13,12 @@ function AssetViewModal({ isOpen, onClose, asset, departmentNames }) {
 
   const openRequestModal = () => {
     setShowRequestModal(true);
-    onClose();
+   
   };
 
   return (
     <>
-       
-        <Modal
+       <Modal
             isOpen={isOpen}
             onRequestClose={onClose}
             contentLabel="View Asset Modal"

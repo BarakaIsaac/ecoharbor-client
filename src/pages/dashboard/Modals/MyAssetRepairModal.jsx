@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Modal from 'react-modal';
 
 function MyAssetRepairModal({ 
@@ -8,13 +8,10 @@ function MyAssetRepairModal({
     departmentNames, 
     newAsset, 
     setNewAsset, 
-    showCustomCategoryInput, 
-    setShowCustomCategoryInput, 
-    uniqueAssetCategories 
+    
 }) {
   
-    const [customCategory, setCustomCategory] = useState('');
-    return (
+   return (
 
     
     <div>
@@ -36,45 +33,6 @@ function MyAssetRepairModal({
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                 />
                 </div>
-
-                <div>
-                        <label className="block text-sm font-medium text-gray-700">Asset Category</label>
-                        <select
-                            value={showCustomCategoryInput ? 'Other' : newAsset.category_name}
-                            onChange={e => {
-                                if (e.target.value === 'Other') {
-                                    setShowCustomCategoryInput(true);
-                                } else {
-                                    setShowCustomCategoryInput(false);
-                                    setNewAsset({ ...newAsset, category_name: e.target.value });
-                                }
-                            }}
-                            className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                        >
-                            <option value="" disabled>Select an Asset Category</option>
-                            {uniqueAssetCategories.map((category, index) => (
-                                <option key={index} value={category}>
-                                    {category}
-                                </option>
-                            ))}
-                            <option value="Other">Other (Enter custom category)</option>
-                        </select>
-                    </div>
-
-                    {showCustomCategoryInput && (
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Custom Asset Category</label>
-                            <input
-                                type="text"
-                                value={customCategory}
-                                onChange={e => setCustomCategory(e.target.value)}
-                                className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                            />
-                        </div>
-                    )}
-
-          
-                
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Quantity</label>
                     <input
@@ -84,7 +42,11 @@ function MyAssetRepairModal({
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
                 </div>
-
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Check in Date</label>
+                    <input type="date" value={newAsset.checkin_date} onChange={e => setNewAsset({ ...newAsset, checkin_date: e.target.value })} className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
+                </div>
+                                
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Department</label>
                     <select
@@ -102,15 +64,7 @@ function MyAssetRepairModal({
                     </select>
                 </div>
 
-                {/* <div>
-                    <label className="block text-sm font-medium text-gray-700">Asset Image</label>
-                    <input
-                    type="text"
-                    value={newAsset.asset_image}
-                    onChange={e => setNewAsset({ ...newAsset, asset_image: e.target.value })}
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                </div> */}
+               
 
                 <div className="flex justify-between">
                 <button onClick={handleCreateAsset} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none">

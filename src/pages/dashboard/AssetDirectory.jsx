@@ -15,6 +15,7 @@ import AssetEditModal from './Modals/AssetEditModal';
 const Api_Url = 'http://127.0.0.1:3001/assets_directorys';
 const Api_Url_dep = 'http://127.0.0.1:3001/departments';
 
+
 Modal.setAppElement('#root');
 
 function AssetDirectory() {
@@ -25,7 +26,6 @@ function AssetDirectory() {
         category_name: '',
         category_code: '',
         condition: '',
-        status: '',
         purchase_value: '',
         current_value: '',
         quantity_in_stock: '',
@@ -199,16 +199,13 @@ function AssetDirectory() {
         <div className="mt-12 mb-8 flex flex-col gap-12">
         <Card>
             <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
-                            <div className="flex items-center">
-                                <Typography variant="h6" color="white">
-                                    Asset Directory
-                                </Typography>
-                                <button
-                                    onClick={() => setShowCreateModal(true)}
-                                    className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none"
-                                >
-                                    Create
-                                </button>
+                            <div className="flex items-center"><Typography variant="h6" color="white">Asset Directory</Typography>
+                                <button onClick={() => setShowCreateModal(true)}
+                                    className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none" >
+                                    Create </button>
+                                <button onClick={() => setShowCreateModal(true)}
+                                    className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none" >
+                                    Asset Valuation </button>
                             </div>
             </CardHeader>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">

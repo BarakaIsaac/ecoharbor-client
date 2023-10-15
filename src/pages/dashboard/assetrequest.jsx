@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
-import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import TablePagination from '@mui/material/TablePagination';
-import ReactPaginate from "react-paginate";
 import {
   Card,
   CardHeader,
@@ -16,57 +14,43 @@ import AssetRequestDeleteModal from './Modals/AssetRequestDeleteModal';
 
 
 const Api_Url = 'http://127.0.0.1:3001/requests';
-// const Api_Url_asset = 'http://127.0.0.1:3001/assets_directorys';
-// const Api_Url_dep = 'http://127.0.0.1:3001/departments';
-// const Api_Url_emp = 'http://127.0.0.1:3001/employees';
+const Api_Url_asset = 'http://127.0.0.1:3001/assets_directorys';
+const Api_Url_dep = 'http://127.0.0.1:3001/departments';
+const Api_Url_emp = 'http://127.0.0.1:3001/employees';
 
 Modal.setAppElement('#root'); 
 
 const Assetrequest = () => {
 
+    //REQUEST FETCH API
     const [requests, setRequests] = useState([]);
+    useEffect(() => {
+        axios.get(Api_Url).then((response) => {
+        const requestsWithNames = response.data.map((request) => {
+            axios.get(`${Api_Url_asset}/${request.asset_id}`).then((assetResponse) => {
+                request.asset_name = assetResponse.data.asset_name;
+            });
+            axios.get(`${Api_Url_emp}/${request.employee_id}`).then((employeeResponse) => {
+                const employee = employeeResponse.data;
+                request.employee_name = `${employee.first_name} ${employee.last_name}`;
+            });
+            return request;
+        });
+        setRequests(requestsWithNames);
+        });
+    }, []);
+    
+    // EDIT REQUEST
+    const [showEditModal, setShowEditModal] = useState(false);
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [editedRequest, setEditedRequest] = useState({
         asset_id: '',
-        request_id: '',
         urgency: '',
         quantity: 0,
         reason: '',
         employee_id: '',
-        request_date: '',
-        approval_date: '',
-        request_status: '',
-        
+        request_date: '',              
     });
-    const [showEditModal, setShowEditModal] = useState(false);
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-
-    const [successMessage, setSuccessMessage] = useState(null);
-
-useEffect(() => {
-    axios.get(Api_Url).then((response) => {
-      
-      const requestsWithNames = response.data.map((request) => {
-        
-        axios.get(`${Api_Url_asset}/${request.asset_id}`).then((assetResponse) => {
-          request.asset_name = assetResponse.data.asset_name;
-        });
-
-        axios.get(`${Api_Url_emp}/${request.employee_id}`).then((employeeResponse) => {
-          const employee = employeeResponse.data;
-          request.employee_name = `${employee.first_name} ${employee.last_name}`;
-        });
-
-        return request;
-      });
-
-      setRequests(requestsWithNames);
-    });
-  }, []);
-
     const handleEditClick = (request) => {
         setSelectedRequest(request);
         setEditedRequest({
@@ -77,12 +61,9 @@ useEffect(() => {
             reason: request.reason,
             employee_id: request.employee_id,
             request_date: request.request_date,
-            approval_date: request.approval_date,
-            request_status: request.request_status,
-        });
+            });
         setShowEditModal(true);
     };
-
     const handleSaveEdit = () => {
         axios.put(`${Api_Url}/${selectedRequest.id}`, editedRequest)
             .then(response => {
@@ -95,17 +76,15 @@ useEffect(() => {
                 console.error('Error updating request record: ', error);
             });
     };
-
+    // DELETE REQUEST
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const handleDeleteClick = (request) => {
         setSelectedRequest(request);
         setShowDeleteModal(true);
     };
-
     const handleConfirmDelete = () => {
-       
-        axios.delete(`${Api_Url}/${selectedRequest.id}`)
+       axios.delete(`${Api_Url}/${selectedRequest.id}`)
             .then(() => {
-                
                 setRequests(requests.filter(req => req.id !== selectedRequest.id));
                 setShowDeleteModal(false);
 
@@ -115,18 +94,19 @@ useEffect(() => {
                 console.error('Error deleting request record: ', error);
             });
     };
-
+    // PAGINATION
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const handleChangePage = (event, newPage) => {
     setPage(newPage);
     };
-
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-
     const paginatedRequests = requests.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
-
+    // MESSAGE SUCCESS
+    const [successMessage, setSuccessMessage] = useState(null);
     const showSuccessMessage = (message) => {
         setSuccessMessage(message);
 
@@ -134,7 +114,6 @@ useEffect(() => {
             setSuccessMessage(null);
         }, 5000); 
         };
-
     const SuccessMessage = ({ message }) => {
     return (
         <div className="fixed top-1/20 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#2E3D44] text-white py-2 px-4 rounded-md z-50 transition-transform duration-500 shadow-md text-center">
@@ -142,8 +121,7 @@ useEffect(() => {
         </div>
     );
     };
-
-    
+ 
     return (
         <div className="mt-12 mb-8 flex flex-col gap-12">
         <Card>

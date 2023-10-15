@@ -93,19 +93,7 @@ function AssetEditModal({
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
                 </div>
-
-
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Asset Status</label>
-                    <input
-                    type="text"
-                    value={editedAsset.status}
-                    onChange={e => setEditedAsset({ ...editedAsset, status: e.target.value })}
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                </div>
-                
-                <div>
+                {/* <div>
                     <label className="block text-sm font-medium text-gray-700">Purchase Value [KES]</label>
                     <input
                     type="text"
@@ -123,7 +111,7 @@ function AssetEditModal({
                     onChange={e => setEditedAsset({ ...editedAsset, current_value: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
-                </div>
+                </div> */}
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Quantity</label>

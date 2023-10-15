@@ -11,17 +11,17 @@ import LoginIcon from '@mui/icons-material/Login';
 import { Profile } from "./pages/dashboard/profile";
 // import { Tables } from "./pages/dashboard/tables";
 import { Home } from "./pages/dashboard/home";
-import { Department } from "./pages/dashboard/department";
 import { SignIn } from "./pages/auth/sign-in";
 import { SignUp } from "./pages/auth/sign-up";
 import DepartmentList from "./pages/dashboard/departmentlist";
 import Requests from "./pages/dashboard/requests.jsx";
-import Repairs from "./pages/dashboard/repairs.jsx";
+import AssetRepairs from "./pages/dashboard/repairs.jsx";
 import Assetrequest from "./pages/dashboard/assetrequest.jsx";
 import InventoryIcon from '@mui/icons-material/Inventory';
 import MyAssets from "./pages/dashboard/myassets";
 import EmployeeList from "./pages/dashboard/EmployeeList";
 import AssetDirectory from "./pages/dashboard/AssetDirectory";
+import AssetValuation from "./pages/dashboard/AssetValuation";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -71,7 +71,7 @@ export const routes = [
         icon: <HandymanIcon {...icon} />,
         name: "Asset Repairs",
         path: "/repairs",
-        element: <Repairs />,
+        element: <AssetRepairs />,
       },
       {
         icon: <RequestQuoteIcon {...icon} />,
@@ -81,9 +81,9 @@ export const routes = [
       },
       {
         icon: <ShoppingBagIcon {...icon} />,
-        name: "Procurement Requests",
-        path: "/requests",
-        element: <Requests />,
+        name: "Asset Valuation",
+        path: "/AssetValuation",
+        element: <AssetValuation />,
       },
      
       // {
