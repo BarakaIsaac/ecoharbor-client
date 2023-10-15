@@ -3,12 +3,14 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import TablePagination from '@mui/material/TablePagination';
 import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react";
+import DeleteIcon from '@mui/icons-material/Delete';
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 
 import AssetViewModal from './Modals/AssetViewModal';
 import AssetCreateModal from './Modals/AssetCreateModal';
 import AssetDeleteModal from './Modals/AssetDeleteModal';
 import AssetEditModal from './Modals/AssetEditModal';
-
 
 const Api_Url = 'http://127.0.0.1:3001/assets_directorys';
 const Api_Url_dep = 'http://127.0.0.1:3001/departments';
@@ -40,7 +42,7 @@ function AssetDirectory() {
         category_name: '',
         category_code: '',
         condition: '',
-        status: '',
+        // status: '',
         purchase_value: '',
         current_value: '',
         quantity_in_stock: '',
@@ -99,7 +101,7 @@ function AssetDirectory() {
             category_name: asset.category_name,
             category_code: asset.category_code,
             condition: asset.condition,
-            status: asset.status,
+            // status: asset.status,
             purchase_value: asset.purchase_value,
             current_value: asset.current_value,
             quantity_in_stock: asset.quantity_in_stock,
@@ -216,13 +218,13 @@ function AssetDirectory() {
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
                             Name</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
-                            Category</Typography></th>
+                            Code </Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
-                            Category Code </Typography></th>
+                            Category</Typography></th>                        
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
                             Condition</Typography></th>
-                        <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
-                            Status</Typography></th>
+                        {/* <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
+                            Status</Typography></th> */}
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
                             Purchase Value [KES]</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">
@@ -248,12 +250,12 @@ function AssetDirectory() {
                         </td>
                         <td>
                             <Typography className="text-xs font-normal text-blue-gray-500">
-                            {asset.category_name}
+                            {asset.category_code}
                             </Typography>
                         </td>
                         <td>
                             <Typography className="text-xs font-semibold text-blue-gray-600">
-                            {asset.category_code}
+                            {asset.category_name}
                             </Typography>
                         </td>
                         <td>
@@ -261,11 +263,11 @@ function AssetDirectory() {
                             {asset.condition}
                             </Typography>
                         </td>
-                        <td>
+                        {/* <td>
                             <Typography className="text-xs font-semibold text-blue-gray-600">
                             {asset.status}
                             </Typography>
-                        </td>
+                        </td> */}
                         <td>
                             <Typography className="text-center text-xs font-semibold text-blue-gray-600">
                             {asset.purchase_value}
@@ -292,15 +294,9 @@ function AssetDirectory() {
                             </Typography>
                         </td> */}
                         <td>
-                            
-                            <button onClick={() => handleViewClick(asset)} className="bg-brown-500 text-white py-1 px-3 rounded-md mb-2">
-                            View
-                            </button><button onClick={() => handleEditClick(asset)} className="bg-blue-500 text-white py-1 px-3 rounded-md mb-2">
-                            Edit
-                            </button>
-                            <button onClick={() => handleDeleteClick(asset)} className="bg-red-500 text-white py-1 px-3 rounded-md">
-                            Delete
-                            </button>
+                            <button onClick={() => handleViewClick(asset)} className="py-1 px-3 rounded-md mb-2 border-black"><VisibilityOutlinedIcon /></button>
+                            <button onClick={() => handleEditClick(asset)} className="py-1 px-3 rounded-md mb-2 border-gray-300"><CreateOutlinedIcon /></button>
+                            <button onClick={() => handleDeleteClick(asset)} className="py-1 px-3 rounded-md"><DeleteIcon style={{ color: '#BC544B' }} /></button>                            
                         </td>
                         </tr>
                     ))}
@@ -352,7 +348,6 @@ function AssetDirectory() {
             departmentNames={departmentNames}
         
         />
-
 
         <div className="my-4 flex justify-between items-center">
             <TablePagination

@@ -305,12 +305,6 @@ const DepartmentList = () => {
                         </button>
                     </div>
 
-                    {/* <div className="flex justify-between">
-                        <button onClick={handleConfirmDelete} className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none ">
-                            Delete</button>
-                        <button onClick={() => setShowDeleteModal(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none">
-                            Cancel</button>
-                    </div> */}
                 </div>
         </Modal>
 

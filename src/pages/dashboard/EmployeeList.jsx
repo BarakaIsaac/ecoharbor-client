@@ -217,12 +217,12 @@ const EmployeeList = () => {
                         <tr key={employee.id} className="border-t">
                         <td>
                             <Typography color="blue-gray" className="pl-2 font-semibold text-xs text-blue-gray-500">
-                            {employee.first_name}
+                            {employee.first_name.toUpperCase()}
                             </Typography>
                         </td>
                         <td>
                             <Typography className="text-xs font-normal text-blue-gray-500">
-                            {employee.last_name}
+                            {employee.last_name.toUpperCase()}
                             </Typography>
                         </td>
                         <td>

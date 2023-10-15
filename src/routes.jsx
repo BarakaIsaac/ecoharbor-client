@@ -19,7 +19,7 @@ import Requests from "./pages/dashboard/requests.jsx";
 import Repairs from "./pages/dashboard/repairs.jsx";
 import Assetrequest from "./pages/dashboard/assetrequest.jsx";
 import InventoryIcon from '@mui/icons-material/Inventory';
-import myassets from "./pages/dashboard/myassets";
+import MyAssets from "./pages/dashboard/myassets";
 import EmployeeList from "./pages/dashboard/EmployeeList";
 import AssetDirectory from "./pages/dashboard/AssetDirectory";
 
@@ -47,7 +47,7 @@ export const routes = [
         icon: <InventoryIcon {...icon} />,
         name: "My Assets",
         path: "/my-assets",
-        element: <myassets />,
+        element: <MyAssets />,
       },
       {
         icon: <PeopleAltIcon {...icon} />,

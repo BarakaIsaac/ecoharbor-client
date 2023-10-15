@@ -1,12 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { Card, CardHeader } from "@material-tailwind/react";
+import AssetRequestFormModal from './AssetRequestFormModal'; 
 
 
 
 Modal.setAppElement('#root');
 
 function AssetViewModal({ isOpen, onClose, asset, departmentNames }) {
+  
+  const [showRequestModal, setShowRequestModal] = useState(false);
+
+  const openRequestModal = () => {
+    setShowRequestModal(true);
+    onClose();
+  };
+
   return (
     <>
        
@@ -64,13 +73,39 @@ function AssetViewModal({ isOpen, onClose, asset, departmentNames }) {
                     </div>
                     
                     <div className="flex justify-end">
-                        <button onClick={onClose} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none">
+                        <button
+                            onClick={openRequestModal}
+                            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none mt-4"
+                            >
+                            Request Asset
+                        </button>
+                        <button onClick={onClose} className="bg-gray-300 text-black py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none mt-4 ml-2">
                             Close
                         </button>
+                        
                     </div>
                     </Card>
                 </div>
             )}
+            
+
+                
+                {/* <AssetRequestFormModal
+                    isOpen={showRequestModal}
+                    onClose={() => setShowRequestModal(false)}
+                    selectedAsset={asset}
+                    departmentNames={departmentNames}
+                /> */}
+                {showRequestModal && (
+                    <AssetRequestFormModal
+                        isOpen={showRequestModal}
+                        onClose={() => setShowRequestModal(false)}
+                        selectedAsset={asset}
+                        departmentNames={departmentNames}
+                    />
+                    )}
+
+                
         </Modal>
       
     </>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Modal from 'react-modal';
 
-function AssetCreateModal({ 
+function MyAssetRepairModal({ 
     showCreateModal, 
     setShowCreateModal, 
     handleCreateAsset, 
@@ -13,7 +13,6 @@ function AssetCreateModal({
     uniqueAssetCategories 
 }) {
   
- 
     const [customCategory, setCustomCategory] = useState('');
     return (
 
@@ -26,7 +25,7 @@ function AssetCreateModal({
             className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-opacity-75 bg-black"
             >
             <div className="bg-white w-1/3 p-6 rounded-lg">
-                <h2 className="text-2xl font-semibold mb-4">Create New Asset</h2>
+                <h2 className="text-2xl font-semibold mb-4">Repair Asset</h2>
 
                 <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">Asset Name</label>
@@ -37,22 +36,6 @@ function AssetCreateModal({
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                 />
                 </div>
-
-                {/* <div>
-                    <label className="block text-sm font-medium text-gray-700">Asset Category</label>
-                    <select
-                            value={newAsset.category_name}
-                            onChange={e => setNewAsset({ ...newAsset, category_name: e.target.value })}
-                            className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                        >
-                            <option value="" disabled>Select an Asset Category</option>
-                            {uniqueAssetCategories.map((category, index) => (
-                                <option key={index} value={category}>
-                                    {category}
-                                </option>
-                            ))}
-                        </select>
-                </div> */}
 
                 <div>
                         <label className="block text-sm font-medium text-gray-700">Asset Category</label>
@@ -90,61 +73,8 @@ function AssetCreateModal({
                         </div>
                     )}
 
-
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Category Code</label>
-                    <input
-                    type="text"
-                    value={newAsset.category_code}
-                    onChange={e => setNewAsset({ ...newAsset, category_code: e.target.value })}
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                </div>
-
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Asset Condition</label>
-                    <input
-                    type="text"
-                    value={newAsset.condition}
-                    onChange={e => setNewAsset({ ...newAsset, condition: e.target.value })}
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                </div>
-
-                {/* <div>
-                    <label className="block text-sm font-medium text-gray-700">Asset Status</label>
-                    <input
-                    type="text"
-                    value={newAsset.status}
-                    onChange={e => setNewAsset({ ...newAsset, status: e.target.value })}
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                </div> */}
-
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Asset Purchase Value [KES]</label>
-                    <input
-                    type="text"
-                    id="currency"
-                    pattern="^\d+(\.\d{2})?$" placeholder="KES 0.00"
-                    value={newAsset.purchase_value}
-                    onChange={e => setNewAsset({ ...newAsset, purchase_value: e.target.value })}
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                </div>
+          
                 
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Asset Current Value [KES] </label>
-                    <input
-                    type="text"
-                    id="currency"
-                    pattern="^\d+(\.\d{2})?$" placeholder="KES 0.00"
-                    value={newAsset.current_value}
-                    onChange={e => setNewAsset({ ...newAsset, current_value: e.target.value })}
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                </div>
-
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Quantity</label>
                     <input
@@ -172,7 +102,7 @@ function AssetCreateModal({
                     </select>
                 </div>
 
-                <div>
+                {/* <div>
                     <label className="block text-sm font-medium text-gray-700">Asset Image</label>
                     <input
                     type="text"
@@ -180,11 +110,11 @@ function AssetCreateModal({
                     onChange={e => setNewAsset({ ...newAsset, asset_image: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
-                </div>
+                </div> */}
 
                 <div className="flex justify-between">
                 <button onClick={handleCreateAsset} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none">
-                    Create
+                    Request
                 </button>
                 <button onClick={() => setShowCreateModal(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none">
                     Cancel
@@ -197,4 +127,4 @@ function AssetCreateModal({
   )
 }
 
-export default AssetCreateModal
+export default MyAssetRepairModal
