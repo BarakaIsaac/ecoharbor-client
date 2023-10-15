@@ -12,23 +12,28 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
+import {saveTokens} from "../../tokens/tokens.jsx";
+
+// Get the access token from the response headers
 
 export function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const Api_Url = 'http://127.0.0.1:3001';
+  const Api_Url = 'http://localhost:3000/employees/tokens';
+
 
 
   const handleSignIn = async () => {
     try {
-      const response = await axios.post(`${Api_Url}/employees/sign_in`, {
+      const response = await axios.post(`${Api_Url}/sign_in`, {
         email: email,
         password: password,
       });
+      saveTokens(response);
 
       // Handle the successful sign-in here, e.g., redirect to another page.
-      const navigate = useNavigate();
       navigate("/dashboard/home");
       console.log('Sign-in successful', response.data);
     } catch (error) {

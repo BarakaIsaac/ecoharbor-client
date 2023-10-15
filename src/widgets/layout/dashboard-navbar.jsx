@@ -25,12 +25,19 @@ import {
   setOpenConfigurator,
   setOpenSidenav,
 } from "/src/context";
+import { useAuth } from "../../pages/auth/auth-context.jsx";
+
 
 export function DashboardNavbar() {
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
   const [layout, page] = pathname.split("/").filter((el) => el !== "");
+  const { isAuthenticated, logout } = useAuth();
+
+  const handleLogout = () => {
+      logout();
+  }
 
   return (
     <Navbar
@@ -83,23 +90,28 @@ export function DashboardNavbar() {
           >
             <Bars3Icon strokeWidth={3} className="h-6 w-6 text-blue-gray-500" />
           </IconButton>
-          <Link to="/auth/sign-in">
-            <Button
-              variant="text"
-              color="blue-gray"
-              className="hidden items-center gap-1 px-4 xl:flex"
-            >
-              <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-              Sign In
-            </Button>
-            <IconButton
-              variant="text"
-              color="blue-gray"
-              className="grid xl:hidden"
-            >
-              <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-            </IconButton>
-          </Link>
+          {isAuthenticated ? (
+              <Button
+                  variant="text"
+                  color="blue-gray"
+                  className="hidden items-center gap-1 px-4 xl:flex"
+                  onClick={handleLogout}
+              >
+                <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
+                Log Out
+              </Button>
+          ) : (
+              <Link to="/auth/sign-in">
+                <Button
+                    variant="text"
+                    color="blue-gray"
+                    className="hidden items-center gap-1 px-4 xl:flex"
+                >
+                  <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
+                  Log Out
+                </Button>
+              </Link>
+          )}
           <IconButton
             variant="text"
             color="blue-gray"
