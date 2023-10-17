@@ -9,7 +9,7 @@ import AssetRequestDeleteModal from './Modals/AssetRequestDeleteModal';
 
 
 const Api_Url = 'http://127.0.0.1:3001/repairs';
-const Api_Url_asset = 'http://127.0.0.1:3001/assets_directorys';
+const Api_Url_asset = 'http://127.0.0.1:3001/assets';
 const Api_Url_dep = 'http://127.0.0.1:3001/departments';
 const Api_Url_emp = 'http://127.0.0.1:3001/employees';
 

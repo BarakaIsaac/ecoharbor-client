@@ -5,7 +5,7 @@ function Api() {
   useEffect(() => {
     // Define the API URLs
     const apiUrls = {
-      assets: 'http://127.0.0.1:3001/assets_directorys',
+      assets: 'http://127.0.0.1:3001/assets',
       departments: 'http://127.0.0.1:3000/departments',
       employees: 'http://127.0.0.1:3000/employees',
       requests: 'http://127.0.0.1:3000/requests',

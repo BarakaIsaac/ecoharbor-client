@@ -26,9 +26,7 @@ const DepartmentList = () => {
     const [newDepartment, setNewDepartment] = useState({
         department_name: '',
         department_code: '',
-        head_of_department: '',
-        assets: 0,
-        asset_value: 0,
+
     });
    const handleCreateDepartment = () => {
         axios.post(Api_Url, newDepartment)
@@ -50,18 +48,12 @@ const DepartmentList = () => {
     const [editedDepartment, setEditedDepartment] = useState({
         department_name: '',
         department_code: '',
-        head_of_department: '',
-        assets: 0,
-        asset_value: 0,
     });
     const handleEditClick = (department) => {
         setSelectedDepartment(department);
         setEditedDepartment({
             department_name: department.department_name,
             department_code: department.department_code,
-            head_of_department: department.head_of_department,
-            assets: department.total_assets, 
-            asset_value: department.asset_total_value,
         });
         setShowEditModal(true);
     };
@@ -141,9 +133,6 @@ const DepartmentList = () => {
                         <tr>
                             <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Department Name</Typography></th>
                             <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Department Code</Typography></th>
-                            <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Head of Department</Typography></th>
-                            <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Total No. Assets</Typography></th>
-                            <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Asset Total Value (KES)</Typography></th>
                             <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Actions</Typography></th>
                         </tr>
                     </thead>
@@ -152,9 +141,6 @@ const DepartmentList = () => {
                             <tr key={department.id} className="border-t">
                                 <td><Typography color="blue-gray" className="pl-2 font-semibold text-xs text-blue-gray-500 uppercase">{department.department_name}</Typography></td>
                                 <td><Typography className="text-xs font-normal text-blue-gray-500">{department.department_code}</Typography></td>
-                                <td><Typography className="text-xs font-semibold text-blue-gray-600">{department.head_of_department}</Typography></td>
-                                <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{department.total_assets}</Typography></td>
-                                <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{department.asset_total_value}</Typography></td>
                                 <td><button onClick={() => handleEditClick(department)} className="bg-blue-500 text-white py-1 px-3 rounded-md mb-2">Edit</button>
                                     <button onClick={() => handleDeleteClick(department)} className="bg-red-500 text-white py-1 px-3 rounded-md">Delete</button></td>
                             </tr>
@@ -197,14 +183,6 @@ const DepartmentList = () => {
                         value={editedDepartment.department_code}
                         onChange={e => setEditedDepartment({ ...editedDepartment, department_code: e.target.value })}
                         className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Head of Department</label>
-                        <input
-                        type="text"
-                        value={editedDepartment.head_of_department}
-                        onChange={e => setEditedDepartment({ ...editedDepartment, head_of_department: e.target.value })}
-                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />                
                     </div>
                     <div className="flex justify-between">
                         <button onClick={handleSaveEdit} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none">Update</button>
@@ -259,14 +237,6 @@ const DepartmentList = () => {
                         onChange={e => setNewDepartment({ ...newDepartment, department_code: e.target.value })}
                         className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />                
                     </div>                
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Head of Department</label>
-                        <input
-                        type="text"
-                        value={newDepartment.head_of_department}
-                        onChange={e => setNewDepartment({ ...newDepartment, head_of_department: e.target.value })}
-                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
-                    </div>
                     <div className="flex justify-between">
                         <button onClick={handleCreateDepartment} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none">Create</button>
                         <button onClick={() => setShowCreateModal(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none">Cancel</button>
