@@ -3,7 +3,11 @@ const withMT = require("@material-tailwind/react/utils/withMT");
 module.exports = withMT({
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      borderWidth: {
+        '3': '3px', // Customize the border width as needed
+      },
+    },
   },
   plugins: [],
 });

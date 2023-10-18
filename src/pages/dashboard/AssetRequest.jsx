@@ -3,14 +3,13 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import TablePagination from '@mui/material/TablePagination';
 import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react";
-import DeleteIcon from '@mui/icons-material/Delete';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 
 //REQUEST CRUD MODALS
 import RequestApproveModal from './RequestModals/RequestApproveModal';
-import RequestDeleteModal from './RequestModals/RequestDeleteModal';
+import RequestRejectModal from './RequestModals/RequestRejectModal';
 import RequestViewModal from './RequestModals/RequestViewModal';
 
 
@@ -40,35 +39,29 @@ const AssetRequest = () => {
         });
     }, []);
     
-    // EDIT REQUEST
-    const [showEditModal, setShowEditModal] = useState(false);
+    // EDIT REQUEST - APPROVAL, REJECTION
+    const [showEditApproveModal, setShowEditApproveModal] = useState(false);
+    const [showEditRejectModal, setShowEditRejectModal] = useState(false);
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [editedRequest, setEditedRequest] = useState({
         request_type: '', new_asset_name: '', asset_id: '', urgency: '', quantity: '', reason: '', employee_id: '', department_id: '', request_date: '', approval_date: '', procurement_comments: '', request_status: '',});
-    const handleEditClick = (request) => {
+    const handleEditApproveClick = (request) => {
         setSelectedRequest(request);
+        const currentDate = new Date().toISOString().slice(0, 10);
         setEditedRequest({
-            asset_id: request.asset_id,
-            department_id: request.department_id,
-            urgency: request.urgency,
-            quantity: request.quantity, 
-            reason: request.reason,
-            employee_id: request.employee_id,
-            request_date: request.request_date,
-            department_id: request.department_id,
-            request_type: request.request_type,
-            new_asset_name: request.new_asset_name,
-            approval_date: request.approval_date,
-            procurement_comments: request. procurement_comments,
-            request_status: request.request_status
+            approval_date: currentDate,
+            procurement_comments: null,
+            request_status: "Approved"
             });
-        setShowEditModal(true);
+        setSelectedRequestForView(request);
+        console.log('Edited Request (Approve):', editedRequest);
+        setShowEditApproveModal(true);
     };
-    const handleSaveEdit = () => {
+    const handleSaveApproveEdit = () => {
         axios.put(`${Api_Url}/${selectedRequest.id}`, editedRequest)
             .then(response => {
                 setRequests(requests.map(req => req.id === selectedRequest.id ? response.data : req));
-                setShowEditModal(false);
+                setShowEditApproveModal(false);
 
                 showSuccessMessage('Request record updated successfully!');
             })
@@ -76,22 +69,29 @@ const AssetRequest = () => {
                 console.error('Error updating request record: ', error);
             });
     };
-    // DELETE REQUEST
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const handleDeleteClick = (request) => {
+        const handleEditRejectClick = (request) => {
         setSelectedRequest(request);
-        setShowDeleteModal(true);
+        const currentDate = new Date().toISOString().slice(0, 10);
+        setEditedRequest({
+            approval_date: currentDate,
+            procurement_comments: null,
+            request_status: "Rejected"
+            });
+        setSelectedRequestForView(request);
+        console.log('Edited Request (Reject):', editedRequest);
+        console.log('Request Status:', request.request_status);
+        setShowEditRejectModal(true);
     };
-    const handleConfirmDelete = () => {
-       axios.delete(`${Api_Url}/${selectedRequest.id}`)
-            .then(() => {
-                setRequests(requests.filter(req => req.id !== selectedRequest.id));
-                setShowDeleteModal(false);
+    const handleSaveRejectEdit = () => {
+        axios.put(`${Api_Url}/${selectedRequest.id}`, editedRequest)
+            .then(response => {
+                setRequests(requests.map(req => req.id === selectedRequest.id ? response.data : req));
+                setShowEditRejectModal(false);
 
-                showSuccessMessage('Request record deleted successfully!');
+                showSuccessMessage('Request record updated successfully!');
             })
             .catch(error => {
-                console.error('Error deleting request record: ', error);
+                console.error('Error updating request record: ', error);
             });
     };
     //VIEW REQUEST
@@ -175,9 +175,9 @@ const AssetRequest = () => {
                             <td><button onClick={() => handleViewClick(request)} className="py-1 px-3 rounded-md mb-2 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="View Request">
                                 <VisibilityOutlinedIcon /></button>                                
                                 {/* <button onClick={() => handleDeleteClick(request)} className="bg-red-500 text-white py-1 px-3 rounded-md">Delete</button> */}
-                                <button onClick={() => handleEditClick(request)} className="py-1 px-3 rounded-md mb-2 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Approve Request">
+                                <button onClick={() => handleEditApproveClick(request)} className="py-1 px-3 rounded-md mb-2 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Approve Request">
                                     <TaskAltIcon /></button>
-                                <button onClick={() => handleDeleteClick(request)} className="py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white " title="Reject Request">
+                                <button onClick={() => handleEditRejectClick(request)} className="py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white " title="Reject Request">
                                     <ThumbDownOffAltIcon style={{ color: '#BC544B' }} /></button></td>
                         </tr>
                     ))}
@@ -197,22 +197,28 @@ const AssetRequest = () => {
         </Card>
         
         <RequestApproveModal
-            isOpen={showEditModal}
-            setShowEditModal={setShowEditModal}
+            isOpen={showEditApproveModal}
+            setShowEditApproveModal={setShowEditApproveModal}
             selectedRequest={selectedRequest}
             editedRequest={editedRequest}
             setEditedRequest={setEditedRequest}
-            handleSaveEdit={handleSaveEdit}
+            handleSaveApproveEdit={handleSaveApproveEdit}
             request={selectedRequest} />
-        <RequestDeleteModal
-            showDeleteModal={showDeleteModal}
-            setShowDeleteModal={setShowDeleteModal}
+
+        <RequestRejectModal
+            isOpen={showEditRejectModal}
+            setShowEditRejectModal={setShowEditRejectModal}
             selectedRequest={selectedRequest}
-            handleConfirmDelete={handleConfirmDelete}  />
+            editedRequest={editedRequest}
+            setEditedRequest={setEditedRequest}
+            handleSaveRejectEdit={handleSaveRejectEdit}
+            request={selectedRequest} />
+
         <RequestViewModal 
             isOpen={viewRequestModalOpen}
             onClose={closeViewRequestModal}
-            request={selectedRequestForView} />
+            request={selectedRequestForView} 
+            selectedRequest={selectedRequest}/>
     
         {successMessage && <SuccessMessage message={successMessage}  />}
         </div>
