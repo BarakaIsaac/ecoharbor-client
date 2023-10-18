@@ -150,10 +150,8 @@ const AssetRequest = () => {
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Request Type</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Quantity</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Urgency</Typography></th>
-                        <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Reason</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Approval Date</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Request Status</Typography></th>
-                        <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Procurement Comments</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Actions</Typography></th>
                     </tr>
                 </thead>
@@ -171,10 +169,8 @@ const AssetRequest = () => {
                                     request.urgency === "High" || request.urgency === "Critical" ? 'text-red-500' :
                                     request.urgency === "Medium" ? 'text-blue-500' : 'text-black'
                                 }`}>{request.urgency}</Typography></td>
-                            <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{request.reason}</Typography></td>
                             <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{request.approval_date}</Typography></td>
                             <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{request.request_status}</Typography></td>
-                            <td><Typography className="text-xs font-semibold text-blue-gray-600">{request.procurement_comments}</Typography></td>
                             <td><button onClick={() => handleViewClick(request)} className="py-1 px-3 rounded-md mb-2 border-black"><VisibilityOutlinedIcon /></button>                                
                                 {/* <button onClick={() => handleDeleteClick(request)} className="bg-red-500 text-white py-1 px-3 rounded-md">Delete</button> */}
                                 <button onClick={() => handleEditClick(request)} className="py-1 px-3 rounded-md mb-2"><CreateOutlinedIcon /></button>
