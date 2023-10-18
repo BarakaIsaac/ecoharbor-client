@@ -191,8 +191,7 @@ function AssetDirectory() {
             })
             .catch(error => {
                 console.error('Error deleting asset record: ', error);
-            });
-            
+            });            
         };
 
     //PAGINATION
@@ -266,7 +265,7 @@ function AssetDirectory() {
                                 <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{asset.current_value}</Typography></td>
                                 <td><button onClick={() => handleViewClick(asset)} className="py-1 px-3 rounded-md mb-2 border-black"><VisibilityOutlinedIcon /></button>
                                     <button onClick={() => handleEditClick(asset)} className="py-1 px-3 rounded-md mb-2 border-gray-300"><CreateOutlinedIcon /></button>
-                                    <button onClick={() => handleDeleteClick(asset)} className="py-1 px-3 rounded-md"><DeleteIcon style={{ color: '#BC544B' }} /></button>                            
+                                    <button onClick={() => handleDeleteClick(asset)} className="py-1 px-3 rounded-md"><DeleteIcon style={{ color: '#BC544B' }}/></button>                            
                                 </td>
                             </tr>
                         ))}

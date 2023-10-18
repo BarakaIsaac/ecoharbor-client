@@ -1,7 +1,7 @@
 import React from 'react'
 import Modal from 'react-modal';
 
-function AssetRequestEditModal({
+function RequestEditModal({
   showEditModal,
   setShowEditModal,
   selectedRequest,
@@ -67,4 +67,4 @@ function AssetRequestEditModal({
   )
 }
 
-export default AssetRequestEditModal
+export default RequestEditModal

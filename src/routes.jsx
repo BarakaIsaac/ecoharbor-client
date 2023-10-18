@@ -16,7 +16,7 @@ import DepartmentList from "./pages/dashboard/DepartmentList";
 import AssetRepair from "./pages/dashboard/AssetRepair.jsx";
 import AssetRequest from "./pages/dashboard/AssetRequest.jsx";
 import InventoryIcon from '@mui/icons-material/Inventory';
-import MyAssets from "./pages/dashboard/myassets";
+import MyAssets from "./pages/dashboard/MyAssets";
 import EmployeeList from "./pages/dashboard/EmployeeList";
 import AssetDirectory from "./pages/dashboard/AssetDirectory";
 import AssetValuation from "./pages/dashboard/AssetValuation";
@@ -44,7 +44,7 @@ export const routes = [
       {
         icon: <InventoryIcon {...icon} />,
         name: "My Assets",
-        path: "/my-assets",
+        path: "/MyAssets",
         element: <MyAssets />,
       },
       {

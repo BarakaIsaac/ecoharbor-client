@@ -1,7 +1,7 @@
 import React from 'react'
 import Modal from 'react-modal';
 
-function AssetRequestDeleteModal({showDeleteModal, setShowDeleteModal, selectedRequest, handleConfirmDelete}) {
+function RequestDeleteModal({showDeleteModal, setShowDeleteModal, selectedRequest, handleConfirmDelete}) {
   return (
     <Modal
                 isOpen={showDeleteModal}
@@ -36,4 +36,4 @@ function AssetRequestDeleteModal({showDeleteModal, setShowDeleteModal, selectedR
   )
 }
 
-export default AssetRequestDeleteModal
+export default RequestDeleteModal
