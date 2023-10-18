@@ -24,17 +24,13 @@ const DepartmentList = () => {
     //CREATE DEPARTMENT
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [newDepartment, setNewDepartment] = useState({
-        department_name: '',
-        department_code: '',
-
-    });
-   const handleCreateDepartment = () => {
+        department_name: '', department_code: '', });
+    const handleCreateDepartment = () => {
         axios.post(Api_Url, newDepartment)
             .then(response => {
             const createdDepartment = response.data;
                 setDepartments([...departments, createdDepartment]);
                 setShowCreateModal(false);
-
                 showSuccessMessage('Department created successfully!');
             })
             .catch(error => {
@@ -46,8 +42,7 @@ const DepartmentList = () => {
     const [selectedDepartment, setSelectedDepartment] = useState(null);
     const [showEditModal, setShowEditModal] = useState(false);
     const [editedDepartment, setEditedDepartment] = useState({
-        department_name: '',
-        department_code: '',
+        department_name: '', department_code: '',
     });
     const handleEditClick = (department) => {
         setSelectedDepartment(department);

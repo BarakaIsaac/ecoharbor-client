@@ -75,10 +75,11 @@ function AssetDirectory() {
         setSelectedAssetForView(null);
         setViewAssetModalOpen(false);
     };
-    //CREATE ASSET
+    //CREATE ASSET current_value: '', department_id: '', employee_id: ''
     const [showCreateModal, setShowCreateModal] = useState(false);
+    
     const [newAsset, setNewAsset] = useState({
-        asset_name: '', asset_category: '', asset_image: '', asset_condition: '', purchase_value: '', current_value: '', quantity: '', department_id: '', employee_id: ''});
+        asset_name: '', asset_category: '', asset_image: '', asset_condition: '', purchase_value: '',  quantity: '', });
     const handleCreateAsset = () => {
         axios.post(Api_Url, newAsset)
             .then(response => {
@@ -86,10 +87,14 @@ function AssetDirectory() {
                     setAssets([...assets, createdAsset]);
                     setShowCreateModal(false);
                     showSuccessMessage('Asset record created successfully!');
+                    console.log('Created Asset):', createdAsset);
+                    console.log('Request Status:', newAsset.asset_name); // Corrected line
+
                 })
                 .catch(error => {
                 console.error('Error creating asset record: ', error);
             });
+        
         };
     //EDIT ASSETS
     const [showEditModal, setShowEditModal] = useState(false);
