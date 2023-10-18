@@ -1,6 +1,6 @@
 import React from 'react'
 import Modal from 'react-modal';
-import { Card, CardHeader } from "@material-tailwind/react";
+import { Card } from "@material-tailwind/react";
 
 Modal.setAppElement('#root');
 
@@ -31,9 +31,8 @@ function RequestViewModal({isOpen,onClose, request }) {
             {request && (
                 <div className="bg-white w-2/3 p-6 rounded-lg " >
                     <Card>
-                        <CardHeader variant="gradient" color="blue" className="mb-2 p-2 text-center">
-                            <div className="flex items-center"><h2 className="text-center text-2xl font-semibold mb-4"style={{ textAlign: 'center' }}>{request.asset_name}</h2></div>
-                        </CardHeader>           
+                        <div className="flex items-center"><h2 className="text-center text-2xl font-semibold mb-4"style={{ textAlign: 'center' }}>{request.asset_name}</h2></div>
+                          
                         {/* <div className="flex items-center justify-center">
                             {request.asset_image && (
                                 <img src={request.asset_image} alt="Asset Image" className="max-w-[500px] max-h-[500px] my-4 border-4 border-blue-500 rounded-lg shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out"  />

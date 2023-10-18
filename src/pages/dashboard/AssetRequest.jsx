@@ -197,12 +197,13 @@ const AssetRequest = () => {
         </Card>
         
         <RequestApproveModal
-            showEditModal={showEditModal}
+            isOpen={showEditModal}
             setShowEditModal={setShowEditModal}
             selectedRequest={selectedRequest}
             editedRequest={editedRequest}
             setEditedRequest={setEditedRequest}
-            handleSaveEdit={handleSaveEdit} />
+            handleSaveEdit={handleSaveEdit}
+            request={selectedRequest} />
         <RequestDeleteModal
             showDeleteModal={showDeleteModal}
             setShowDeleteModal={setShowDeleteModal}

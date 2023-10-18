@@ -1,6 +1,8 @@
 import React from 'react'
 import Modal from 'react-modal';
 
+Modal.setAppElement('#root');
+
 function AssetEditModal({showEditModal, setShowEditModal, selectedAsset, editedAsset, setEditedAsset, handleSaveEdit, departmentNames }) {
   return (
         <Modal
