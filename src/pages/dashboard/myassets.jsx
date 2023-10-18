@@ -6,7 +6,7 @@ import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 
-import MyAssetRepairModal from './AssetModals/MyAssetRepairModal';
+import MyAssetRepairModal from './RequestModals/MyAssetRepairModal';
 import AssetViewModal from './AssetModals/AssetViewModal';
 
 

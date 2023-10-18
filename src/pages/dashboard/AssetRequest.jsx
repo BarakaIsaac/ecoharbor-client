@@ -2,26 +2,21 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 import TablePagination from '@mui/material/TablePagination';
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Typography,
-} from "@material-tailwind/react";
+import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react";
 
-import AssetRequestEditModal from './AssetModals/AssetRequestEditModal';
-import AssetRequestDeleteModal from './AssetModals/AssetRequestDeleteModal';
+//REQUEST CRUD MODALS
+import AssetRequestEditModal from './RequestModals/AssetRequestEditModal';
+import AssetRequestDeleteModal from './RequestModals/AssetRequestDeleteModal';
 
 
 const Api_Url = 'http://127.0.0.1:3001/requests';
-const Api_Url_asset = 'http://127.0.0.1:3001/assets_directorys';
+const Api_Url_asset = 'http://127.0.0.1:3001/assetz';
 const Api_Url_dep = 'http://127.0.0.1:3001/departments';
 const Api_Url_emp = 'http://127.0.0.1:3001/employees';
 
 Modal.setAppElement('#root'); 
 
-const Assetrequest = () => {
-
+const AssetRequest = () => {
     //REQUEST FETCH API
     const [requests, setRequests] = useState([]);
     useEffect(() => {
@@ -223,6 +218,16 @@ const Assetrequest = () => {
                     </tbody>
             </table>
             </CardBody>
+            <div className="my-4 flex justify-between items-center">
+            <TablePagination
+                component="div"
+                count={requests.length}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                className="text-blue-500" />
+            </div>
         </Card>
 
         <AssetRequestEditModal
@@ -242,21 +247,11 @@ const Assetrequest = () => {
         />
             
         
-        <div className="my-4 flex justify-between items-center">
-        <TablePagination
-            component="div"
-            count={requests.length}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            className="text-blue-500"
-        />
-        </div>
+        
         {/* Conditionally render the success message  */}
         {successMessage && <SuccessMessage message={successMessage}  />}
         </div>
     );
 };
 
-export default Assetrequest;
+export default AssetRequest;

@@ -12,10 +12,9 @@ import { Profile } from "./pages/dashboard/Profile";
 import { Home } from "./pages/dashboard/home";
 import { SignIn } from "./pages/auth/sign-in";
 import { SignUp } from "./pages/auth/sign-up";
-import DepartmentList from "./pages/dashboard/departmentlist";
-import Requests from "./pages/dashboard/requests.jsx";
-import AssetRepairs from "./pages/dashboard/repairs.jsx";
-import Assetrequest from "./pages/dashboard/assetrequest.jsx";
+import DepartmentList from "./pages/dashboard/DepartmentList";
+import AssetRepair from "./pages/dashboard/AssetRepair.jsx";
+import AssetRequest from "./pages/dashboard/AssetRequest.jsx";
 import InventoryIcon from '@mui/icons-material/Inventory';
 import MyAssets from "./pages/dashboard/myassets";
 import EmployeeList from "./pages/dashboard/EmployeeList";
@@ -69,14 +68,14 @@ export const routes = [
       {
         icon: <HandymanIcon {...icon} />,
         name: "Asset Repairs",
-        path: "/repairs",
-        element: <AssetRepairs />,
+        path: "/AssetRepair",
+        element: <AssetRepair />,
       },
       {
         icon: <RequestQuoteIcon {...icon} />,
         name: "Asset Requests",
-        path: "/assetrequests",
-        element: <Assetrequest />,
+        path: "/AssetRequest",
+        element: <AssetRequest />,
       },
       {
         icon: <ShoppingBagIcon {...icon} />,

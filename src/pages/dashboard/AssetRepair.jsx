@@ -15,7 +15,7 @@ const Api_Url_emp = 'http://127.0.0.1:3001/employees';
 
 Modal.setAppElement('#root'); 
 
-const AssetRepairs = () => {
+const AssetRepair = () => {
 
     const [repairs, setRepairs] = useState([]);
     const [selectedRepair, setSelectedRepair] = useState(null);
@@ -196,4 +196,4 @@ useEffect(() => {
     );
 };
 
-export default AssetRepairs;
+export default AssetRepair;

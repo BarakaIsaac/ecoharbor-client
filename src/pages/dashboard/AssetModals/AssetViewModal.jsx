@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { Card, CardHeader } from "@material-tailwind/react";
-import AssetRequestFormModal from './AssetRequestFormModal'; 
+import AssetRequestFormModal from '../RequestModals/AssetRequestFormModal'; 
 
 
 

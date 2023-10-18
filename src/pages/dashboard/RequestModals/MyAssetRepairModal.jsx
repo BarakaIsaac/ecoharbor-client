@@ -37,7 +37,7 @@ function MyAssetRepairModal({
                     <label className="block text-sm font-medium text-gray-700">Quantity</label>
                     <input
                     type="number"
-                    value={newAsset.quantity_in_stock}
+                    value={newAsset.quantity}
                     onChange={e => setNewAsset({ ...newAsset, quantity_in_stock: e.target.value })}
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                     />
