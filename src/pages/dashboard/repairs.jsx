@@ -4,8 +4,8 @@ import Modal from 'react-modal';
 import TablePagination from '@mui/material/TablePagination';
 import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react";
 
-import AssetRequestEditModal from './Modals/AssetRequestEditModal';
-import AssetRequestDeleteModal from './Modals/AssetRequestDeleteModal';
+// import AssetRequestEditModal from './AssetModals/AssetRequestEditModal';
+// import AssetRequestDeleteModal from './AssetModals/AssetRequestDeleteModal';
 
 
 const Api_Url = 'http://127.0.0.1:3001/repairs';

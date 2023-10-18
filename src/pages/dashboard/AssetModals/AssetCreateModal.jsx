@@ -2,15 +2,9 @@
 import React, { useState } from 'react'
 import Modal from 'react-modal';
 
-function AssetCreateModal({ 
-    showCreateModal, 
-    setShowCreateModal, 
-    handleCreateAsset, 
-    departmentNames, 
-    newAsset, 
-    setNewAsset, 
+Modal.setAppElement('#root');
 
-}) {
+function AssetCreateModal({ showCreateModal, setShowCreateModal, handleCreateAsset, departmentNames, newAsset, setNewAsset, }) {
     return (
      <div>
         <Modal

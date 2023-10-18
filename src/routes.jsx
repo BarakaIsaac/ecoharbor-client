@@ -8,8 +8,7 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 
-import { Profile } from "./pages/dashboard/profile";
-// import { Tables } from "./pages/dashboard/tables";
+import { Profile } from "./pages/dashboard/Profile";
 import { Home } from "./pages/dashboard/home";
 import { SignIn } from "./pages/auth/sign-in";
 import { SignUp } from "./pages/auth/sign-up";
@@ -40,7 +39,7 @@ export const routes = [
       {
         icon: <UserCircleIcon {...icon} />,
         name: "Personal Profile",
-        path: "/profile",
+        path: "/Profile",
         element: <Profile />,
       },
       {
@@ -84,14 +83,7 @@ export const routes = [
         name: "Asset Valuation",
         path: "/AssetValuation",
         element: <AssetValuation />,
-      },
-     
-      // {
-      //   icon: <TableCellsIcon {...icon} />,
-      //   name: "tables",
-      //   path: "/tables",
-      //   element: <Tables />,
-      // },
+      },        
     ],
   },
   {

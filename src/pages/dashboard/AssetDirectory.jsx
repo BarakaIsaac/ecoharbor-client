@@ -7,14 +7,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 //MODALS
-import AssetViewModal from './Modals/AssetViewModal';
-import AssetCreateModal from './Modals/AssetCreateModal';
-import AssetDeleteModal from './Modals/AssetDeleteModal';
-import AssetEditModal from './Modals/AssetEditModal';
-import AssetValuationModal from './Modals/AssetValuationModal';
-import AssetAllocationModal from './Modals/AssetAllocationModal';
+import AssetViewModal from './AssetModals/AssetViewModal';
+import AssetCreateModal from './AssetModals/AssetCreateModal';
+import AssetDeleteModal from './AssetModals/AssetDeleteModal';
+import AssetEditModal from './AssetModals/AssetEditModal';
+import AssetValuationModal from './AssetModals/AssetValuationModal';
+import AssetAllocationModal from './AssetModals/AssetAllocationModal';
 
-const Api_Url = 'http://127.0.0.1:3001/assets';
+const Api_Url = 'http://127.0.0.1:3001/assetz';
 const Api_Url_dep = 'http://127.0.0.1:3001/departments';
 const Api_Url_emp = 'http://127.0.0.1:3001/employees';
 
@@ -62,9 +62,7 @@ function AssetDirectory() {
 
     //UPDATE ASSETS
     const [selectedAsset, setSelectedAsset] = useState(null);
-    const [editedAsset, setEditedAsset] = useState({
-        asset_name: '', asset_category: '', asset_image: '', asset_condition: '', purchase_value: '', current_value: '', quantity: '', department_id: '', employee_id: '', department_id: '',                
-    });
+    const [editedAsset, setEditedAsset] = useState({ asset_name: '', asset_category: '', asset_image: '', asset_condition: '', purchase_value: '', current_value: '', quantity: '', department_id: '', employee_id: '' });
 
     //VIEW ASSET
     const [viewAssetModalOpen, setViewAssetModalOpen] = useState(false);
@@ -80,8 +78,7 @@ function AssetDirectory() {
     //CREATE ASSET
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [newAsset, setNewAsset] = useState({
-        asset_name: '', asset_category: '', asset_image: '', asset_condition: '', purchase_value: '', current_value: '', quantity: '', department_id: '', employee_id: '', department_id: '', 
-    });
+        asset_name: '', asset_category: '', asset_image: '', asset_condition: '', purchase_value: '', current_value: '', quantity: '', department_id: '', employee_id: ''});
     const handleCreateAsset = () => {
         axios.post(Api_Url, newAsset)
             .then(response => {
@@ -188,7 +185,6 @@ function AssetDirectory() {
     const handleConfirmDelete = () => {
         axios.delete(`${Api_Url}/${selectedAsset.id}`)
             .then(() => {
-                
                 setAssets(assets.filter(ast => ast.id !== selectedAsset.id));
                 setShowDeleteModal(false);
                 showSuccessMessage('Asset record deleted successfully!');
@@ -196,6 +192,7 @@ function AssetDirectory() {
             .catch(error => {
                 console.error('Error deleting asset record: ', error);
             });
+            
         };
 
     //PAGINATION
@@ -230,17 +227,17 @@ function AssetDirectory() {
         <div className="mt-12 mb-8 flex flex-col gap-12">
         <Card>
             <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
-                            <div className="flex items-center"><Typography variant="h6" color="white">Asset Directory</Typography>
-                                <button onClick={() => setShowCreateModal(true)}
+                <div className="flex items-center"><Typography variant="h6" color="white">Asset Directory</Typography>
+                    <button onClick={() => setShowCreateModal(true)}
                                     className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none" >
                                     Create </button>
-                                <button onClick={() => setShowEditValuationModal(true)}
+                    <button onClick={() => setShowEditValuationModal(true)}
                                     className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none" >
                                     Asset Valuation </button>
-                                <button onClick={() => setShowEditAllocationModal(true)}
+                    <button onClick={() => setShowEditAllocationModal(true)}
                                     className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none" >
                                     Asset Allocation </button>
-                                </div>
+                </div>
             </CardHeader>
             <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
                 <table className="w-full min-w-[640px] table-auto">
