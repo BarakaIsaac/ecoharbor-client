@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import React, { useState } from 'react';
 
@@ -12,23 +12,36 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
+import {saveTokens} from "../../tokens/tokens.jsx";
+
+// Get the access token from the response headers
 
 export function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const Api_Url = 'http://localhost:3001/employees/tokens';
 
   const handleSignIn = async () => {
     try {
-      const response = await axios.post('your_authentication_endpoint', {
+      const response = await axios.post(`${Api_Url}/sign_in`, {
         email: email,
         password: password,
       });
+      saveTokens(response);
 
       // Handle the successful sign-in here, e.g., redirect to another page.
+      navigate("/dashboard/home");
       console.log('Sign-in successful', response.data);
     } catch (error) {
       // Handle sign-in errors, e.g., display an error message.
       console.error('Sign-in failed', error);
+      // Check the response status code to determine the error type.
+      if (error.response) {
+        console.error('Response status:', error.response.status);
+        console.error('Response data:', error.response.data);
+      }
     }
   };
 
@@ -40,7 +53,7 @@ export function SignIn() {
       />
       <div className="absolute inset-0 z-0 h-full w-full bg-black/50" />
       <div className="container mx-auto p-4">
-        <Card className="absolute top-2/4 left-2/4 w-full max-w-[24rem] -translate-y-2/4 -translate-x-2/4">
+        <Card className="absolute top-2/4 left-3/4 w-full max-w-[34rem] -translate-y-2/4 -translate-x-2/4">
           <CardHeader
             variant="gradient"
             color="blue"
