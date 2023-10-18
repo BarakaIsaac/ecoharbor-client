@@ -263,9 +263,12 @@ function AssetDirectory() {
                                 <td><Typography className="text-xs font-semibold text-blue-gray-600">{employeeNames[asset.employee_id]}</Typography></td>
                                 <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{asset.purchase_value}</Typography></td>
                                 <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{asset.current_value}</Typography></td>
-                                <td><button onClick={() => handleViewClick(asset)} className="py-1 px-3 rounded-md mb-2 border-black"><VisibilityOutlinedIcon /></button>
-                                    <button onClick={() => handleEditClick(asset)} className="py-1 px-3 rounded-md mb-2 border-gray-300"><CreateOutlinedIcon /></button>
-                                    <button onClick={() => handleDeleteClick(asset)} className="py-1 px-3 rounded-md"><DeleteIcon style={{ color: '#BC544B' }}/></button>                            
+                                <td><button onClick={() => handleViewClick(asset)} className="py-1 px-3 rounded-md mb-2 border-black border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="View Asset">
+                                    <VisibilityOutlinedIcon /></button>
+                                    <button onClick={() => handleEditClick(asset)} className="py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white"title="Edit Asset">
+                                        <CreateOutlinedIcon /></button>
+                                    <button onClick={() => handleDeleteClick(asset)} className="py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Delete Asset">
+                                        <DeleteIcon style={{ color: '#BC544B' }}/></button>                            
                                 </td>
                             </tr>
                         ))}

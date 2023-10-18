@@ -1,14 +1,7 @@
 import React from 'react'
 import Modal from 'react-modal';
 
-function RequestEditModal({
-  showEditModal,
-  setShowEditModal,
-  selectedRequest,
-  editedRequest,
-  setEditedRequest,
-  handleSaveEdit,
-}) {
+function RequestApproveModal({  showEditModal,  setShowEditModal,  selectedRequest,  editedRequest,  setEditedRequest,  handleSaveEdit,}) {
   return (
     <Modal
             isOpen={showEditModal}
@@ -16,14 +9,13 @@ function RequestEditModal({
             contentLabel="Edit Request Modal"
             className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-opacity-75 bg-black" >
             <div className="bg-white w-1/3 p-6 rounded-lg">
-                <h2 className="text-2xl font-semibold mb-4">Edit {" "}
+                <h2 className="text-2xl font-semibold mb-4">Approve {" "}
                             <span className="font-bold text-blue-600 underline">
                                Request # {selectedRequest?.id}
                             </span>{" "} for Asset # {selectedRequest?.asset_id} requested by {selectedRequest?.employee_id}</h2>
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700">Urgency</label>
-                    <select
-                        value={editedRequest.urgency}
+                    <select value={editedRequest.urgency}
                         onChange={e => setEditedRequest({ ...editedRequest, urgency: e.target.value })}
                         className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" >
                         <option value="High" style={{ fontWeight: 'bold', color: 'red' }}>High</option>
@@ -67,4 +59,4 @@ function RequestEditModal({
   )
 }
 
-export default RequestEditModal
+export default RequestApproveModal

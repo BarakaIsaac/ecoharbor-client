@@ -34,11 +34,11 @@ function RequestViewModal({isOpen,onClose, request }) {
                         <CardHeader variant="gradient" color="blue" className="mb-2 p-2 text-center">
                             <div className="flex items-center"><h2 className="text-center text-2xl font-semibold mb-4"style={{ textAlign: 'center' }}>{request.asset_name}</h2></div>
                         </CardHeader>           
-                        <div className="flex items-center justify-center">
+                        {/* <div className="flex items-center justify-center">
                             {request.asset_image && (
                                 <img src={request.asset_image} alt="Asset Image" className="max-w-[500px] max-h-[500px] my-4 border-4 border-blue-500 rounded-lg shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out"  />
                             )}
-                        </div>
+                        </div> */}
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <p className="text-xs text-[#2F3D44] mb-2"><strong>Request Date:</strong> {request.request_date}</p>

@@ -4,11 +4,12 @@ import Modal from 'react-modal';
 import TablePagination from '@mui/material/TablePagination';
 import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react";
 import DeleteIcon from '@mui/icons-material/Delete';
-import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
+import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 
 //REQUEST CRUD MODALS
-import RequestEditModal from './RequestModals/RequestEditModal';
+import RequestApproveModal from './RequestModals/RequestApproveModal';
 import RequestDeleteModal from './RequestModals/RequestDeleteModal';
 import RequestViewModal from './RequestModals/RequestViewModal';
 
@@ -171,10 +172,13 @@ const AssetRequest = () => {
                                 }`}>{request.urgency}</Typography></td>
                             <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{request.approval_date}</Typography></td>
                             <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{request.request_status}</Typography></td>
-                            <td><button onClick={() => handleViewClick(request)} className="py-1 px-3 rounded-md mb-2 border-black"><VisibilityOutlinedIcon /></button>                                
+                            <td><button onClick={() => handleViewClick(request)} className="py-1 px-3 rounded-md mb-2 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="View Request">
+                                <VisibilityOutlinedIcon /></button>                                
                                 {/* <button onClick={() => handleDeleteClick(request)} className="bg-red-500 text-white py-1 px-3 rounded-md">Delete</button> */}
-                                <button onClick={() => handleEditClick(request)} className="py-1 px-3 rounded-md mb-2"><CreateOutlinedIcon /></button>
-                                <button onClick={() => handleDeleteClick(request)} className="py-1 px-3 rounded-md"><DeleteIcon style={{ color: '#BC544B' }} /></button></td>
+                                <button onClick={() => handleEditClick(request)} className="py-1 px-3 rounded-md mb-2 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Approve Request">
+                                    <TaskAltIcon /></button>
+                                <button onClick={() => handleDeleteClick(request)} className="py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white " title="Reject Request">
+                                    <ThumbDownOffAltIcon style={{ color: '#BC544B' }} /></button></td>
                         </tr>
                     ))}
                     </tbody>
@@ -192,7 +196,7 @@ const AssetRequest = () => {
             </div>
         </Card>
         
-        <RequestEditModal
+        <RequestApproveModal
             showEditModal={showEditModal}
             setShowEditModal={setShowEditModal}
             selectedRequest={selectedRequest}

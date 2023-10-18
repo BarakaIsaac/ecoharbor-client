@@ -66,16 +66,16 @@ export const routes = [
         element: <AssetDirectory />,
       },
       {
-        icon: <HandymanIcon {...icon} />,
-        name: "Asset Repairs",
-        path: "/AssetRepair",
-        element: <AssetRepair />,
-      },
-      {
         icon: <RequestQuoteIcon {...icon} />,
         name: "Asset Requests",
         path: "/AssetRequest",
         element: <AssetRequest />,
+      },
+      {
+        icon: <HandymanIcon {...icon} />,
+        name: "Asset Repairs",
+        path: "/AssetRepair",
+        element: <AssetRepair />,
       },
       {
         icon: <ShoppingBagIcon {...icon} />,
