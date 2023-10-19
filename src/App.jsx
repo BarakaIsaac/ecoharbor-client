@@ -4,6 +4,7 @@ import Auth from "./layouts/auth.jsx";
 import Modal from 'react-modal';
 import "./App.css";
 
+
 Modal.setAppElement('#root');
 
 function App() {
