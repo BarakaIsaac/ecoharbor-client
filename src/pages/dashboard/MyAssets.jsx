@@ -12,10 +12,10 @@ import MyAssetRepairModal from './RequestModals/MyAssetRepairModal';
 import AssetViewModal from './AssetModals/AssetViewModal';
 import MyAssetNewRequestModal from './RequestModals/MyAssetNewRequestModal';
 
-const Api_Url = 'http://127.0.0.1:3001/assetz';
-const Api_Url_dep = 'http://127.0.0.1:3001/departments';
-const Api_Url_emp = 'http://127.0.0.1:3001/employees';
-const Api_Url_req= 'http://127.0.0.1:3001/requests';
+const Api_Url = 'http://127.0.0.1:3000/assetz';
+const Api_Url_dep = 'http://127.0.0.1:3000/departments';
+const Api_Url_emp = 'http://127.0.0.1:3000/employees';
+const Api_Url_req= 'http://127.0.0.1:3000/requests';
 
 Modal.setAppElement('#root');
 

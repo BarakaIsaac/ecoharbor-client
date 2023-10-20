@@ -6,6 +6,7 @@ import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import {backendUrl} from "../../../backendConfig.js";
 //MODALS
 import AssetViewModal from './AssetModals/AssetViewModal';
 import AssetCreateModal from './AssetModals/AssetCreateModal';
@@ -14,9 +15,9 @@ import AssetEditModal from './AssetModals/AssetEditModal';
 import AssetValuationModal from './AssetModals/AssetValuationModal';
 import AssetAllocationModal from './AssetModals/AssetAllocationModal';
 
-const Api_Url = 'http://127.0.0.1:3001/assetz';
-const Api_Url_dep = 'http://127.0.0.1:3001/departments';
-const Api_Url_emp = 'http://127.0.0.1:3001/employees';
+const Api_Url = `${backendUrl}/assetz`;
+const Api_Url_dep = `${backendUrl}/departments`;
+const Api_Url_emp = `${backendUrl}/employees`;
 
 Modal.setAppElement('#root');
 
@@ -82,7 +83,7 @@ function AssetDirectory() {
     const handleCreateAsset = () => {
         axios.post(Api_Url, newAsset)
             .then(response => {
-                const createdAsset = response.data;                    
+                const createdAsset = response.data;
                     setAssets([...assets, createdAsset]);
                     setShowCreateModal(false);
                     showSuccessMessage('Asset record created successfully!');
@@ -92,7 +93,7 @@ function AssetDirectory() {
                 .catch(error => {
                 console.error('Error creating asset record: ', error);
             });
-        
+
         };
     //EDIT ASSETS
     const [showEditModal, setShowEditModal] = useState(false);
@@ -107,7 +108,7 @@ function AssetDirectory() {
             current_value: asset.current_value,
             quantity: asset.quantity,
             department_id: asset.department_id,
-            employee_id: asset.employee_id,            
+            employee_id: asset.employee_id,
         });
         setShowEditModal(true);
     };
@@ -135,7 +136,7 @@ function AssetDirectory() {
             current_value: asset.current_value,
             quantity: asset.quantity,
             department_id: asset.department_id,
-            employee_id: asset.employee_id,            
+            employee_id: asset.employee_id,
         });
         setShowEditValuationModal(true);
     };
@@ -163,7 +164,7 @@ function AssetDirectory() {
             current_value: asset.current_value,
             quantity: asset.quantity,
             department_id: asset.department_id,
-            employee_id: asset.employee_id,            
+            employee_id: asset.employee_id,
         });
         setShowEditAllocationModal(true);
     };

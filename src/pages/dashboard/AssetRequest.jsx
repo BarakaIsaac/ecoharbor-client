@@ -13,10 +13,10 @@ import RequestRejectModal from './RequestModals/RequestRejectModal';
 import RequestViewModal from './RequestModals/RequestViewModal';
 
 
-const Api_Url = 'http://127.0.0.1:3001/requests';
-const Api_Url_asset = 'http://127.0.0.1:3001/assetz';
-const Api_Url_dep = 'http://127.0.0.1:3001/departments';
-const Api_Url_emp = 'http://127.0.0.1:3001/employees';
+const Api_Url = 'http://127.0.0.1:3000/requests';
+const Api_Url_asset = 'http://127.0.0.1:3000/assetz';
+const Api_Url_dep = 'http://127.0.0.1:3000/departments';
+const Api_Url_emp = 'http://127.0.0.1:3000/employees';
 
 Modal.setAppElement('#root'); 
 

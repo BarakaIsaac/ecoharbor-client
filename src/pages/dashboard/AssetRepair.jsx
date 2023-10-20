@@ -8,10 +8,10 @@ import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react
 // import AssetRequestDeleteModal from './AssetModals/AssetRequestDeleteModal';
 
 
-const Api_Url = 'http://127.0.0.1:3001/repairs';
-const Api_Url_asset = 'http://127.0.0.1:3001/assets';
-const Api_Url_dep = 'http://127.0.0.1:3001/departments';
-const Api_Url_emp = 'http://127.0.0.1:3001/employees';
+const Api_Url = 'http://127.0.0.1:3000/repairs';
+const Api_Url_asset = 'http://127.0.0.1:3000/assets';
+const Api_Url_dep = 'http://127.0.0.1:3000/departments';
+const Api_Url_emp = 'http://127.0.0.1:3000/employees';
 
 Modal.setAppElement('#root'); 
 

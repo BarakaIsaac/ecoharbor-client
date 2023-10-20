@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 import { Card, CardHeader, CardBody, CardFooter, Input, Checkbox, Button, Typography, } from "@material-tailwind/react";
 import {saveTokens} from "../../tokens/tokens.jsx";
+import {backendUrl} from "../../../backendConfig.js";
 
 export function SignIn() {
   const [email, setEmail] = useState('');
@@ -11,13 +12,13 @@ export function SignIn() {
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
 
-  const Api_Url = 'http://localhost:3001/employees/tokens';
-
   const handleSignIn = async () => {
     try {
-      const response = await axios.post(`${Api_Url}/sign_in`, {
-        email: email,
-        password: password,
+      const response = await axios.post(`${backendUrl}/signin`, {
+          employee: {
+              email: email,
+              password: password,
+          }
       });
       saveTokens(response);
 
@@ -59,7 +60,7 @@ if (error.response) {
           <CardBody className="flex flex-col gap-4">
             <Input type="email" label="Email" size="lg" value={email} onChange={(e) => setEmail(e.target.value)} />
             <Input type="password" label="Password" size="lg" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <div className="-ml-2.5"><Checkbox label="Remember Me" /></div>
+            {/*<div className="-ml-2.5"><Checkbox label="Remember Me" /></div>*/}
           </CardBody>
           <CardFooter className="pt-0">
             <Button variant="gradient" fullWidth onClick={handleSignIn}>Sign In</Button>

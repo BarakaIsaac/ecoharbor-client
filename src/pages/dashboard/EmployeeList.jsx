@@ -8,9 +8,10 @@ import { Card, CardHeader, CardBody, Typography, } from "@material-tailwind/reac
 import EmployeeEditModal from './EmployeeModals/EmployeeEditModal';
 import EmployeeDeleteModal from './EmployeeModals/EmployeeDeleteModal';
 import EmployeeCreateModal from './EmployeeModals/EmployeeCreateModal';
+import {backendUrl} from "../../../backendConfig.js";
 
-const Api_Url = 'http://127.0.0.1:3001/employees';
-const Api_Url_dep = 'http://127.0.0.1:3001/departments';
+const Api_Url = backendUrl;
+const Api_Url_dep = 'http://127.0.0.1:3000/departments';
 
 Modal.setAppElement('#root'); 
 
@@ -19,7 +20,7 @@ const EmployeeList = () => {
     const [employees, setEmployees] = useState([]);
     const [departmentNames, setDepartmentNames] = useState({});
     useEffect(() => {
-        axios.get(Api_Url)
+        axios.get(`${Api_Url}/employees`)
             .then(response => {
                 setEmployees(response.data);
                 })
@@ -94,7 +95,7 @@ const EmployeeList = () => {
         setShowEditModal(true);
     };
     const handleSaveEdit = () => {
-        axios.put(`${Api_Url}/${selectedEmployee.id}`, editedEmployee)
+        axios.put(`${Api_Url}/employees/${selectedEmployee.id}`, editedEmployee)
             .then(response => {
                 setEmployees(employees.map(emp => emp.id === selectedEmployee.id ? response.data : emp));
                 setShowEditModal(false);
@@ -205,7 +206,7 @@ const EmployeeList = () => {
             handleCreateEmployee={handleCreateEmployee}
             departmentNames={departmentNames}
             newEmployee={newEmployee}
-            setNewWmployee={setNewEmployee} />
+            setNewEmployee={setNewEmployee} />
         
         {successMessage && <SuccessMessage message={successMessage}  />}
         

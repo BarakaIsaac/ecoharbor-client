@@ -3,8 +3,9 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import TablePagination from '@mui/material/TablePagination';
 import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react";
+import { backendUrl } from "../../../backendConfig.js";
 
-const Api_Url = 'http://127.0.0.1:3001/departments';
+// const backendUrl = 'http://127.0.0.1:3000/departments';
 
 Modal.setAppElement('#root'); 
 
@@ -12,7 +13,7 @@ const DepartmentList = () => {
     //DEPARTMENT FETCH API
     const [departments, setDepartments] = useState([]);
     useEffect(() => {
-         axios.get(Api_Url)
+         axios.get(backendUrl)
             .then(response => {
                 setDepartments(response.data);
             })
@@ -26,7 +27,7 @@ const DepartmentList = () => {
     const [newDepartment, setNewDepartment] = useState({
         department_name: '', department_code: '', });
     const handleCreateDepartment = () => {
-        axios.post(Api_Url, newDepartment)
+        axios.post(backendUrl, newDepartment)
             .then(response => {
             const createdDepartment = response.data;
                 setDepartments([...departments, createdDepartment]);
@@ -53,7 +54,7 @@ const DepartmentList = () => {
         setShowEditModal(true);
     };
     const handleSaveEdit = () => {
-        axios.put(`${Api_Url}/${selectedDepartment.id}`, editedDepartment)
+        axios.put(`${backendUrl}/${selectedDepartment.id}`, editedDepartment)
             .then(response => {
                 setDepartments(departments.map(dep => dep.id === selectedDepartment.id ? response.data : dep));
                 setShowEditModal(false);
@@ -72,7 +73,7 @@ const DepartmentList = () => {
         setShowDeleteModal(true);
     };
     const handleConfirmDelete = () => {
-        axios.delete(`${Api_Url}/${selectedDepartment.id}`)
+        axios.delete(`${backendUrl}/${selectedDepartment.id}`)
             .then(() => {
                 setDepartments(departments.filter(dep => dep.id !== selectedDepartment.id));
                 setShowDeleteModal(false);

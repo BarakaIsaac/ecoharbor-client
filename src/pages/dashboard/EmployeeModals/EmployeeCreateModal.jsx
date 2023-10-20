@@ -73,10 +73,10 @@ function EmployeeCreateModal({showCreateModal, setShowCreateModal, handleCreateE
                         onChange={e => setNewEmployee({ ...newEmployee, employee_role: e.target.value })}
                         className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" >
                         <option value="" disabled>Select a Role</option>
-                        <option value="Procurement Manager">Procurement Manager</option>
-                        <option value="Normal Employee">Normal Employee</option>
-                        <option value="Finance">Finance</option>
-                        <option value="Finance">Admin</option>
+                        <option value="1">Procurement Manager</option>
+                        <option value="0">Normal Employee</option>
+                        <option value="2">Finance</option>
+                        <option value="3">Admin</option>
                     </select>
                 </div>
                 <div className="flex justify-between">
