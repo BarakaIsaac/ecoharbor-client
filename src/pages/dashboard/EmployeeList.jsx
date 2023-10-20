@@ -11,7 +11,7 @@ import EmployeeCreateModal from './EmployeeModals/EmployeeCreateModal';
 import {backendUrl} from "../../../backendConfig.js";
 
 const Api_Url = backendUrl;
-const Api_Url_dep = 'http://127.0.0.1:3000/departments';
+const Api_Url_dep = `${backendUrl}/departments`;
 
 Modal.setAppElement('#root'); 
 
@@ -62,7 +62,7 @@ const EmployeeList = () => {
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [newEmployee, setNewEmployee] = useState({ first_name: '', last_name: '', email: '', phone_number: '', password: '', employment_date: '', department_id: '', employee_role: '', employee_image: '' });
     const handleCreateEmployee = () => {
-        axios.post(Api_Url, newEmployee)
+        axios.post((`${Api_Url}/signup`), newEmployee)
             .then(response => {
             const createdEmployee = response.data;
             

@@ -5,12 +5,14 @@ import React, { useState } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Input, Checkbox, Button, Typography, } from "@material-tailwind/react";
 import {saveTokens} from "../../tokens/tokens.jsx";
 import {backendUrl} from "../../../backendConfig.js";
+import { useEmployee } from "../dashboard/EmployeeModals/EmployeeContext.jsx";
 
 export function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
+  const { setCurrentEmployee } = useEmployee();
 
   const handleSignIn = async () => {
     try {
@@ -22,7 +24,9 @@ export function SignIn() {
       });
       saveTokens(response);
 
-      navigate("/dashboard/home");
+      // setCurrentEmployee(response.data.employee);
+
+        navigate("/dashboard/home");
       console.log('Sign-in successful', response.data);
     } catch (error) {
       console.error('Sign-in failed', error);

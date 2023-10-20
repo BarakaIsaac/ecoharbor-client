@@ -25,6 +25,8 @@ const icon = {
   className: "w-5 h-5 text-inherit",
 };
 
+
+
 export const routes = [
   {
     layout: "dashboard",
@@ -82,7 +84,7 @@ export const routes = [
         name: "Asset Valuation",
         path: "/AssetValuation",
         element: <AssetValuation />,
-      },        
+      },
     ],
   },
   {
@@ -105,4 +107,103 @@ export const routes = [
   },
 ];
 
+export const roleBasedRoutes = {
+  Admin: [
+    {
+      layout: "dashboard",
+      pages: [
+        {
+          icon: <HomeIcon {...icon} />,
+          name: "dashboard",
+          path: "/home",
+          element: <Home />,
+        },
+        {
+          icon: <UserCircleIcon {...icon} />,
+          name: "Personal Profile",
+          path: "/Profile",
+          element: <Profile />,
+        },
+        // Add other pages accessible by Admin
+      ],
+    },
+  ],
+  FinanceManager: [
+    {
+      layout: "dashboard",
+      pages: [
+        {
+          icon: <HomeIcon {...icon} />,
+          name: "dashboard",
+          path: "/home",
+          element: <Home />,
+        },
+        {
+          icon: <UserCircleIcon {...icon} />,
+          name: "Personal Profile",
+          path: "/Profile",
+          element: <Profile />,
+        },
+        // Add other pages accessible by Finance Manager
+      ],
+    },
+  ],
+  ProcurementManager: [
+    {
+      layout: "dashboard",
+      pages: [
+        {
+          icon: <HomeIcon {...icon} />,
+          name: "dashboard",
+          path: "/home",
+          element: <Home />,
+        },
+        {
+          icon: <UserCircleIcon {...icon} />,
+          name: "Personal Profile",
+          path: "/Profile",
+          element: <Profile />,
+        },
+        // Add other pages accessible by Procurement Manager
+      ],
+    },
+  ],
+  Employee: [
+    {
+      layout: "dashboard",
+      pages: [
+        {
+          icon: <HomeIcon {...icon} />,
+          name: "dashboard",
+          path: "/home",
+          element: <Home />,
+        },
+        {
+          icon: <UserCircleIcon {...icon} />,
+          name: "Personal Profile",
+          path: "/Profile",
+          element: <Profile />,
+        },
+        // Add other pages accessible by Employee
+      ],
+    },
+  ],
+};
+
+export function getEmployeeRole() {
+  const role = localStorage.getItem("role");
+  if (role === "Employee") {
+    return "Employee";
+  } else if (role === "FinanceManager") {
+    return "Finance Manager";
+  } else if (role === "ProcurementManager") {
+    return "Procurement Manager";
+  } else {
+    return "Admin";
+  }
+
+}
+
 export default routes;
+
+

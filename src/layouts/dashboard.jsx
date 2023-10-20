@@ -6,12 +6,14 @@ import {  Sidenav } from "../widgets/layout/sidenav";
 import routes from "../routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "../context";
 import Configurator from "../widgets/layout/configurator";
+import {EmployeeProvider} from "../pages/dashboard/EmployeeModals/EmployeeContext.jsx";
 
 export function Dashboard() {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
 
   return (
+      <EmployeeProvider>
     <div className="min-h-screen bg-blue-gray-50/50">
       <Sidenav routes={routes} brandImg={sidenavType === "dark" ? "/img/logo-ct.png" : "/img/logo-ct-dark.png" }/>
       <div className="p-4 xl:ml-80">
@@ -34,6 +36,7 @@ export function Dashboard() {
         </div>
       </div>
     </div>
+    </EmployeeProvider>
   );
 }
 

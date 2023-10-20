@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import {backendUrl} from "../../../../backendConfig.js";
 
 function Api() {
   useEffect(() => {
     // Define the API URLs
     const apiUrls = {
-      assets: 'http://127.0.0.1:3001/assets',
-      departments: 'http://127.0.0.1:3000/departments',
-      employees: 'http://127.0.0.1:3000/employees',
-      requests: 'http://127.0.0.1:3000/requests',
-      approvals: 'http://127.0.0.1:3000/approvals',
-      allocations: 'http://127.0.0.1:3000/allocations',
-      repairs: 'http://127.0.0.1:3000/repairs',
+      assets: `${backendUrl}/assets`,
+      departments: `${backendUrl}/departments`,
+      employees: `${backendUrl}/employees`,
+      requests: `${backendUrl}/requests`,
+      approvals: `${backendUrl}/approvals`,
+      allocations: `${backendUrl}/allocations`,
+      repairs: `${backendUrl}/repairs`,
     };
 
     // Fetch data from each API
