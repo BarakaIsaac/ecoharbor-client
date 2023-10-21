@@ -15,9 +15,9 @@ import AssetEditModal from './AssetModals/AssetEditModal';
 import AssetValuationModal from './AssetModals/AssetValuationModal';
 import AssetAllocationModal from './AssetModals/AssetAllocationModal';
 
-const Api_Url = `${backendUrl}/assetz`;
-const Api_Url_dep = `${backendUrl}/departments`;
-const Api_Url_emp = `${backendUrl}/employees`;
+// const Api_Url = `${backendUrl}/assetz`;
+// const Api_Url_dep = `${backendUrl}/departments`;
+// const Api_Url_emp = `${backendUrl}/employees`;
 
 Modal.setAppElement('#root');
 
@@ -28,7 +28,7 @@ function AssetDirectory() {
     const [employeeNames, setEmployeeNames] = useState({});
 
     useEffect(() => {
-        axios.get(Api_Url)
+        axios.get(`${backendUrl}/assetz`)
             .then(response => {
             setAssets(response.data);
             })
@@ -36,7 +36,7 @@ function AssetDirectory() {
             console.error('Error fetching Asset record: ', error);
             });
         // Fetch department data to get department names
-        axios.get(Api_Url_dep)
+        axios.get(`${backendUrl}/departments`)
             .then(response => {
                 const departmentNameMap = {};
                 response.data.forEach(department => {
@@ -48,14 +48,25 @@ function AssetDirectory() {
                 console.error('Error fetching department data: ', error);
             });
             // Fetch employee data to get employee names
-        axios.get(Api_Url_dep)
+        // axios.get(`${backendUrl}/departments`)
+        //     .then(response => {
+        //         const employeeNameMap = {};
+        //         response.data.forEach(employee => {
+        //             employeeNameMap[employee.id] = employee.first_name;
+        //         });
+        //         setEmployeeNames(employeeNameMap);
+        //         })
+        //     .catch(error => {
+        //         console.error('Error fetching employee data: ', error);
+        //     });
+        axios.get(`${backendUrl}/employees`)
             .then(response => {
                 const employeeNameMap = {};
                 response.data.forEach(employee => {
                     employeeNameMap[employee.id] = employee.first_name;
                 });
                 setEmployeeNames(employeeNameMap);
-                })
+            })
             .catch(error => {
                 console.error('Error fetching employee data: ', error);
             });
@@ -76,12 +87,12 @@ function AssetDirectory() {
         setSelectedAssetForView(null);
         setViewAssetModalOpen(false);
     };
-    //CREATE ASSET current_value: '', department_id: '', employee_id: ''
+    //CREATE ASSET 
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [newAsset, setNewAsset] = useState({
         asset_name: '', asset_category: '', asset_image: '', asset_condition: '', purchase_value: '',  quantity: '', });
     const handleCreateAsset = () => {
-        axios.post(Api_Url, newAsset)
+        axios.post(`${backendUrl}/assetz`, newAsset)
             .then(response => {
                 const createdAsset = response.data;
                     setAssets([...assets, createdAsset]);
@@ -113,7 +124,7 @@ function AssetDirectory() {
         setShowEditModal(true);
     };
     const handleSaveEdit = () => {
-        axios.put(`${Api_Url}/${selectedAsset.id}`, editedAsset)
+        axios.put(`${backendUrl}/assetz/${selectedAsset.id}`, editedAsset)
             .then(response => {
                 setAssets(assets.map(ast => ast.id === selectedAsset.id ? response.data : ast));
                 setShowEditModal(false);
@@ -141,7 +152,7 @@ function AssetDirectory() {
         setShowEditValuationModal(true);
     };
     const handleSaveEditValuation = () => {
-        axios.put(`${Api_Url}/${selectedAsset.id}`, editedAsset)
+        axios.put(`${backendUrl}/assetz/${selectedAsset.id}`, editedAsset)
             .then(response => {
                 setAssets(assets.map(ast => ast.id === selectedAsset.id ? response.data : ast));
                 setShowEditValuationModal(false);
@@ -169,7 +180,7 @@ function AssetDirectory() {
         setShowEditAllocationModal(true);
     };
     const handleSaveEditAllocation = () => {
-        axios.put(`${Api_Url}/${selectedAsset.id}`, editedAsset)
+        axios.put(`${backendUrl}/assetz/${selectedAsset.id}`, editedAsset)
             .then(response => {
                 setAssets(assets.map(ast => ast.id === selectedAsset.id ? response.data : ast));
                 setShowEditAllocationModal(false);
@@ -187,7 +198,7 @@ function AssetDirectory() {
         setShowDeleteModal(true);
     };
     const handleConfirmDelete = () => {
-        axios.delete(`${Api_Url}/${selectedAsset.id}`)
+        axios.delete(`${backendUrl}/assetz/${selectedAsset.id}`)
             .then(() => {
                 setAssets(assets.filter(ast => ast.id !== selectedAsset.id));
                 setShowDeleteModal(false);

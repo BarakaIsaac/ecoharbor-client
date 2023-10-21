@@ -20,6 +20,7 @@ import MyAssets from "./pages/dashboard/MyAssets";
 import EmployeeList from "./pages/dashboard/EmployeeList";
 import AssetDirectory from "./pages/dashboard/AssetDirectory";
 import AssetValuation from "./pages/dashboard/AssetValuation";
+import AssetDirectory2 from "./pages/dashboard/AssetDirectory2";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -66,6 +67,12 @@ export const routes = [
         name: "Asset Directory",
         path: "/AssetDirectory",
         element: <AssetDirectory />,
+      },
+      {
+        icon: <StorageIcon {...icon} />,
+        name: "Asset Directory2",
+        path: "/AssetDirectory2",
+        element: <AssetDirectory2 />,
       },
       {
         icon: <RequestQuoteIcon {...icon} />,

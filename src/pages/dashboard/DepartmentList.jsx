@@ -13,7 +13,7 @@ const DepartmentList = () => {
     //DEPARTMENT FETCH API
     const [departments, setDepartments] = useState([]);
     useEffect(() => {
-         axios.get(backendUrl)
+         axios.get(`${backendUrl}/departments`)
             .then(response => {
                 setDepartments(response.data);
             })
@@ -96,8 +96,8 @@ const DepartmentList = () => {
         setPage(0);
     };
     const paginatedDepartments = departments.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
-   
-    //SUCCESS MESSAGES
+    
+       //SUCCESS MESSAGES
     const [successMessage, setSuccessMessage] = useState(null);
     const showSuccessMessage = (message) => {
         setSuccessMessage(message);

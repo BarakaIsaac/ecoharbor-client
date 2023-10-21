@@ -68,7 +68,7 @@ const EmployeeList = () => {
     };
     // CREATE EMPLOYEE
     const [showCreateModal, setShowCreateModal] = useState(false);
-    const [newEmployee, setNewEmployee] = useState({ first_name: '', last_name: '', email: '', phone_number: '', password: '', employment_date: '', department_id: '', employee_role: '', employee_image: '' });
+    const [newEmployee, setNewEmployee] = useState({ first_name: '', last_name: '', email: '', phone_number: '', password: '', employment_date: '', department_id: '', employee_role: '', role: '', employee_image: '' });
     const handleCreateEmployee = () => {
         axios.post((`${backendUrl}/signup`), newEmployee)
             .then(response => {
@@ -85,7 +85,7 @@ const EmployeeList = () => {
         };
     //EDIT EMPLOYEE
     const [selectedEmployee, setSelectedEmployee] = useState(null);
-    const [editedEmployee, setEditedEmployee] = useState({ first_name: '', last_name: '', email: '', phone_number: '', password: '', employment_date: '', department_id: '', employee_role: '', employee_image: '' });
+    const [editedEmployee, setEditedEmployee] = useState({ first_name: '', last_name: '', email: '', phone_number: '', password: '', employment_date: '', department_id: '', employee_role: '', role: '', employee_image: '' });
     const [showEditModal, setShowEditModal] = useState(false);
     const handleEditClick = (employee) => {
         setSelectedEmployee(employee);
@@ -185,15 +185,15 @@ const EmployeeList = () => {
                 </table>
             </CardBody>
             <div className="my-4 flex justify-between items-center">
-            <TablePagination
-                component="div"
-                count={employees.length}
-                page={page}
-                onPageChange={handleChangePage}
-                rowsPerPage={rowsPerPage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                className="text-blue-500" />
-        </div>
+                <TablePagination
+                    component="div"
+                    count={employees.length}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    rowsPerPage={rowsPerPage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    className="text-blue-500" />
+            </div>
         </Card>
         <EmployeeEditModal 
             showEditModal={showEditModal}
@@ -218,7 +218,7 @@ const EmployeeList = () => {
         
         {successMessage && <SuccessMessage message={successMessage}  />}
         
-        </div>
+    </div>
     );
 };
 

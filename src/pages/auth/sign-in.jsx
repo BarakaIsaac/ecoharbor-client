@@ -7,6 +7,8 @@ import {saveTokens} from "../../tokens/tokens.jsx";
 import {backendUrl} from "../../../backendConfig.js";
 import { useEmployee } from "../dashboard/EmployeeModals/EmployeeContext.jsx";
 
+// import { getEmployeeRole } from "../../routes.jsx";
+
 export function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,33 +26,34 @@ export function SignIn() {
       });
       saveTokens(response);
 
+      // // Here, you should set `userData` to the response data.
+      // const userData = response.data;
+
+      // // Add the code here to determine the user role based on the response data
+      // const userRole = getEmployeeRole(userData);
+      // console.log("User role:", userRole);
+
       // setCurrentEmployee(response.data.employee);
 
         navigate("/dashboard/home");
       console.log('Sign-in successful', response.data);
+
     } catch (error) {
       console.error('Sign-in failed', error);
-      // Check the response status code to determine the error type.
-  //     if (error.response) {
-  //       console.error('Response status:', error.response.status);
-  //       console.error('Response data:', error.response.data);
-  //     }
-  //   }
-  // };
-if (error.response) {
-        // Check the response status code to determine the error type.
-        console.error('Response status:', error.response.status);
-        console.error('Response data:', error.response.data);
+    if (error.response) {
+            // Check the response status code to determine the error type.
+            console.error('Response status:', error.response.status);
+            console.error('Response data:', error.response.data);
 
-        // Display an error message based on the response status code.
-        if (error.response.status === 401) {
-          setErrorMessage('Incorrect Email or Password');
-        } else {
-          setErrorMessage('An error occurred. Please try again later.');
+            // Display an error message based on the response status code.
+            if (error.response.status === 401) {
+              setErrorMessage('Incorrect Email or Password');
+            } else {
+              setErrorMessage('An error occurred. Please try again later.');
+            }
+          }
         }
-      }
-    }
-  };
+      };
 
   return (
     <>
