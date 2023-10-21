@@ -7,7 +7,7 @@ export function Auth() {
     const role = getEmployeeRole();
 
     const selectedRoutes = roleBasedRoutes[role] || [];
-    
+
   const navbarRoutes = [
     // {
     //   name: "dashboard",
