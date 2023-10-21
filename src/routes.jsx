@@ -192,13 +192,14 @@ export const roleBasedRoutes = {
 
 export function getEmployeeRole() {
   const role = localStorage.getItem("role");
-  if (role === "Employee") {
+  if (role === 0) {
     return "Employee";
-  } else if (role === "FinanceManager") {
+  } else if (role === 2) {
     return "Finance Manager";
-  } else if (role === "ProcurementManager") {
+  } else if (role === 1) {
     return "Procurement Manager";
-  } else {
+  } else (role === 3)
+  {
     return "Admin";
   }
 

@@ -10,8 +10,6 @@ import EmployeeDeleteModal from './EmployeeModals/EmployeeDeleteModal';
 import EmployeeCreateModal from './EmployeeModals/EmployeeCreateModal';
 import {backendUrl} from "../../../backendConfig.js";
 
-const Api_Url = backendUrl;
-const Api_Url_dep = `${backendUrl}/departments`;
 
 Modal.setAppElement('#root'); 
 
@@ -20,7 +18,12 @@ const EmployeeList = () => {
     const [employees, setEmployees] = useState([]);
     const [departmentNames, setDepartmentNames] = useState({});
     useEffect(() => {
-        axios.get(`${Api_Url}/employees`)
+        axios.get(`${backendUrl}/employees`,{
+            headers: {
+            'Authorization': 'Bearer your_token',
+                'Content-Type': 'application/json'
+        }
+    })
             .then(response => {
                 setEmployees(response.data);
                 })
@@ -28,7 +31,12 @@ const EmployeeList = () => {
                 console.error('Error fetching Employees record: ', error);
                 });
         // Fetch department data to get department names
-        axios.get(Api_Url_dep)
+        axios.get(`${backendUrl}/departments`, {
+            headers: {
+                'Authorization': 'Bearer your_token',
+                'Content-Type': 'application/json'
+            }
+        })
             .then(response => {
             const departmentNameMap = {};
             response.data.forEach(department => {
@@ -47,7 +55,7 @@ const EmployeeList = () => {
         setShowDeleteModal(true);
     };
     const handleConfirmDelete = () => {
-        axios.delete(`${Api_Url}/${selectedEmployee.id}`)
+        axios.delete(`${backendUrl}/employees/${selectedEmployee.id}`)
             .then(() => {
                 setEmployees(employees.filter(emp => emp.id !== selectedEmployee.id));
                 setShowDeleteModal(false);
@@ -62,7 +70,7 @@ const EmployeeList = () => {
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [newEmployee, setNewEmployee] = useState({ first_name: '', last_name: '', email: '', phone_number: '', password: '', employment_date: '', department_id: '', employee_role: '', employee_image: '' });
     const handleCreateEmployee = () => {
-        axios.post((`${Api_Url}/signup`), newEmployee)
+        axios.post((`${backendUrl}/signup`), newEmployee)
             .then(response => {
             const createdEmployee = response.data;
             
@@ -95,7 +103,7 @@ const EmployeeList = () => {
         setShowEditModal(true);
     };
     const handleSaveEdit = () => {
-        axios.put(`${Api_Url}/employees/${selectedEmployee.id}`, editedEmployee)
+        axios.put(`${backendUrl}/employees/${selectedEmployee.id}`, editedEmployee)
             .then(response => {
                 setEmployees(employees.map(emp => emp.id === selectedEmployee.id ? response.data : emp));
                 setShowEditModal(false);

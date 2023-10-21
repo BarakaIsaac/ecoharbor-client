@@ -3,7 +3,7 @@ import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { IconButton } from "@material-tailwind/react";
 import {DashboardNavbar} from "../widgets/layout/dashboard-navbar";
 import {  Sidenav } from "../widgets/layout/sidenav";
-import routes from "../routes";
+import routes, { roleBasedRoutes, getEmployeeRole } from "../routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "../context";
 import Configurator from "../widgets/layout/configurator";
 import {EmployeeProvider} from "../pages/dashboard/EmployeeModals/EmployeeContext.jsx";
@@ -11,6 +11,8 @@ import {EmployeeProvider} from "../pages/dashboard/EmployeeModals/EmployeeContex
 export function Dashboard() {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
+  const role = getEmployeeRole();
+  const selectedRoutes = roleBasedRoutes[role] || [];
 
   return (
       <EmployeeProvider>
@@ -24,11 +26,9 @@ export function Dashboard() {
           <Cog6ToothIcon className="h-5 w-5" />
         </IconButton>
         <Routes>
-          {routes.map(
-            ({ layout, pages }) =>
-              layout === "dashboard" &&
+          {selectedRoutes.map(({ layout, pages }) =>
               pages.map(({ path, element }) => (
-                <Route exact path={path} element={element} />
+                  <Route key={path} exact path={path} element={element} />
               ))
           )}
         </Routes>

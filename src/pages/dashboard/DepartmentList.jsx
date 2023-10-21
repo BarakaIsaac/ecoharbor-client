@@ -27,7 +27,7 @@ const DepartmentList = () => {
     const [newDepartment, setNewDepartment] = useState({
         department_name: '', department_code: '', });
     const handleCreateDepartment = () => {
-        axios.post(backendUrl, newDepartment)
+        axios.post(`${backendUrl}/departments`, newDepartment)
             .then(response => {
             const createdDepartment = response.data;
                 setDepartments([...departments, createdDepartment]);

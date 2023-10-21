@@ -1,9 +1,13 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { ChartPieIcon, UserIcon, UserPlusIcon, ArrowRightOnRectangleIcon, } from "@heroicons/react/24/solid";
 import { Navbar } from "../widgets/layout/navbar";
-import routes from "../routes";
+import routes, { roleBasedRoutes, getEmployeeRole } from "../routes";
 
 export function Auth() {
+    const role = getEmployeeRole();
+
+    const selectedRoutes = roleBasedRoutes[role] || [];
+    
   const navbarRoutes = [
     // {
     //   name: "dashboard",
