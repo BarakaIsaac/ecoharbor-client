@@ -3,15 +3,13 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import TablePagination from '@mui/material/TablePagination';
 import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react";
-
-// import AssetRequestEditModal from './AssetModals/AssetRequestEditModal';
-// import AssetRequestDeleteModal from './AssetModals/AssetRequestDeleteModal';
+import {backendUrl} from "../../../backendConfig.js";
 
 
-const Api_Url = 'http://127.0.0.1:3000/repairs';
-const Api_Url_asset = 'http://127.0.0.1:3000/assets';
-const Api_Url_dep = 'http://127.0.0.1:3000/departments';
-const Api_Url_emp = 'http://127.0.0.1:3000/employees';
+const Api_Url = `${backendUrl}/repairs`;
+const Api_Url_asset = `${backendUrl}/assetz`;
+const Api_Url_dep = `${backendUrl}/departments`;
+const Api_Url_emp = `${backendUrl}/employees`;
 
 Modal.setAppElement('#root'); 
 
@@ -22,10 +20,11 @@ const AssetRepair = () => {
     const [editedRepair, setEditedRepair] = useState({
         request_id: '',
         asset_id: '',
-        quantity: 0,
+        quantity: '',
         checkin_date: '',
         checkout_date: '',
-        department_name: '',
+        department_id: '',
+        employee_id: '',
     });
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -65,7 +64,7 @@ useEffect(() => {
             reason: repair.reason,
             checkin_date: repair.checkin_date,
             checkout_date: repair.checkout_date,
-            approval_date: repair.approval_dat,
+            approval_date: repair.approval_date,
         });
         setShowEditModal(true);
     };
@@ -162,23 +161,7 @@ useEffect(() => {
                 </table>
                 </CardBody>
             </Card>
-
-            {/* <AssetRequestEditModal
-                showEditModal={showEditModal}
-                setShowEditModal={setShowEditModal}
-                selectedRequest={selectedRequest}
-                editedRequest={editedRequest}
-                setEditedRequest={setEditedRequest}
-                handleSaveEdit={handleSaveEdit}
-            />
-        
-            <AssetRequestDeleteModal
-                    showDeleteModal={showDeleteModal}
-                    setShowDeleteModal={setShowDeleteModal}
-                    selectedRequest={selectedRequest}
-                    handleConfirmDelete={handleConfirmDelete}
-                /> */}
-                
+               
             <div className="my-4 flex justify-between items-center">
             <TablePagination
                 component="div"

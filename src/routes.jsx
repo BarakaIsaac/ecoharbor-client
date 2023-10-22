@@ -45,7 +45,7 @@ export const routes = [
       // },
       {
         icon: <InventoryIcon {...icon} />,
-        name: "DO NOT TOUCH",
+        name: "My Assets",
         path: "/MyAssets",
         element: <MyAssets />,
       },

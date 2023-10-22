@@ -7,21 +7,23 @@ import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import ConstructionIcon from '@mui/icons-material/Construction';
+import {backendUrl} from "../../../backendConfig.js";
 //CRUD MODALS
-import MyAssetRepairModal from './RequestModals/MyAssetRepairModal';
+import AssetRepairModal from './RequestModals/AssetRepairModal';
 import AssetViewModal from './AssetModals/AssetViewModal';
-import MyAssetNewRequestModal from './RequestModals/MyAssetNewRequestModal';
+import AssetRequestFormModal from './RequestModals/AssetRequestFormModal';
 
-const Api_Url = 'http://127.0.0.1:3000/assetz';
-const Api_Url_dep = 'http://127.0.0.1:3000/departments';
-const Api_Url_emp = 'http://127.0.0.1:3000/employees';
-const Api_Url_req= 'http://127.0.0.1:3000/requests';
+const Api_Url = `${backendUrl}/assetz`;
+const Api_Url_dep = `${backendUrl}/departments`;
+const Api_Url_emp = `${backendUrl}/employees`;
+const Api_Url_req= `${backendUrl}/requests`;
 
 Modal.setAppElement('#root');
 
 function MyAssets() {
-    const [assets, setAssets] = useState([]);
     //FETCH ASSETS
+    const [assets, setAssets] = useState([]);
+    
     const [departmentNames, setDepartmentNames] = useState({});
     useEffect(() => {
         axios.get(Api_Url)
@@ -45,40 +47,24 @@ function MyAssets() {
             });
         }, []);
 
-    //REQUEST NEW ASSET
-    const [showNewAssetRequestModal, setShowNewAssetRequestModal] = useState(false);
-    const [newAssetRequest, setNewAssetRequest] = useState({
-        new_asset_name: '', request_type: '', urgency: '', reason: '', request_date: '', request_status: '', asset_id: '', employee_id: '', department_id: '',});
-     const handleNewAssetRequest = () => {
-        axios.post(Api_Url, newAsset)
-            .then(response => {
-                const createdAsset = response.data;
-                    setAssetRequest([...assets, createdAsset]);
-                    setShowNewAssetRequestModal(false);
-                    showSuccessMessage('Asset record created successfully!');
-                })
-                .catch(error => {
-                console.error('Error creating asset record: ', error);
-                });
-    };
+    // //REQUEST NEW ASSET
+    const [showRequestModal, setShowRequestModal] = useState(false);
+    const openRequestModal = () => {
+        setShowRequestModal(true);
+    }
+    const closeRequestModal = () => {
+        setShowRequestModal(false);
+    }
 
-    
     //REQUEST ASSET REPAIR
     const [showRepairModal, setShowRepairModal] = useState(false);
-    const [assetRepair, setAssetRepair] = useState({
-        quantity: '', checkin_date: '', request_id: '', asset_id: '', employee_id: '', department_id: '',});
-     const handleAssetRepair = () => {
-        axios.post(Api_Url, newAsset)
-            .then(response => {
-                const createdAsset = response.data;
-                    setAssetRepair([...assets, createdAsset]);
-                    setShowAssetRepairModal(false);
-                    showSuccessMessage('Asset record created successfully!');
-                })
-                .catch(error => {
-                console.error('Error creating asset record: ', error);
-                });
-    };
+    const openRepairModal = () => {
+        setShowRepairModal(true);
+    }
+    const closeRepairModal = () => {
+        setShowRepairModal(false);
+    }
+
     //PAGINATION
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -123,8 +109,8 @@ function MyAssets() {
             <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
                 <div className="flex items-center">
                     <Typography variant="h6" color="white">My Assets</Typography>
-                        <button onClick={() => setShowNewAssetRequestModal(true)} className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none" title="Request New Asset"><AddTaskIcon /></button>
-                        <button onClick={() => setShowAssetRepairModal(true)} className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none" title="Repair Request"><ConstructionIcon /></button>
+                        <button onClick={openRequestModal} className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none" title="Request New Asset"><AddTaskIcon /></button>
+                        <button onClick={openRepairModal} className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none" title="Repair Request"><ConstructionIcon /></button>
                 </div>
             </CardHeader>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
@@ -168,26 +154,21 @@ function MyAssets() {
                 className="text-blue-500" />
         </div>
         </Card>         
-        <MyAssetNewRequestModal
-            showNewAssetRequestModal={showNewAssetRequestModal}
-            setShowNewAsseRequestModal={setShowNewAssetRequestModal}
-            handleNewAssetRequest={handleNewAssetRequest}
-            departmentNames={departmentNames}
-            newAssetRequest={newAssetRequest}
-            setNewAssetRequest={setNewAssetRequest} />
+
         <AssetViewModal 
             isOpen={viewAssetModalOpen}
             onClose={closeViewModal}
             asset={selectedAssetForView}
             departmentNames={departmentNames} />
-        <MyAssetRepairModal 
-            showRepairModal={showRepairModal}
-            setShowRepairModal={setShowRepairModal}
-            handleRepairAsset={handleRepairAsset}
-            departmentNames={departmentNames}
-            newAssetRepair={newAssetRepair}
-            setNewAssetRepair={setNewAssetRepair} />
-                 
+
+        <AssetRequestFormModal
+                    isOpen={showRequestModal}
+                    onClose={closeRequestModal} />
+
+        <AssetRepairModal
+                   isOpen={showRepairModal}
+                    onClose={closeRepairModal} />
+   
         {successMessage && <SuccessMessage message={successMessage}  />}
       </div>
     );

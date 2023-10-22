@@ -48,20 +48,20 @@ function AssetViewModal({ isOpen, onClose, asset, departmentNames }) {
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <p className="text-xs text-[#2F3D44] mb-2"><strong>Category:</strong> {asset.category_name}</p>
+                                <p className="text-xs text-[#2F3D44] mb-2"><strong>Category:</strong> {asset.asset_category}</p>
                                 <p className="text-xs text-[#2F3D44] mb-2"><strong>Category Code:</strong> {asset.category_code}</p>
-                                <p className="text-xs text-[#2F3D44] mb-2"><strong>Condition:</strong> {asset.condition}</p>
+                                <p className="text-xs text-[#2F3D44] mb-2"><strong>Condition:</strong> {asset.asset_condition}</p>
                                 <p className="text-xs text-[#2F3D44] mb-2"><strong>Status:</strong> {asset.status}</p>
                             </div>
                             <div>
                                 <p className="text-xs text-[#2F3D44] mb-2"><strong>Purchase Value [KES]:</strong> {asset.purchase_value}</p>
                                 <p className="text-xs text-[#2F3D44] mb-2"><strong>Current Value [KES]:</strong> {asset.current_value}</p>
-                                <p className="text-xs text-[#2F3D44] mb-2"><strong>Quantity:</strong> {asset.quantity_in_stock}</p>
+                                <p className="text-xs text-[#2F3D44] mb-2"><strong>Quantity:</strong> {asset.quantity}</p>
                                 <p className="text-xs text-[#2F3D44]"><strong>Owning Dept:</strong> {departmentNames[asset.department_id]}</p>
                             </div>
                         </div>
                         <div className="flex justify-end">
-                            <button onClick={openRequestModal} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none mt-4" >Request Asset</button>
+                            {/* <button onClick={openRequestModal} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none mt-4" >Request Asset</button> */}
                             <button onClick={onClose} className="bg-gray-300 text-black py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none mt-4 ml-2">Close</button>                        
                         </div>
                     </Card>

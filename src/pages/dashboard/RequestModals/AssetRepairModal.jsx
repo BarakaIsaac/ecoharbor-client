@@ -5,8 +5,7 @@ import axios from 'axios';
 import { Today } from '@mui/icons-material';
 import {backendUrl} from "../../../../backendConfig.js";
 
-function AssetRequestFormModal({ isOpen, onClose, }) {
-  const [urgency, setUrgency] = useState('');
+function AssetRepairModal({ isOpen, onClose, }) {
   const [quantity, setQuantity] = useState(1); // Set quantity to non-zero
   const [requestDate, setRequestDate] = useState(new Date().toISOString().split('T')[0]); // Set initial date
   const [reason, setReason] = useState('');
@@ -17,7 +16,6 @@ function AssetRequestFormModal({ isOpen, onClose, }) {
   const [assetName, setAssetName] = useState('');
 
   const today = new Date().toISOString().split('T')[0];
-  const urgencyOptions = ['Critical', 'High', 'Medium', 'Low'];
 
   const [employees, setEmployees] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -81,14 +79,14 @@ function AssetRequestFormModal({ isOpen, onClose, }) {
       request_date: requestDate,
     };
 
-    // CREATE ASSET REQUEST API
-    axios.post(`${backendUrl}requests`, requestData)
+    // CREATE ASSET REpair API
+    axios.post(`${backendUrl}repairs`, requestData)
       .then((response) => {
-        console.log('Request submitted successfully', response.data);
+        console.log('Repair submitted successfully', response.data);
         onClose();
       })
       .catch((error) => {
-        console.error('Error submitting the request', error);
+        console.error('Error submitting the repair', error);
       });
   };
 
@@ -112,11 +110,11 @@ function AssetRequestFormModal({ isOpen, onClose, }) {
   };
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onClose} contentLabel="Asset Request Form Modal" style={customModalStyles}>
+    <Modal isOpen={isOpen} onRequestClose={onClose} contentLabel="Asset Repair Form Modal" style={customModalStyles}>
       <Card>
         <CardHeader variant="gradient" color="blue" className="mb-2 p-2 text-center">
           <div className="flex items-center">
-            <h2 className="text-center text-2xl font-semibold mb-4" style={{ textAlign: 'center' }}>Asset Request Form</h2>
+            <h2 className="text-center text-2xl font-semibold mb-4" style={{ textAlign: 'center' }}>Asset Repair Form</h2>
           </div>
         </CardHeader>
 
@@ -143,23 +141,7 @@ function AssetRequestFormModal({ isOpen, onClose, }) {
             />
             <p>Asset Name: {assetName}</p>
           </div>
-
-          <div className="mb-4">
-            <label className="text-xs text-[#2F3D44]">Urgency:</label>
-            <select
-              className="bg-gray-100 text-xs text-[#2F3D44] w-full py-2 px-3 rounded-md"
-              value={urgency}
-              onChange={(e) => setUrgency(e.target.value)}
-            >
-              {urgencyOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="mb-4">
+           <div className="mb-4">
             <label className="text-xs text-[#2F3D44]">Quantity:</label>
             <input
               type="number"
@@ -172,7 +154,7 @@ function AssetRequestFormModal({ isOpen, onClose, }) {
           </div>
 
           <div className="mb-4">
-            <label className="text-xs text-[#2F3D44]">Request Date:</label>
+            <label className="text-xs text-[#2F3D44]">Check In Date:</label>
             <input
               type="date"
               className="bg-gray-100 text-xs text-[#2F3D44] w-full py-2 px-3 rounded-md"
@@ -181,21 +163,11 @@ function AssetRequestFormModal({ isOpen, onClose, }) {
               onChange={(e) => setRequestDate(e.target.value)}
             />
           </div>
-
-          <div className="mb-4">
-            <label className="text-xs text-[#2F3D44]">Reason:</label>
-            <textarea
-              className="bg-gray-100 text-xs text-[#2F3D44] w-full py-2 px-3 rounded-md"
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
-            />
-          </div>
-
           <div className="flex justify-between">
             <button
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded-md hover-bg-blue-600 focus:outline-none"    >
-              Submit Request
+              Submit Repair Request
             </button>
             <button
               type="button"
@@ -210,5 +182,6 @@ function AssetRequestFormModal({ isOpen, onClose, }) {
   );
 }
 
-export default AssetRequestFormModal;
+export default AssetRepairModal;
+
 
