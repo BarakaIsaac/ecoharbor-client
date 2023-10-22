@@ -11,8 +11,8 @@ function App() {
   return (
       <EmployeeProvider>
         <Routes>
-          //check roles here
-          //create 4 dashboards 
+          {/* //check roles here
+          //create 4 dashboards  */}
           {/* {employee.role="admin"? <link>assets</link> :""} */}
           <Route path="/dashboard/*" element={<Dashboard />} />
           <Route path="/auth/*" element={<Auth />} />
