@@ -6,11 +6,11 @@ export const saveTokens = (response) => {
   const employee_role = response.data.data.employee_role;
 
 
-  console.log("API Response:", response);
+  // console.log("API Response:", response);
 
-  console.log("accessToken:", accessToken);
-  console.log("client:", client);
-  console.log("uid:", uid);
+  // console.log("accessToken:", accessToken);
+  // console.log("client:", client);
+  // console.log("uid:", uid);
 
   // Stringify the tokens before saving them to local storage.
   const accessTokenString = JSON.stringify(accessToken);
@@ -19,6 +19,8 @@ export const saveTokens = (response) => {
   const emailString = JSON.stringify(email);
   const employeeRoleString = JSON.stringify(employee_role);
 
+  //check if window is type defined, vercel hosting may fail 
+  
   // Save the tokens in local storage.
   localStorage.setItem("access-token", accessTokenString);
   localStorage.setItem("client", clientString);
@@ -32,6 +34,7 @@ export const saveTokens = (response) => {
   );
   console.log("client in localStorage:", localStorage.getItem("client"));
   console.log("uid in localStorage:", localStorage.getItem("uid"));
+  console.log("email in localStorage:", localStorage.getItem("email"));
   console.log("email in localStorage:", localStorage.getItem("email"));
 };
 

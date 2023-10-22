@@ -17,3 +17,4 @@ export function EmployeeProvider({children}) {
         </EmployeeContext.Provider>
     )
 } 
+//useEffect, fetch employee data - set to state
