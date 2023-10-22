@@ -6,6 +6,7 @@ import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 //MODALS
 import AssetViewModal from './AssetModals/AssetViewModal';
 import AssetCreateModal from './AssetModals/AssetCreateModal';
@@ -151,7 +152,7 @@ function AssetDirectory() {
                 console.error('Error updating asset record: ', error);
             });
     };
-    //EDIT ASSETS VALUATION
+    //EDIT ASSETS ALLOCATION
     const [showEditAllocationModal, setShowEditAllocationModal] = useState(false);
     const handleEditAllocationClick = (asset) => {
         setSelectedAsset(asset);
@@ -273,7 +274,9 @@ function AssetDirectory() {
                                     className="py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white"title="Edit Asset">
                                         <CreateOutlinedIcon /></button>
                                     <button onClick={() => handleDeleteClick(asset)} className="py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Delete Asset">
-                                        <DeleteIcon style={{ color: '#BC544B' }}/></button>                            
+                                        <DeleteIcon style={{ color: '#BC544B' }}/></button>
+                                    <button onClick={() => handleEditValuationClick(asset)} className="py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Asset Valuation">
+                                        <CurrencyExchangeIcon /></button>                               
                                 </td>
                             </tr>
                         ))}

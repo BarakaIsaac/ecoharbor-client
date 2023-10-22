@@ -5,6 +5,7 @@ import TablePagination from '@mui/material/TablePagination';
 import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react";
 import { backendUrl } from "../../../backendConfig.js";
 import RepairCommentModal from './RepairModals/RepairCommentModal.jsx';
+import TireRepairIcon from '@mui/icons-material/TireRepair';
 
 Modal.setAppElement('#root');
 
@@ -160,7 +161,8 @@ useEffect(() => {
                   <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{repair.checkin_date}</Typography></td>
                   <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{repair.checkout_date}</Typography></td>
                   <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{repair.repair_comments}</Typography></td>
-                  <td><button onClick={() => handleUpdateClick(repair)} className="bg-blue-500 text-white py-1 px-3 rounded-md mb-2">Comment</button>
+                  <td><button onClick={() => handleUpdateClick(repair)} 
+                    className="py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Repair Comments"><TireRepairIcon /></button>
                   </td>
                 </tr>
               ))}
