@@ -60,9 +60,9 @@ function AssetViewModal({ isOpen, onClose, asset, departmentNames }) {
                                 <p className="text-xs text-[#2F3D44]"><strong>Owning Dept:</strong> {departmentNames[asset.department_id]}</p>
                             </div>
                         </div>
-                        <div className="flex justify-end">
+                        <div className="flex justify-center">
                             {/* <button onClick={openRequestModal} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none mt-4" >Request Asset</button> */}
-                            <button onClick={onClose} className="bg-gray-300 text-black py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none mt-4 ml-2">Close</button>                        
+                            <button onClick={onClose} className="py-1 px-3 rounded-md mb-2 bg-[#399EF1] border-black text-white border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" >Close</button>                        
                         </div>
                     </Card>
                 </div>

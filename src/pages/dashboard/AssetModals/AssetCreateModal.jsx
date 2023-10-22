@@ -45,8 +45,10 @@ function AssetCreateModal({ showCreateModal, setShowCreateModal, handleCreateAss
                     className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
                 </div>
                 <div className="flex justify-between">
-                    <button onClick={handleCreateAsset} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none">Create</button>
-                    <button onClick={() => setShowCreateModal(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none">Cancel</button>
+                    <button onClick={handleCreateAsset} 
+                        className="py-1 px-3 rounded-md mb-2 bg-[#399EF1] border-black text-white border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white">Create</button>
+                    <button onClick={() => setShowCreateModal(false)} 
+                        className="py-1 px-3 rounded-md mb-2 bg-[#2F3D44] border-black text-white border-black expand-button hover:scale-105 hover:bg-[#399ef1] hover:text-white">Cancel</button>
                 </div>
             </div>
         </Modal>     

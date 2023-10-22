@@ -90,7 +90,6 @@ export const routes = [
         name: "Asset Valuation",
         path: "/AssetValuation",
         element: <AssetValuation />,
-        employee_role: 
       },
     ],
   },
@@ -278,21 +277,21 @@ export const routes = [
 //   ],
 // };
 
-export function getEmployeeRole() {
-  const role = localStorage.getItem("employee_role"); //check if window is undefined. 
+// export function getEmployeeRole() {
+//   const role = localStorage.getItem("employee_role"); //check if window is undefined. 
 
-  if (role === "0") {
-    return "Employee";
-  } else if (role === "2") {
-    return "Finance Manager";
-  } else if (role === "1") {
-    return "Procurement Manager";
-  } else (role === "3")
-  {
-    return "Admin";
-  }
+//   if (role === "0") {
+//     return "Employee";
+//   } else if (role === "2") {
+//     return "Finance Manager";
+//   } else if (role === "1") {
+//     return "Procurement Manager";
+//   } else (role === "3")
+//   {
+//     return "Admin";
+//   }
 
-}
+// }
 export default routes;
 
 

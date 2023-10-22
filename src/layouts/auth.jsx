@@ -1,12 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Navbar } from "../widgets/layout/navbar";
-import routes, { roleBasedRoutes, getEmployeeRole } from "../routes";
+import routes from "../routes";
 
 export function Auth() {
-    const role = getEmployeeRole();
-
-    const selectedRoutes = roleBasedRoutes[role] || [];
-
   const navbarRoutes = [
 
   ];

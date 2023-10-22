@@ -6,7 +6,6 @@ import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import {backendUrl} from "../../../backendConfig.js";
 //MODALS
 import AssetViewModal from './AssetModals/AssetViewModal';
 import AssetCreateModal from './AssetModals/AssetCreateModal';
@@ -14,10 +13,11 @@ import AssetDeleteModal from './AssetModals/AssetDeleteModal';
 import AssetEditModal from './AssetModals/AssetEditModal';
 import AssetValuationModal from './AssetModals/AssetValuationModal';
 import AssetAllocationModal from './AssetModals/AssetAllocationModal';
+import { backendUrl } from "../../../backendConfig.js";
 
-// const Api_Url = `${backendUrl}/assetz`;
-// const Api_Url_dep = `${backendUrl}/departments`;
-// const Api_Url_emp = `${backendUrl}/employees`;
+const Api_Url = `${backendUrl}/assetz`;
+const Api_Url_dep = `${backendUrl}/departments`;
+const Api_Url_emp = `${backendUrl}/employees`;
 
 Modal.setAppElement('#root');
 
@@ -28,7 +28,7 @@ function AssetDirectory() {
     const [employeeNames, setEmployeeNames] = useState({});
 
     useEffect(() => {
-        axios.get(`${backendUrl}/assetz`)
+        axios.get(Api_Url)
             .then(response => {
             setAssets(response.data);
             })
@@ -36,7 +36,7 @@ function AssetDirectory() {
             console.error('Error fetching Asset record: ', error);
             });
         // Fetch department data to get department names
-        axios.get(`${backendUrl}/departments`)
+        axios.get(Api_Url_dep)
             .then(response => {
                 const departmentNameMap = {};
                 response.data.forEach(department => {
@@ -48,25 +48,14 @@ function AssetDirectory() {
                 console.error('Error fetching department data: ', error);
             });
             // Fetch employee data to get employee names
-        // axios.get(`${backendUrl}/departments`)
-        //     .then(response => {
-        //         const employeeNameMap = {};
-        //         response.data.forEach(employee => {
-        //             employeeNameMap[employee.id] = employee.first_name;
-        //         });
-        //         setEmployeeNames(employeeNameMap);
-        //         })
-        //     .catch(error => {
-        //         console.error('Error fetching employee data: ', error);
-        //     });
-        axios.get(`${backendUrl}/employees`)
+        axios.get(Api_Url_emp)
             .then(response => {
                 const employeeNameMap = {};
                 response.data.forEach(employee => {
                     employeeNameMap[employee.id] = employee.first_name;
                 });
                 setEmployeeNames(employeeNameMap);
-            })
+                })
             .catch(error => {
                 console.error('Error fetching employee data: ', error);
             });
@@ -87,14 +76,14 @@ function AssetDirectory() {
         setSelectedAssetForView(null);
         setViewAssetModalOpen(false);
     };
-    //CREATE ASSET 
+    //CREATE ASSET current_value: '', department_id: '', employee_id: ''
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [newAsset, setNewAsset] = useState({
         asset_name: '', asset_category: '', asset_image: '', asset_condition: '', purchase_value: '',  quantity: '', });
     const handleCreateAsset = () => {
-        axios.post(`${backendUrl}/assetz`, newAsset)
+        axios.post(Api_Url, newAsset)
             .then(response => {
-                const createdAsset = response.data;
+                const createdAsset = response.data;                    
                     setAssets([...assets, createdAsset]);
                     setShowCreateModal(false);
                     showSuccessMessage('Asset record created successfully!');
@@ -104,7 +93,7 @@ function AssetDirectory() {
                 .catch(error => {
                 console.error('Error creating asset record: ', error);
             });
-
+        
         };
     //EDIT ASSETS
     const [showEditModal, setShowEditModal] = useState(false);
@@ -119,12 +108,12 @@ function AssetDirectory() {
             current_value: asset.current_value,
             quantity: asset.quantity,
             department_id: asset.department_id,
-            employee_id: asset.employee_id,
+            employee_id: asset.employee_id,            
         });
         setShowEditModal(true);
     };
     const handleSaveEdit = () => {
-        axios.put(`${backendUrl}/assetz/${selectedAsset.id}`, editedAsset)
+        axios.put(`${Api_Url}/${selectedAsset.id}`, editedAsset)
             .then(response => {
                 setAssets(assets.map(ast => ast.id === selectedAsset.id ? response.data : ast));
                 setShowEditModal(false);
@@ -147,12 +136,12 @@ function AssetDirectory() {
             current_value: asset.current_value,
             quantity: asset.quantity,
             department_id: asset.department_id,
-            employee_id: asset.employee_id,
+            employee_id: asset.employee_id,            
         });
         setShowEditValuationModal(true);
     };
     const handleSaveEditValuation = () => {
-        axios.put(`${backendUrl}/assetz/${selectedAsset.id}`, editedAsset)
+        axios.put(`${Api_Url}/${selectedAsset.id}`, editedAsset)
             .then(response => {
                 setAssets(assets.map(ast => ast.id === selectedAsset.id ? response.data : ast));
                 setShowEditValuationModal(false);
@@ -175,12 +164,12 @@ function AssetDirectory() {
             current_value: asset.current_value,
             quantity: asset.quantity,
             department_id: asset.department_id,
-            employee_id: asset.employee_id,
+            employee_id: asset.employee_id,            
         });
         setShowEditAllocationModal(true);
     };
     const handleSaveEditAllocation = () => {
-        axios.put(`${backendUrl}/assetz/${selectedAsset.id}`, editedAsset)
+        axios.put(`${Api_Url}/${selectedAsset.id}`, editedAsset)
             .then(response => {
                 setAssets(assets.map(ast => ast.id === selectedAsset.id ? response.data : ast));
                 setShowEditAllocationModal(false);
@@ -198,7 +187,7 @@ function AssetDirectory() {
         setShowDeleteModal(true);
     };
     const handleConfirmDelete = () => {
-        axios.delete(`${backendUrl}/assetz/${selectedAsset.id}`)
+        axios.delete(`${Api_Url}/${selectedAsset.id}`)
             .then(() => {
                 setAssets(assets.filter(ast => ast.id !== selectedAsset.id));
                 setShowDeleteModal(false);
@@ -280,7 +269,8 @@ function AssetDirectory() {
                                 <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{asset.current_value}</Typography></td>
                                 <td><button onClick={() => handleViewClick(asset)} className="py-1 px-3 rounded-md mb-2 border-black border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="View Asset">
                                     <VisibilityOutlinedIcon /></button>
-                                    <button onClick={() => handleEditClick(asset)} className="py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white"title="Edit Asset">
+                                    <button onClick={() => handleEditClick(asset)} 
+                                    className="py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white"title="Edit Asset">
                                         <CreateOutlinedIcon /></button>
                                     <button onClick={() => handleDeleteClick(asset)} className="py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Delete Asset">
                                         <DeleteIcon style={{ color: '#BC544B' }}/></button>                            
@@ -351,3 +341,4 @@ function AssetDirectory() {
 };
 
 export default AssetDirectory
+

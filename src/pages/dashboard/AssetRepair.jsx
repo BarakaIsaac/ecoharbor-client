@@ -29,27 +29,39 @@ const AssetRepair = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [successMessage, setSuccessMessage] = useState(null);
 
-  useEffect(() => {
-    axios.get(Api_Url).then((response) => {
-      const repairsWithNames = response.data.map(async (repair) => {
-        const assetResponse = await axios.get(`${Api_Url_asset}/${repair.asset_id}`);
-        repair.asset_name = assetResponse.data.asset_name;
+useEffect(() => {
+  axios.get(Api_Url).then((response) => {
+    const repairsWithNames = response.data.map(async (repair) => {
+      const assetResponse = await axios.get(`${Api_Url_asset}/${repair.asset_id}`);
+      repair.asset_name = assetResponse.data.asset_name;
 
-        const employeeResponse = await axios.get(`${Api_Url_emp}/${repair.employee_id}`);
-        const employee = employeeResponse.data;
-        repair.employee_name = `${employee.first_name} ${employee.last_name}`;
+      const departmentResponse = await axios.get(`${Api_Url_dep}/${repair.department_id}`);
+      repair.department_name = departmentResponse.data.department_name;
 
-        const departmentResponse = await axios.get(`${Api_Url_dep}/${repair.department_id}`);
-        repair.department_name = departmentResponse.data.department_name;
+      // Fetch the employee data
+      const employeeResponse = await axios.get(`${Api_Url_emp}/${repair.employee_id}`);
+      if (employeeResponse.status === 200) {
+        const employeeData = employeeResponse.data;
+        // Ensure that the employee data has the expected structure
+        if (employeeData.first_name && employeeData.last_name) {
+          repair.employee_name = `${employeeData.first_name} ${employeeData.last_name}`;
+        } else {
+          // Handle cases where the data doesn't have the expected structure
+          repair.employee_name = "N/A"; // or some default value
+        }
+      } else {
+        // Handle cases where the employee data retrieval was unsuccessful
+        repair.employee_name = "N/A"; // or some default value
+      }
 
-        return repair;
-      });
-
-      Promise.all(repairsWithNames).then((repairsWithNamesData) => {
-        setRepairs(repairsWithNamesData);
-      });
+      return repair;
     });
-  }, []);
+
+    Promise.all(repairsWithNames).then((repairsWithNamesData) => {
+      setRepairs(repairsWithNamesData);
+    });
+  });
+}, []);
 
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [selectedRepair, setSelectedRepair] = useState(null);

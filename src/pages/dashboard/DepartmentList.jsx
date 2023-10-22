@@ -4,6 +4,8 @@ import Modal from 'react-modal';
 import TablePagination from '@mui/material/TablePagination';
 import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react";
 import { backendUrl } from "../../../backendConfig.js";
+import DeleteIcon from '@mui/icons-material/Delete';
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 
 // const backendUrl = 'http://127.0.0.1:3000/departments';
 
@@ -137,8 +139,12 @@ const DepartmentList = () => {
                             <tr key={department.id} className="border-t">
                                 <td><Typography color="blue-gray" className="pl-2 font-semibold text-xs text-blue-gray-500 uppercase">{department.department_name}</Typography></td>
                                 <td><Typography className="text-xs font-normal text-blue-gray-500">{department.department_code}</Typography></td>
-                                <td><button onClick={() => handleEditClick(department)} className="bg-blue-500 text-white py-1 px-3 rounded-md mb-2">Edit</button>
-                                    <button onClick={() => handleDeleteClick(department)} className="bg-red-500 text-white py-1 px-3 rounded-md">Delete</button></td>
+                                <td><button onClick={() => handleEditClick(department)} 
+                                className="py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white"title="Edit Department">
+                                        <CreateOutlinedIcon /></button>
+                                    <button onClick={() => handleDeleteClick(department)} 
+                                    className="py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Delete Department">
+                                        <DeleteIcon style={{ color: '#BC544B' }}/></button> </td>
                             </tr>
                         ))}
                         </tbody>

@@ -26,10 +26,9 @@ import {
   setOpenSidenav,
 } from "/src/context";
 import {SignOutButton} from "../../pages/auth/signout.jsx";
-import {useEmployee } from "../../pages/dashboard/EmployeeModals/EmployeeContext.jsx";
+
 
 export function DashboardNavbar() {
-  const { currentEmployee } = useEmployee()
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
@@ -94,7 +93,7 @@ export function DashboardNavbar() {
               onClick={SignOutButton}
             >
               <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-              {currentEmployee ? `${currentEmployee.name} - ${currentEmployee.role}` : "Sign Out"}
+
             </Button>
             <IconButton
                 variant="text"
