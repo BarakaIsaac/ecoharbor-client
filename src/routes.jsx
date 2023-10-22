@@ -8,7 +8,7 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 
-import { Profile } from "./pages/dashboard/Profile";
+// import { Profile } from "./pages/dashboard/Profile";
 import { Home } from "./pages/dashboard/home";
 import { SignIn } from "./pages/auth/sign-in";
 import { SignUp } from "./pages/auth/sign-up";
@@ -26,8 +26,6 @@ const icon = {
   className: "w-5 h-5 text-inherit",
 };
 
-
-
 export const routes = [
   {
     layout: "dashboard",
@@ -37,16 +35,17 @@ export const routes = [
         name: "dashboard",
         path: "/home",
         element: <Home />,
+        employee_role: []
       },
-      {
-        icon: <UserCircleIcon {...icon} />,
-        name: "Personal Profile",
-        path: "/Profile",
-        element: <Profile />,
-      },
+      // {
+      //   icon: <UserCircleIcon {...icon} />,
+      //   name: "Personal Profile",
+      //   path: "/Profile",
+      //   element: <Profile />,
+      // },
       {
         icon: <InventoryIcon {...icon} />,
-        name: "My Assets",
+        name: "DO NOT TOUCH",
         path: "/MyAssets",
         element: <MyAssets />,
       },
@@ -126,12 +125,6 @@ export const roleBasedRoutes = {
           element: <Home />,
         },
         {
-          icon: <UserCircleIcon {...icon} />,
-          name: "Personal Profile",
-          path: "/Profile",
-          element: <Profile />,
-        },
-        {
           icon: <InventoryIcon {...icon} />,
           name: "My Assets",
           path: "/MyAssets",
@@ -168,12 +161,12 @@ export const roleBasedRoutes = {
           path: "/home",
           element: <Home />,
         },
-        {
-          icon: <UserCircleIcon {...icon} />,
-          name: "Personal Profile",
-          path: "/Profile",
-          element: <Profile />,
-        },
+        // {
+        //   icon: <UserCircleIcon {...icon} />,
+        //   name: "Personal Profile",
+        //   path: "/Profile",
+        //   element: <Profile />,
+        // },
         {
           icon: <InventoryIcon {...icon} />,
           name: "My Assets",
@@ -217,12 +210,12 @@ export const roleBasedRoutes = {
           path: "/home",
           element: <Home />,
         },
-        {
-          icon: <UserCircleIcon {...icon} />,
-          name: "Personal Profile",
-          path: "/Profile",
-          element: <Profile />,
-        },
+        // {
+        //   icon: <UserCircleIcon {...icon} />,
+        //   name: "Personal Profile",
+        //   path: "/Profile",
+        //   element: <Profile />,
+        // },
         {
           icon: <InventoryIcon {...icon} />,
           name: "My Assets",
@@ -260,12 +253,12 @@ export const roleBasedRoutes = {
           path: "/home",
           element: <Home />,
         },
-        {
-          icon: <UserCircleIcon {...icon} />,
-          name: "Personal Profile",
-          path: "/Profile",
-          element: <Profile />,
-        },
+        // {
+        //   icon: <UserCircleIcon {...icon} />,
+        //   name: "Personal Profile",
+        //   path: "/Profile",
+        //   element: <Profile />,
+        // },
         {
           icon: <InventoryIcon {...icon} />,
           name: "My Assets",
@@ -284,14 +277,14 @@ export const roleBasedRoutes = {
 };
 
 export function getEmployeeRole() {
-  const role = localStorage.getItem("role");
-  if (role === 0) {
+  const role = localStorage.getItem("employee_role");
+  if (role === "0") {
     return "Employee";
-  } else if (role === 2) {
+  } else if (role === "2") {
     return "Finance Manager";
-  } else if (role === 1) {
+  } else if (role === "1") {
     return "Procurement Manager";
-  } else (role === 3)
+  } else (role === "3")
   {
     return "Admin";
   }

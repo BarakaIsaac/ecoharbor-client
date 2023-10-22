@@ -26,6 +26,7 @@ const EmployeeList = () => {
     })
             .then(response => {
                 setEmployees(response.data);
+                // console.log(response.data[0].employee_role);
                 })
             .catch(error => {
                 console.error('Error fetching Employees record: ', error);

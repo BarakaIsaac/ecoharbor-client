@@ -9,8 +9,10 @@ import { // statisticsCardsData,
 } from "/src/data/statistics-charts-data.js";
 
 export function Home() {
+  const email = localStorage.getItem("email"); 
   return (
     <div className="mt-12">
+      <h1>Welcome User {email}</h1>
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
       </div>
       <div className="mb-6 grid grid-cols-1 gap-y-12 gap-x-6 md:grid-cols-2 xl:grid-cols-3">
