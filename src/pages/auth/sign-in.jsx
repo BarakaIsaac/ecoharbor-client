@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { saveTokens } from "../../tokens/tokens.jsx";
 import { backendUrl } from "../../../backendConfig.js";
+// import { getEmployeeRole } from "../../routes.jsx"
 
 import {
   Card,
@@ -42,6 +43,7 @@ export function SignIn() {
 
       // Get accessible routes based on the user's role
       const accessibleRoutes = getAccessibleRoutes(role);
+  
       console.log("Accessible Routes:", accessibleRoutes);
     } catch (error) {
       if (error.response) {

@@ -107,184 +107,189 @@ export const routes = [
   },
 ];
 
-// export const roleBasedRoutes = {
-//   Admin: [
-//     {
-//       layout: "dashboard",
-//       pages: [
-//         {
-//           icon: <HomeIcon {...icon} />,
-//           name: "dashboard",
-//           path: "/home",
-//           element: <Home />,
-//         },
-//         {
-//           icon: <InventoryIcon {...icon} />,
-//           name: "My Assets",
-//           path: "/MyAssets",
-//           element: <MyAssets />,
-//         },
-//         {
-//           icon: <PeopleAltIcon {...icon} />,
-//           name: "Employee List",
-//           path: "/EmployeeList",
-//           element: <EmployeeList />,
-//         },
-//         {
-//           icon: <HomeWorkIcon {...icon} />,
-//           name: "Department List",
-//           path: "/departmentlist",
-//           element: <DepartmentList />,
-//         },
-//         {
-//           icon: <HandymanIcon {...icon} />,
-//           name: "Asset Repairs",
-//           path: "/AssetRepair",
-//           element: <AssetRepair />,
-//         },
-//       ],
-//     },
-//   ],
-//   FinanceManager: [
-//     {
-//       layout: "dashboard",
-//       pages: [
-//         {
-//           icon: <HomeIcon {...icon} />,
-//           name: "dashboard",
-//           path: "/home",
-//           element: <Home />,
-//         },
-//         // {
-//         //   icon: <UserCircleIcon {...icon} />,
-//         //   name: "Personal Profile",
-//         //   path: "/Profile",
-//         //   element: <Profile />,
-//         // },
-//         {
-//           icon: <InventoryIcon {...icon} />,
-//           name: "My Assets",
-//           path: "/MyAssets",
-//           element: <MyAssets />,
-//         },
-//         {
-//           icon: <StorageIcon {...icon} />,
-//           name: "Asset Directory",
-//           path: "/AssetDirectory",
-//           element: <AssetDirectory />,
-//         },
-//         {
-//           icon: <RequestQuoteIcon {...icon} />,
-//           name: "Asset Requests",
-//           path: "/AssetRequest",
-//           element: <AssetRequest />,
-//         },
-//         {
-//           icon: <HandymanIcon {...icon} />,
-//           name: "Asset Repairs",
-//           path: "/AssetRepair",
-//           element: <AssetRepair />,
-//         },
-//         {
-//           icon: <ShoppingBagIcon {...icon} />,
-//           name: "Asset Valuation",
-//           path: "/AssetValuation",
-//           element: <AssetValuation />,
-//         },
-//       ],
-//     },
-//   ],
-//   ProcurementManager: [
-//     {
-//       layout: "dashboard",
-//       pages: [
-//         {
-//           icon: <HomeIcon {...icon} />,
-//           name: "dashboard",
-//           path: "/home",
-//           element: <Home />,
-//         },
-//         // {
-//         //   icon: <UserCircleIcon {...icon} />,
-//         //   name: "Personal Profile",
-//         //   path: "/Profile",
-//         //   element: <Profile />,
-//         // },
-//         {
-//           icon: <InventoryIcon {...icon} />,
-//           name: "My Assets",
-//           path: "/MyAssets",
-//           element: <MyAssets />,
-//         },
-//         {
-//           icon: <StorageIcon {...icon} />,
-//           name: "Asset Directory",
-//           path: "/AssetDirectory",
-//           element: <AssetDirectory />,
-//         },
-//         {
-//           icon: <HandymanIcon {...icon} />,
-//           name: "Asset Repairs",
-//           path: "/AssetRepair",
-//           element: <AssetRepair />,
-//         },
-//         {
-//           icon: <RequestQuoteIcon {...icon} />,
-//           name: "Asset Requests",
-//           path: "/AssetRequest",
-//           element: <AssetRequest />,
-//         },
-//       ],
-//     },
-//   ],
-//   Employee: [
-//     {
-//       layout: "dashboard",
-//       pages: [
-//         {
-//           icon: <HomeIcon {...icon} />,
-//           name: "dashboard",
-//           path: "/home",
-//           element: <Home />,
-//         },
-//         // {
-//         //   icon: <UserCircleIcon {...icon} />,
-//         //   name: "Personal Profile",
-//         //   path: "/Profile",
-//         //   element: <Profile />,
-//         // },
-//         {
-//           icon: <InventoryIcon {...icon} />,
-//           name: "My Assets",
-//           path: "/MyAssets",
-//           element: <MyAssets />,
-//         },
-//         {
-//           icon: <HandymanIcon {...icon} />,
-//           name: "Asset Repairs",
-//           path: "/AssetRepair",
-//           element: <AssetRepair />,
-//         },
-//       ],
-//     },
-//   ],
-// };
+export const roleBasedRoutes = {
+  Admin: [
+    {
+      layout: "dashboard",
+      pages: [
+        {
+          icon: <HomeIcon {...icon} />,
+          name: "dashboard",
+          path: "/home",
+          element: <Home />,
+        },
+        {
+          icon: <InventoryIcon {...icon} />,
+          name: "My Assets",
+          path: "/MyAssets",
+          element: <MyAssets />,
+        },
+        {
+          icon: <PeopleAltIcon {...icon} />,
+          name: "Employee List",
+          path: "/EmployeeList",
+          element: <EmployeeList />,
+        },
+        {
+          icon: <HomeWorkIcon {...icon} />,
+          name: "Department List",
+          path: "/departmentlist",
+          element: <DepartmentList />,
+        },
+        {
+          icon: <HandymanIcon {...icon} />,
+          name: "Asset Repairs",
+          path: "/AssetRepair",
+          element: <AssetRepair />,
+        },
+      ],
+    },
+  ],
+  FinanceManager: [
+    {
+      layout: "dashboard",
+      pages: [
+        {
+          icon: <HomeIcon {...icon} />,
+          name: "dashboard",
+          path: "/home",
+          element: <Home />,
+        },
+        // {
+        //   icon: <UserCircleIcon {...icon} />,
+        //   name: "Personal Profile",
+        //   path: "/Profile",
+        //   element: <Profile />,
+        // },
+        {
+          icon: <InventoryIcon {...icon} />,
+          name: "My Assets",
+          path: "/MyAssets",
+          element: <MyAssets />,
+        },
+        {
+          icon: <StorageIcon {...icon} />,
+          name: "Asset Directory",
+          path: "/AssetDirectory",
+          element: <AssetDirectory />,
+        },
+        {
+          icon: <RequestQuoteIcon {...icon} />,
+          name: "Asset Requests",
+          path: "/AssetRequest",
+          element: <AssetRequest />,
+        },
+        {
+          icon: <HandymanIcon {...icon} />,
+          name: "Asset Repairs",
+          path: "/AssetRepair",
+          element: <AssetRepair />,
+        },
+        // {
+        //   icon: <ShoppingBagIcon {...icon} />,
+        //   name: "Asset Valuation",
+        //   path: "/AssetValuation",
+        //   element: <AssetValuation />,
+        // },
+      ],
+    },
+  ],
+  ProcurementManager: [
+    {
+      layout: "dashboard",
+      pages: [
+        {
+          icon: <HomeIcon {...icon} />,
+          name: "dashboard",
+          path: "/home",
+          element: <Home />,
+        },
+        // {
+        //   icon: <UserCircleIcon {...icon} />,
+        //   name: "Personal Profile",
+        //   path: "/Profile",
+        //   element: <Profile />,
+        // },
+        {
+          icon: <InventoryIcon {...icon} />,
+          name: "My Assets",
+          path: "/MyAssets",
+          element: <MyAssets />,
+        },
+        {
+          icon: <StorageIcon {...icon} />,
+          name: "Asset Directory",
+          path: "/AssetDirectory",
+          element: <AssetDirectory />,
+        },
+        {
+          icon: <HandymanIcon {...icon} />,
+          name: "Asset Repairs",
+          path: "/AssetRepair",
+          element: <AssetRepair />,
+        },
+        {
+          icon: <RequestQuoteIcon {...icon} />,
+          name: "Asset Requests",
+          path: "/AssetRequest",
+          element: <AssetRequest />,
+        },
+      ],
+    },
+  ],
+  Employee: [
+    {
+      layout: "dashboard",
+      pages: [
+        {
+          icon: <HomeIcon {...icon} />,
+          name: "dashboard",
+          path: "/home",
+          element: <Home />,
+        },
+        // {
+        //   icon: <UserCircleIcon {...icon} />,
+        //   name: "Personal Profile",
+        //   path: "/Profile",
+        //   element: <Profile />,
+        // },
+        {
+          icon: <InventoryIcon {...icon} />,
+          name: "My Assets",
+          path: "/MyAssets",
+          element: <MyAssets />,
+        },
+        {
+          icon: <HandymanIcon {...icon} />,
+          name: "Asset Repairs",
+          path: "/AssetRepair",
+          element: <AssetRepair />,
+        },
+      ],
+    },
+  ],
+};
+  // const role = localStorage.getItem("employee_role");
+  // console.log("Employee_rolecccccccccc", role) 
 
-// export function getEmployeeRole() {
-//   const role = localStorage.getItem("employee_role"); //check if window is undefined. 
+export function getEmployeeRole() {
+  const role = localStorage.getItem("employee_role"); //check if window is undefined. 
 
-//   if (role === "0") {
-//     return "Employee";
-//   } else if (role === "2") {
-//     return "Finance Manager";
-//   } else if (role === "1") {
-//     return "Procurement Manager";
-//   } else (role === "3")
-//   {
-//     return "Admin";
-//   }
+  // console.log("Employee_rolecccccccccc", role)  
+  if (role === "0") {
+    return "Employee";
+  } else if (role === "2") {
+    return "Finance Manager";
+  } else if (role === "1") {
+    return "Procurement Manager";
+  } else (role === "3")
+  {
+    return "Admin";
+  }
 
-// }
+}
+
+
 export default routes;
 
 

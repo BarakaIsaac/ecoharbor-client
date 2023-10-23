@@ -9,14 +9,14 @@ export const saveTokens = (response) => {
   const last_name = response.data.data.last_name;
     const employee_image = response.data.data.employee_image;
 
-  console.log("API Response:", response);
-  console.log("Employee ID:", employee_id);
-  console.log("accessToken:", accessToken);
-  console.log("client:", client);
-  console.log("uid:", uid);
-  console.log("Employee name:", first_name);
-    console.log("Employee name:", last_name);
-      console.log("Employee image:", employee_image);
+  // console.log("API Response:", response);
+  // console.log("Employee ID:", employee_id);
+  // console.log("accessToken:", accessToken);
+  // console.log("client:", client);
+  // console.log("uid:", uid);
+  // console.log("Employee name:", first_name);
+  //   console.log("Employee name:", last_name);
+  //     console.log("Employee image:", employee_image);
 
   // Stringify the tokens before saving them to local storage.
   const accessTokenString = JSON.stringify(accessToken);
