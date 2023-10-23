@@ -42,9 +42,9 @@ export function SignIn() {
       console.log("Sign-in successful", response.data.data);
 
       // Get accessible routes based on the user's role
-      const accessibleRoutes = getAccessibleRoutes(role);
+      // const accessibleRoutes = getAccessibleRoutes(role);
   
-      console.log("Accessible Routes:", accessibleRoutes);
+      // console.log("Accessible Routes:", accessibleRoutes);
     } catch (error) {
       if (error.response) {
         // // Check the response status code to determine the error type.

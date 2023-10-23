@@ -2,6 +2,8 @@ export const saveTokens = (response) => {
   const accessToken = response.headers["access-token"];
   const client = response.headers["client"];
   const uid = response.headers["uid"];
+
+
   const email = response.data.data.email;
   const employee_role = response.data.data.employee_role;
   const employee_id = response.data.data.id;
@@ -11,9 +13,11 @@ export const saveTokens = (response) => {
 
   // console.log("API Response:", response);
   // console.log("Employee ID:", employee_id);
+
   // console.log("accessToken:", accessToken);
   // console.log("client:", client);
   // console.log("uid:", uid);
+  
   // console.log("Employee name:", first_name);
   //   console.log("Employee name:", last_name);
   //     console.log("Employee image:", employee_image);
@@ -36,6 +40,8 @@ export const saveTokens = (response) => {
   localStorage.setItem("access-token", accessTokenString);
   localStorage.setItem("client", clientString);
   localStorage.setItem("uid", uidString);
+
+
   localStorage.setItem("email", emailString);
   localStorage.setItem("employee_role", employeeRoleString);
   localStorage.setItem("employee_id", employeeIdString);

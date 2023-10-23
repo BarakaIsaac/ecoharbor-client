@@ -1,15 +1,15 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Navbar } from "../widgets/layout/navbar";
+// import { Navbar } from "../widgets/layout/navbar";
 import routes from "../routes";
 
 export function Auth() {
-  const navbarRoutes = [
+  // const navbarRoutes = [
 
-  ];
+  // ];
 
   return (
     <div className="relative min-h-screen w-full">
-      <div className="container relative z-40 mx-auto p-4"><Navbar routes={navbarRoutes} /></div>
+      {/* <div className="container relative z-40 mx-auto p-4"><Navbar routes={navbarRoutes} /></div> */}
       <Routes>
         {routes.map(
           ({ layout, pages }) =>

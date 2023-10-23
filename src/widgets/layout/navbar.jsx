@@ -82,18 +82,18 @@ export function Navbar({ brandName, routes, action }) {
   );
 }
 
-Navbar.defaultProps = {
-  brandName: "Eco Harbor Co.",
-  action: (
-    <Button variant="text"></Button>
-  ),
-};
+// Navbar.defaultProps = {
+//   brandName: "Eco Harbor Co.",
+//   action: (
+//     <Button variant="text"></Button>
+//   ),
+// };
 
-Navbar.propTypes = {
-  brandName: PropTypes.string,
-  routes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  action: PropTypes.node,
-};
+// Navbar.propTypes = {
+//   brandName: PropTypes.string,
+//   routes: PropTypes.arrayOf(PropTypes.object).isRequired,
+//   action: PropTypes.node,
+// };
 
 Navbar.displayName = "/src/widgets/layout/navbar.jsx";
 
