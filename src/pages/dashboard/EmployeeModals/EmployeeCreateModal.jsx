@@ -25,16 +25,28 @@ function EmployeeCreateModal({showCreateModal, setShowCreateModal, handleCreateE
                         className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
                 </div>
                 <div>
+                    <label className="block text-sm font-medium text-gray-700">E-mail</label>
+                    <input type="email" value={newEmployee.email} required
+                        onChange={e => setNewEmployee({ ...newEmployee, email: e.target.value })}
+                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
+                </div>
+                <div>
                     <label className="block text-sm font-medium text-gray-700">Password</label>
                     <input type="password" value={newEmployee.password} required
                         onChange={e => setNewEmployee({ ...newEmployee, password: e.target.value })}
                         className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">E-mail</label>
-                    <input type="email" value={newEmployee.email} required
-                        onChange={e => setNewEmployee({ ...newEmployee, email: e.target.value })}
-                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
+                    <label className="block text-sm font-medium text-gray-700">Employee Role</label>
+                    <select value={newEmployee.employee_role} required
+                        onChange={e => setNewEmployee({ ...newEmployee, employee_role: e.target.value })}
+                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" >
+                        <option value="" disabled>Select a Role</option>
+                        <option value="1">Procurement Manager</option>
+                        <option value="0">Employee</option>
+                        <option value="2">Finance</option>
+                        <option value="3">Admin</option>
+                    </select>
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Phone Number</label>
@@ -43,17 +55,17 @@ function EmployeeCreateModal({showCreateModal, setShowCreateModal, handleCreateE
                         className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Employment Image</label>
-                    <input type="text" value={newEmployee.employee_image} required
-                        onChange={e => setNewEmployee({ ...newEmployee, employee_image: e.target.value })}
-                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
-                </div>                
-                <div>
                     <label className="block text-sm font-medium text-gray-700">Employment Date</label>
                     <input type="date" value={newEmployee.employment_date} required
                         onChange={e => setNewEmployee({ ...newEmployee, employment_date: e.target.value })}
                         className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
                 </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Employment Image</label>
+                    <input type="text" value={newEmployee.employee_image} required
+                        onChange={e => setNewEmployee({ ...newEmployee, employee_image: e.target.value })}
+                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
+                </div>                
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Department</label>
                     <select value={newEmployee.department_id} required
@@ -65,18 +77,6 @@ function EmployeeCreateModal({showCreateModal, setShowCreateModal, handleCreateE
                                 {departmentNames[departmentId]}
                             </option>
                         ))}
-                    </select>
-                </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Employee Role</label>
-                    <select value={newEmployee.employee_role} required
-                        onChange={e => setNewEmployee({ ...newEmployee, employee_role: e.target.value })}
-                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" >
-                        <option value="" disabled>Select a Role</option>
-                        <option value="1">Procurement Manager</option>
-                        <option value="0">Normal Employee</option>
-                        <option value="2">Finance</option>
-                        <option value="3">Admin</option>
                     </select>
                 </div>
                 <div className="flex justify-between">

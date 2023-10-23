@@ -121,7 +121,7 @@ const DepartmentList = () => {
         <div className="mt-12 mb-8 flex flex-col gap-12">
             <Card>
                 <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
-                    <div className="flex items-center"><Typography variant="h6" color="white">Department List</Typography>
+                    <div className="flex items-center justify-between"><Typography variant="h6" color="white">Department List</Typography>
                         <button onClick={() => setShowCreateModal(true)}
                             className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none">Create</button>
                     </div>

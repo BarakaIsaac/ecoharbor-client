@@ -7,6 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 //MODALS
 import AssetViewModal from './AssetModals/AssetViewModal';
 import AssetCreateModal from './AssetModals/AssetCreateModal';
@@ -53,7 +54,11 @@ function AssetDirectory() {
             .then(response => {
                 const employeeNameMap = {};
                 response.data.forEach(employee => {
-                    employeeNameMap[employee.id] = employee.first_name;
+                    // employeeNameMap[employee.id] = employee.first_name;
+                    employeeNameMap[employee.id] = {
+                    firstName: employee.first_name,
+                    lastName: employee.last_name
+                };
                 });
                 setEmployeeNames(employeeNameMap);
                 })
@@ -231,16 +236,11 @@ function AssetDirectory() {
         <div className="mt-12 mb-8 flex flex-col gap-12">
         <Card>
             <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
-                <div className="flex items-center"><Typography variant="h6" color="white">Asset Directory</Typography>
+                <div className="flex items-center justify-between"><Typography variant="h6" color="white">Asset Directory</Typography>
                     <button onClick={() => setShowCreateModal(true)}
                                     className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none" >
                                     Create </button>
-                    <button onClick={() => setShowEditValuationModal(true)}
-                                    className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none" >
-                                    Asset Valuation </button>
-                    <button onClick={() => setShowEditAllocationModal(true)}
-                                    className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none" >
-                                    Asset Allocation </button>
+                  
                 </div>
             </CardHeader>
             <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
@@ -260,7 +260,7 @@ function AssetDirectory() {
                     <tbody>
                     {paginatedAssets.map((asset) => (
                             <tr key={asset.id} className="border-t">
-                                <td><Typography color="blue-gray" className="pl-2 font-semibold text-xs text-blue-gray-500">{asset.asset_name}</Typography></td>
+                                <td><Typography color="blue-gray" className="pl-2 font-semibold text-xs text-blue-gray-500">{asset.asset_name.toUpperCase()}</Typography></td>
                                 <td><Typography className="text-xs font-normal text-blue-gray-500">{asset.asset_category}</Typography></td>
                                 <td><Typography className="text-xs font-semibold text-blue-gray-600">{asset.asset_condition}</Typography></td>
                                 <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{asset.quantity}</Typography></td>
@@ -276,7 +276,9 @@ function AssetDirectory() {
                                     <button onClick={() => handleDeleteClick(asset)} className="py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Delete Asset">
                                         <DeleteIcon style={{ color: '#BC544B' }}/></button>
                                     <button onClick={() => handleEditValuationClick(asset)} className="py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Asset Valuation">
-                                        <CurrencyExchangeIcon /></button>                               
+                                        <CurrencyExchangeIcon /></button> 
+                                    <button onClick={() => handleEditAllocationClick(asset)} className="py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Asset Allocation">
+                                        <AssignmentIndIcon /></button>                                
                                 </td>
                             </tr>
                         ))}

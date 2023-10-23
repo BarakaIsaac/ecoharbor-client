@@ -4,13 +4,14 @@ export const saveTokens = (response) => {
   const uid = response.headers["uid"];
   const email = response.data.data.email;
   const employee_role = response.data.data.employee_role;
+  const employee_id = response.data.data.id;
 
 
-  // console.log("API Response:", response);
-
-  // console.log("accessToken:", accessToken);
-  // console.log("client:", client);
-  // console.log("uid:", uid);
+  console.log("API Response:", response);
+  console.log("Employee ID:", employee_id);
+  console.log("accessToken:", accessToken);
+  console.log("client:", client);
+  console.log("uid:", uid);
 
   // Stringify the tokens before saving them to local storage.
   const accessTokenString = JSON.stringify(accessToken);
@@ -27,6 +28,7 @@ export const saveTokens = (response) => {
   localStorage.setItem("uid", uidString);
   localStorage.setItem("email", emailString);
   localStorage.setItem("employee_role", employeeRoleString);
+  localStorage.setItem("employee_id", employee_idString);
 
   console.log(
     "access-token in localStorage:",
@@ -36,19 +38,20 @@ export const saveTokens = (response) => {
   console.log("uid in localStorage:", localStorage.getItem("uid"));
   console.log("email in localStorage:", localStorage.getItem("email"));
   console.log("email in localStorage:", localStorage.getItem("email"));
+  console.log("employee_id in localStorage:", localStorage.getItem("employee_id"));
 };
 
-// export const handleTokens = (response) => {
-//   const accessToken = response.headers["access-token"];
-//   const client = response.headers["client"];
-//   const uid = response.headers["uid"];
+export const handleTokens = (response) => {
+  const accessToken = response.headers["access-token"];
+  const client = response.headers["client"];
+  const uid = response.headers["uid"];
 
-//   if (accessToken && client && uid) {
-//     localStorage.setItem("access-token", accessToken);
-//     localStorage.setItem("client", client);
-//     localStorage.setItem("uid", uid);
-//   }
-// };
+  if (accessToken && client && uid) {
+    localStorage.setItem("access-token", accessToken);
+    localStorage.setItem("client", client);
+    localStorage.setItem("uid", uid);
+  }
+};
 
 // export const saveTokens = (response) => {
 //   const accessToken = response.headers["access-token"];

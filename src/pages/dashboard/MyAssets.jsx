@@ -23,12 +23,14 @@ Modal.setAppElement('#root');
 function MyAssets() {
     //FETCH ASSETS
     const [assets, setAssets] = useState([]);
+    const [filteredAssets, setFilteredAssets] = useState([]);
     
     const [departmentNames, setDepartmentNames] = useState({});
     useEffect(() => {
         axios.get(Api_Url)
             .then((response) => {
             setAssets(response.data);
+            filterAssetsByEmployee();
             })
             .catch((error) => {
             console.error('Error fetching Asset record: ', error);
@@ -46,6 +48,13 @@ function MyAssets() {
             console.error('Error fetching department data: ', error);
             });
         }, []);
+
+    // Filter assets by employee_id from local storage
+    const filterAssetsByEmployee = () => {
+        const employeeId = localStorage.getItem('employee_id'); // Get employee_id from local storage
+        const filtered = assets.filter((asset) => asset.employee_id === employeeId);
+        setFilteredAssets(filtered);
+    };
 
     // //REQUEST NEW ASSET
     const [showRequestModal, setShowRequestModal] = useState(false);
@@ -75,7 +84,7 @@ function MyAssets() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-    const paginatedAssets = assets.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+    const paginatedAssets = filteredAssets.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
     //SUCCESS MESSAGE
     const [successMessage, setSuccessMessage] = useState(null);
     const showSuccessMessage = (message) => {
@@ -107,10 +116,12 @@ function MyAssets() {
         <div className="mt-12 mb-8 flex flex-col gap-12">
         <Card>
             <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
-                <div className="flex items-center">
+                <div className="flex items-center justify-between">
                     <Typography variant="h6" color="white">My Assets</Typography>
+                    <div className="flex space-x-2">
                         <button onClick={openRequestModal} className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none" title="Request New Asset"><AddTaskIcon /></button>
                         <button onClick={openRepairModal} className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none" title="Repair Request"><ConstructionIcon /></button>
+                    </div>
                 </div>
             </CardHeader>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
@@ -129,7 +140,7 @@ function MyAssets() {
                 <tbody>
                   {paginatedAssets.map((asset) => (
                         <tr key={asset.id} className="border-t">
-                          <td><Typography color="blue-gray" className="pl-2 font-semibold text-xs text-blue-gray-500">{asset.asset_name}</Typography></td>
+                          <td><Typography color="blue-gray" className="pl-2 font-semibold text-xs text-blue-gray-500">{asset.asset_name.toUpperCase()}</Typography></td>
                           <td><Typography className="text-xs font-normal text-blue-gray-500">{asset.asset_category}</Typography></td>
                           <td><Typography className="text-xs font-semibold text-blue-gray-600">{asset.asset_condition}</Typography></td>
                           <td><Typography className="text-xs font-semibold text-blue-gray-600">{asset.condition}</Typography></td>

@@ -17,40 +17,51 @@ Modal.setAppElement('#root');
 
 const EmployeeList = () => {
     //FETCH EMPLOYEE DATA
-    const [employees, setEmployees] = useState([]);
-    const [departmentNames, setDepartmentNames] = useState({});
+const [employees, setEmployees] = useState([]);
+const [departmentNames, setDepartmentNames] = useState({});
+const [employeeCreated, setEmployeeCreated] = useState(false);
+
     useEffect(() => {
-        axios.get(`${backendUrl}/employees`,{
+    const fetchEmployees = async () => {
+        try {
+        const employeesResponse = await axios.get(`${backendUrl}/employees`, {
             headers: {
             'Authorization': 'Bearer your_token',
-                'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            },
+        });
+        setEmployees(employeesResponse.data);
+        } catch (error) {
+        console.error('Error fetching Employees record: ', error);
         }
-    })
-            .then(response => {
-                setEmployees(response.data);
-                // console.log(response.data[0].employee_role);
-                })
-            .catch(error => {
-                console.error('Error fetching Employees record: ', error);
-                });
+
         // Fetch department data to get department names
-        axios.get(`${backendUrl}/departments`, {
+        try {
+        const departmentsResponse = await axios.get(`${backendUrl}/departments`, {
             headers: {
-                'Authorization': 'Bearer your_token',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => {
-            const departmentNameMap = {};
-            response.data.forEach(department => {
-                departmentNameMap[department.id] = department.department_name;
-            });
-            setDepartmentNames(departmentNameMap);
-            })
-            .catch(error => {
-            console.error('Error fetching department data: ', error);
-            });
-        }, []);
+            'Authorization': 'Bearer your_token',
+            'Content-Type': 'application/json',
+            },
+        });
+        const departmentNameMap = {};
+        departmentsResponse.data.forEach(department => {
+            departmentNameMap[department.id] = department.department_name;
+        });
+        setDepartmentNames(departmentNameMap);
+        } catch (error) {
+        console.error('Error fetching department data: ', error);
+        }
+    };
+
+    fetchEmployees(); // Fetch employees on component mount
+
+    // Refresh employees when an employee is created
+    if (employeeCreated) {
+        fetchEmployees();
+        setEmployeeCreated(false); // Reset the state to false
+    }
+    }, [employeeCreated]);
+
     // DELETE EMPLOYEE
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const handleDeleteClick = (employee) => {
@@ -71,14 +82,15 @@ const EmployeeList = () => {
     };
     // CREATE EMPLOYEE
     const [showCreateModal, setShowCreateModal] = useState(false);
-    const [newEmployee, setNewEmployee] = useState({ first_name: '', last_name: '', email: '', phone_number: '', password: '', employment_date: '', department_id: '', employee_role: '', role: '', employee_image: '' });
+    const [newEmployee, setNewEmployee] = useState({ first_name: '', last_name: '', email: '', phone_number: '', password: '', employment_date: '', department_id: '', employee_role: 0, role: '', employee_image: '' });
     const handleCreateEmployee = () => {
-        axios.post((`${backendUrl}/signup`), newEmployee)
+        axios.post((`${backendUrl}/signup`), {employee: newEmployee})
             .then(response => {
             const createdEmployee = response.data;
             
                 setEmployees([...employees, createdEmployee]);
                 setShowCreateModal(false);
+                setEmployeeCreated(true);
 
                 showSuccessMessage('Employee record created successfully!');
             })
@@ -117,6 +129,22 @@ const EmployeeList = () => {
                 console.error('Error updating employee record: ', error);
             });
     };
+    //ROLE NAMES
+    const getRoleName = (role) => {
+            // console.log('Role Value:', role); 
+        switch (role) {
+            case "0":
+            return 'Employee';
+            case "1":
+            return 'Procurement Manager';
+            case "2":
+            return 'Finance Manager';
+            case "3":
+            return 'Admin';
+            default:
+            return 'Unknown Role';
+        }
+        };
 
     //PAGINATION
     const [page, setPage] = useState(0);
@@ -150,7 +178,7 @@ const EmployeeList = () => {
         <div className="mt-12 mb-8 flex flex-col gap-12">
         <Card>
            <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
-                <div className="flex items-center"><Typography variant="h6" color="white">Employee List</Typography>
+                <div className="flex items-center justify-between"><Typography variant="h6" color="white">Employee List</Typography>
                     <button onClick={() => setShowCreateModal(true)} className="bg-[#2F3D44] text-white py-2 px-4 rounded-md ml-2 hover:bg-[#379CF0] focus:outline-none" >Create</button>
                 </div>
             </CardHeader>
@@ -176,9 +204,9 @@ const EmployeeList = () => {
                                 </Typography></td>
                                 <td><Typography className="text-xs font-semibold text-blue-gray-600">{employee.email}</Typography></td>
                                 <td><Typography className="text-xs font-semibold text-blue-gray-600">{employee.phone_number}</Typography></td>
-                                <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{employee.employment_date}</Typography></td>
+                                <td ><Typography className="text-left text-xs font-semibold text-blue-gray-600">{employee.employment_date}</Typography></td>
                                 <td><Typography className="text-xs font-semibold text-blue-gray-600">{departmentNames[employee.department_id]}</Typography></td>
-                                <td><Typography className="text-xs font-semibold text-blue-gray-600">{employee.employee_role}</Typography></td>
+                                <td><Typography className="text-xs font-semibold text-blue-gray-600">{getRoleName(employee.employee_role)}</Typography></td>
                                 <td><button onClick={() => handleEditClick(employee)} 
                                     className="py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white"title="Edit Employee"><CreateOutlinedIcon /></button>
                                     <button onClick={() => handleDeleteClick(employee)} 
