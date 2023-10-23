@@ -11,11 +11,10 @@ function AssetAllocationModal({showEditAllocationModal, setShowEditAllocationMod
             contentLabel="Edit Asset Modal"
             className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-opacity-75 bg-black" >
             <div className="bg-white w-1/3 p-6 rounded-lg">
-                <h2 className="text-2xl font-semibold mb-4">Asset Allocation {" "}<span className="font-bold text-blue-600 underline">{selectedAsset?.asset_name}</span>{" "}</h2>
+                <h2 className="text-2xl font-semibold mb-4">Asset Allocation - {" "}<span className="font-bold text-blue-600 underline">{selectedAsset?.asset_name}</span>{" "}</h2>
 
                 <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 text-center">{selectedAsset?.asset_name}</label>
-                <img src={editedAsset.asset_image}  alt="Asset" className="block w-full mt-1 border rounded-md"  />
+                 <img src={editedAsset.asset_image}  alt="Asset" className="max-w-[500px] max-h-[500px] my-4 border-4 border-blue-500 rounded-lg shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out"  />
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Employee</label>
@@ -46,7 +45,7 @@ function AssetAllocationModal({showEditAllocationModal, setShowEditAllocationMod
                         ))}
                     </select>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between mt-4">
                     <button onClick={handleSaveEditAllocation} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none">Update</button>
                     <button onClick={() => setShowEditAllocationModal(false)} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none">Cancel</button>
                 </div>
