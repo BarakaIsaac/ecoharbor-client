@@ -61,6 +61,7 @@ function AssetDirectory() {
             .catch(error => {
                 console.error('Error fetching employee data: ', error);
             });
+                        // Fetch employee data to get employee names last_name
 
         }, []);
 
@@ -267,7 +268,7 @@ function AssetDirectory() {
                                         ? `${employeeNames[asset.employee_id].first_name} ${employeeNames1[asset.employee_id].last_name}`.toUpperCase()
                                         : ''}
                                     </Typography></td> */}
-                                <td><Typography className="text-xs font-semibold text-blue-gray-600">{employeeNames[asset.employee_id] ? employeeNames[asset.employee_id].toUpperCase() : '' }</Typography></td>
+                                <td><Typography className="text-xs font-semibold text-blue-gray-600">{employeeNames[asset.employee_id]}</Typography></td>
                                 <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{asset.purchase_value !== null
                                         ? Number(asset.purchase_value).toLocaleString('en-US', {
                                             style: 'currency',

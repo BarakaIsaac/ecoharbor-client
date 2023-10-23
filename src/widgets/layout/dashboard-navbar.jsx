@@ -35,18 +35,20 @@ export function DashboardNavbar() {
           </Breadcrumbs>
           <Typography variant="h6" color="blue-gray">{page}</Typography>
         </div>
-<div className="flex items-center justify-between">
-  <div>
-    <img
-      src={defaultImage}
-      alt="Image"
-      className="h-10 w-10 rounded-full object-cover"
-    />
-  </div>
-  <Typography variant="h6" color="black" className="ml-2">
-    {`${first_name} ${last_name}`}
-  </Typography>
-</div>
+        <div className="flex justify-end items-center">
+          <div>
+            <img
+              src={defaultImage}
+              alt="Image"
+              className="h-10 w-10 rounded-full object-cover"
+            />
+          </div>
+          <div className="flex items-center">
+            <Typography variant="h6" color="black" className="ml-2">
+              {`${first_name} ${last_name}`}
+            </Typography>
+          </div>
+        </div>
         <div className="flex items-center">
           <IconButton variant="text" color="blue-gray" className="grid xl:hidden" onClick={() => setOpenSidenav(dispatch, !openSidenav)} >
             <Bars3Icon strokeWidth={3} className="h-6 w-6 text-blue-gray-500" />

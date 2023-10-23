@@ -97,7 +97,7 @@ function AssetRepairModal({ isOpen, onClose, }) {
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
-      height: '70%',
+      height: '55%',
       maxHeight: '800px',
       width: '80%',
       maxWidth: '700px',

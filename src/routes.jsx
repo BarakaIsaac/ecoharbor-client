@@ -19,7 +19,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import MyAssets from "./pages/dashboard/MyAssets";
 import EmployeeList from "./pages/dashboard/EmployeeList";
 import AssetDirectory from "./pages/dashboard/AssetDirectory";
-import AssetValuation from "./pages/dashboard/AssetValuation";
+// import AssetValuation from "./pages/dashboard/AssetValuation";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -78,12 +78,12 @@ export const routes = [
         path: "/AssetRepair",
         element: <AssetRepair />,
       },
-      {
-        icon: <ShoppingBagIcon {...icon} />,
-        name: "Asset Valuation",
-        path: "/AssetValuation",
-        element: <AssetValuation />,
-      },
+      // {
+      //   icon: <ShoppingBagIcon {...icon} />,
+      //   name: "Asset Valuation",
+      //   path: "/AssetValuation",
+      //   element: <AssetValuation />,
+      // },
     ],
   },
   {

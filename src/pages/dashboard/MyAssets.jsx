@@ -23,14 +23,12 @@ Modal.setAppElement('#root');
 function MyAssets() {
     //FETCH ASSETS
     const [assets, setAssets] = useState([]);
-    const [filteredAssets, setFilteredAssets] = useState([]);
     
     const [departmentNames, setDepartmentNames] = useState({});
     useEffect(() => {
         axios.get(Api_Url)
             .then((response) => {
             setAssets(response.data);
-            filterAssetsByEmployee();
             })
             .catch((error) => {
             console.error('Error fetching Asset record: ', error);
@@ -48,13 +46,6 @@ function MyAssets() {
             console.error('Error fetching department data: ', error);
             });
         }, []);
-
-    // Filter assets by employee_id from local storage
-    const filterAssetsByEmployee = () => {
-        const employeeId = localStorage.getItem('employee_id'); // Get employee_id from local storage
-        const filtered = assets.filter((asset) => asset.employee_id === employeeId);
-        setFilteredAssets(filtered);
-    };
 
     // //REQUEST NEW ASSET
     const [showRequestModal, setShowRequestModal] = useState(false);
@@ -84,7 +75,7 @@ function MyAssets() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-    const paginatedAssets = filteredAssets.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+    const paginatedAssets = assets.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
     //SUCCESS MESSAGE
     const [successMessage, setSuccessMessage] = useState(null);
     const showSuccessMessage = (message) => {
