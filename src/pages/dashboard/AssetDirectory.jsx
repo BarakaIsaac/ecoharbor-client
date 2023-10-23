@@ -49,22 +49,19 @@ function AssetDirectory() {
             .catch(error => {
                 console.error('Error fetching department data: ', error);
             });
-            // Fetch employee data to get employee names
+            // Fetch employee data to get employee names first_name
         axios.get(Api_Url_emp)
             .then(response => {
                 const employeeNameMap = {};
                 response.data.forEach(employee => {
-                    // employeeNameMap[employee.id] = employee.first_name;
-                    employeeNameMap[employee.id] = {
-                    firstName: employee.first_name,
-                    lastName: employee.last_name
-                };
+                    employeeNameMap[employee.id] = employee.first_name;
                 });
                 setEmployeeNames(employeeNameMap);
                 })
             .catch(error => {
                 console.error('Error fetching employee data: ', error);
             });
+
         }, []);
 
     //UPDATE ASSETS
@@ -253,8 +250,8 @@ function AssetDirectory() {
                             <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Quantity</Typography></th>  
                             <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Department</Typography></th>
                             <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Staff</Typography></th>                        
-                            <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Purchase Value (KES)</Typography></th>
-                            <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Current value (KES)</Typography></th>          
+                            <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Purchase Value </Typography></th>
+                            <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Current value </Typography></th>          
                         </tr>
                     </thead>
                     <tbody>
@@ -263,11 +260,30 @@ function AssetDirectory() {
                                 <td><Typography color="blue-gray" className="pl-2 font-semibold text-xs text-blue-gray-500">{asset.asset_name.toUpperCase()}</Typography></td>
                                 <td><Typography className="text-xs font-normal text-blue-gray-500">{asset.asset_category}</Typography></td>
                                 <td><Typography className="text-xs font-semibold text-blue-gray-600">{asset.asset_condition}</Typography></td>
-                                <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{asset.quantity}</Typography></td>
-                                <td><Typography className="text-xs font-semibold text-blue-gray-600">{departmentNames[asset.department_id]}</Typography></td>
-                                <td><Typography className="text-xs font-semibold text-blue-gray-600">{employeeNames[asset.employee_id]}</Typography></td>
-                                <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{asset.purchase_value}</Typography></td>
-                                <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{asset.current_value}</Typography></td>
+                                <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{asset.quantity}</Typography></td>                               
+                                <td><Typography className="text-xs font-semibold text-[#3197ED]">{departmentNames[asset.department_id] ? departmentNames[asset.department_id].toUpperCase() : ''}</Typography></td>
+                                {/* <td><Typography className="text-xs font-semibold text-[#3197ED]">
+                                    {employeeNames[asset.employee_id]
+                                        ? `${employeeNames[asset.employee_id].first_name} ${employeeNames1[asset.employee_id].last_name}`.toUpperCase()
+                                        : ''}
+                                    </Typography></td> */}
+                                <td><Typography className="text-xs font-semibold text-blue-gray-600">{employeeNames[asset.employee_id] ? employeeNames[asset.employee_id].toUpperCase() : '' }</Typography></td>
+                                <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{asset.purchase_value !== null
+                                        ? Number(asset.purchase_value).toLocaleString('en-US', {
+                                            style: 'currency',
+                                            currency: 'KES',
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                            })
+                                        : '0.00'}</Typography></td>
+                                <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{asset.current_value !== null
+                                        ? Number(asset.current_value).toLocaleString('en-US', {
+                                            style: 'currency',
+                                            currency: 'KES',
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                            })
+                                        : '0.00'}</Typography></td>
                                 <td><button onClick={() => handleViewClick(asset)} className="py-1 px-3 rounded-md mb-2 border-black border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="View Asset">
                                     <VisibilityOutlinedIcon /></button>
                                     <button onClick={() => handleEditClick(asset)} 

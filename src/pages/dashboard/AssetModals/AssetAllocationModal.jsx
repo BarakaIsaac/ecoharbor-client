@@ -4,9 +4,7 @@ import Modal from 'react-modal';
 Modal.setAppElement('#root');
 
 function AssetAllocationModal({showEditAllocationModal, setShowEditAllocationModal, selectedAsset, editedAsset, setEditedAsset, handleSaveEditAllocation, departmentNames, employeeNames }) {
-  
-  
-    return (
+  return (
         <Modal
             isOpen={showEditAllocationModal}
             onRequestClose={() => setShowEditAllocationModal(false)}
@@ -14,42 +12,25 @@ function AssetAllocationModal({showEditAllocationModal, setShowEditAllocationMod
             className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-opacity-75 bg-black" >
             <div className="bg-white w-1/3 p-6 rounded-lg">
                 <h2 className="text-2xl font-semibold mb-4">Asset Allocation {" "}<span className="font-bold text-blue-600 underline">{selectedAsset?.asset_name}</span>{" "}</h2>
+
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Asset Name</label>
-                    <input type="text" value={editedAsset.asset_name}
-                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
-                </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Department</label>
-                    <input type="text" value={editedAsset.asset_category}
-                        onChange={e => setEditedAsset({ ...editedAsset, asset_category: e.target.value })}
-                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
+                <label className="block text-sm font-medium text-gray-700 text-center">{selectedAsset?.asset_name}</label>
+                <img src={editedAsset.asset_image}  alt="Asset" className="block w-full mt-1 border rounded-md"  />
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Employee</label>
-                    <select
-                    value={editedAsset.employee_id}
-                    onChange={(e) =>
-                        setEditedAsset({ ...editedAsset, employee_id: e.target.value })
-                    }
-                    className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                    >
-                    <option value="" disabled className="text-grey-100" style={{ opacity: 0.6 }}>
+                    <select value={editedAsset.employee_id} onChange={(e) => setEditedAsset({ ...editedAsset, employee_id: e.target.value })}
+                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" >
+                        <option value="" disabled className="text-grey-100" style={{ opacity: 0.6 }}>
                         Select an Employee
-                    </option>
-                    <option value="" key="blank"></option>
-                    {Object.keys(employeeNames).map((employeeId) => (
-                        <option key={employeeId} value={employeeId}>
-                        {employeeNames[employeeId].firstName.toUpperCase()} {employeeNames[employeeId].lastName.toUpperCase()}
                         </option>
-                    ))}
+                        <option value="" key="blank"></option>
+                        {Object.keys(employeeNames).map((employeeId) => (
+                        <option key={employeeId} value={employeeId}>
+                            {employeeNames[employeeId]}
+                        </option>
+                        ))}
                     </select>
-                </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Quantity</label>
-                    <input type="text" value={editedAsset.quantity}
-                        onChange={e => setEditedAsset({ ...editedAsset, quantity: e.target.value })}
-                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Department</label>
@@ -64,12 +45,6 @@ function AssetAllocationModal({showEditAllocationModal, setShowEditAllocationMod
                             </option>
                         ))}
                     </select>
-                </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Asset Image</label>
-                    <input type="text" value={editedAsset.asset_image}
-                        onChange={e => setEditedAsset({ ...editedAsset, asset_image: e.target.value })}
-                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
                 </div>
                 <div className="flex justify-between">
                     <button onClick={handleSaveEditAllocation} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none">Update</button>
