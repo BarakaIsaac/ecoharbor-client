@@ -18,6 +18,7 @@ export function Dashboard() {
         <Configurator />
 
         <Routes>
+          
           {routes.map(
             ({ layout, pages }) =>
               layout === "dashboard" &&

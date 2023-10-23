@@ -9,10 +9,20 @@ import { // statisticsCardsData,
 } from "/src/data/statistics-charts-data.js";
 
 export function Home() {
-  const email = localStorage.getItem("email"); 
+    const first_name = localStorage.getItem("first_name");
+  const last_name = localStorage.getItem("last_name");
+  const userImage = localStorage.getItem("employee_image");
+
   return (
     <div className="mt-12">
-      <h1>Welcome User {email}</h1>
+      {/* <h1>Welcome {first_name} {last_name}</h1>
+       <div>
+        <Typography variant="h6" color="black">{`${first_name} ${last_name}`}</Typography>
+        <div className="flex items-center"><img src="{userImage}" alt="image" className="h-10 w-10 rounded-full object-cover" /></div>
+
+
+
+        </div> */}
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
       </div>
       <div className="mb-6 grid grid-cols-1 gap-y-12 gap-x-6 md:grid-cols-2 xl:grid-cols-3">
