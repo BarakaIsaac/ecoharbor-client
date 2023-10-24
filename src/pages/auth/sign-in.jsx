@@ -5,15 +5,7 @@ import { saveTokens } from "../../tokens/tokens.jsx";
 import { backendUrl } from "../../../backendConfig.js";
 // import { getEmployeeRole } from "../../routes.jsx"
 
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Input,
-  Button,
-  Typography,
-} from "@material-tailwind/react";
+import {Card, CardHeader, CardBody, CardFooter, Input, Button, Typography,} from "@material-tailwind/react";
 
 export function SignIn() {
  const [email, setEmail] = useState("");
@@ -30,28 +22,23 @@ export function SignIn() {
           password: password,
         },
       });
-      console.log("Email", response.data.data.email);
-      console.log("Role", response.data.data.employee_role);
 
+        // localStorage.setItem('tokenx',response.headers.get("Authorization"))
       const role = response.data.data.employee_role;
       setEmployeeRole(role);
 
       saveTokens(response);
 
-      navigate("/home");
+      navigate("/dashboard/home");
       console.log("Sign-in successful", response.data.data);
 
-      // Get accessible routes based on the user's role
-      // const accessibleRoutes = getAccessibleRoutes(role);
-  
-      // console.log("Accessible Routes:", accessibleRoutes);
+        // console.log("Email", response.data.data.email);
+      // console.log("Role", response.data.data.employee_role);
+
+      
     } catch (error) {
       if (error.response) {
-        // // Check the response status code to determine the error type.
-        // console.error("Response status:", error.response.status);
-        // console.error("Response data:", error.response.data);
 
-        // Display an error message based on the response status code.
         if (error.response.status === 401) {
           setErrorMessage("Incorrect Email or Password");
         } else {

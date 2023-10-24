@@ -67,13 +67,7 @@ function AssetViewModal({ isOpen, onClose, asset, departmentNames }) {
                     </Card>
                 </div>
             )}       
-                {/* <AssetRequestFormModal
-                    isOpen={showRequestModal}
-                    onClose={() => setShowRequestModal(false)}
-                    selectedAsset={asset}
-                    departmentNames={departmentNames}
-                /> */}
-                {showRequestModal && (
+               {showRequestModal && (
                     <AssetRequestFormModal
                         isOpen={showRequestModal}
                         onClose={() => setShowRequestModal(false)}

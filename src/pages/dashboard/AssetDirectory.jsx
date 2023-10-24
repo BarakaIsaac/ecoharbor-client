@@ -8,6 +8,9 @@ import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 //MODALS
 import AssetViewModal from './AssetModals/AssetViewModal';
 import AssetCreateModal from './AssetModals/AssetCreateModal';
@@ -28,6 +31,18 @@ function AssetDirectory() {
     const [assets, setAssets] = useState([]);
     const [departmentNames, setDepartmentNames] = useState({});
     const [employeeNames, setEmployeeNames] = useState({});
+    const role = localStorage.getItem('employee_role');
+      const navigate = useNavigate();
+
+     useEffect(() => {
+        
+        if (role !== "1"){
+            navigate("/not-allowed");
+            }
+            else {
+            return;
+            }
+        }, []);
 
     useEffect(() => {
         axios.get(Api_Url)

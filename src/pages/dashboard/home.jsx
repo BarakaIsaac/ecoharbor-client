@@ -7,11 +7,15 @@ import { // statisticsCardsData,
   // projectsTableData,
   // ordersOverviewData,
 } from "/src/data/statistics-charts-data.js";
+import { TokenOutlined } from "@mui/icons-material";
 
 export function Home() {
     const first_name = localStorage.getItem("first_name");
   const last_name = localStorage.getItem("last_name");
   const userImage = localStorage.getItem("employee_image");
+  const token = localStorage.getItem("token");
+
+  console.log("Tokens", token);
 
   return (
     <div className="mt-12">

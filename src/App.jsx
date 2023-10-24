@@ -1,22 +1,38 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./layouts/dashboard.jsx";
+import { useNavigate } from "react-router-dom";
 import Auth from "./layouts/auth.jsx";
+import { useEffect } from 'react';
 import Modal from 'react-modal';
+import ErrorPage from "./pages/dashboard/404.jsx";
 import "./App.css";
 
 
 Modal.setAppElement('#root');
 
 function App() {
+  const islogged = localStorage.getItem('isLoggedIn');
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+  
+  if (!islogged){
+    navigate("/auth/sign-in");
+    }
+    else {
+      navigate("/dashboard/home");
+    }
+
+ }, []);
+
   return (
 
         <Routes>
-          {/* //check roles here
-          //create 4 dashboards  */}
-          {/* {employee.role="admin"? <link>assets</link> :""} */}
           <Route path="/dashboard/*" element={<Dashboard />} />
           <Route path="/auth/*" element={<Auth />} />
-          <Route path="*" element={<Navigate to="/dashboard/home" replace />} />
+          <Route path="*" element={<Navigate to="/auth/sign-in" replace />} />
+          <Route path="/not-allowed" element={<ErrorPage />} />
         </Routes>
 
   );

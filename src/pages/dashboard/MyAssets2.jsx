@@ -10,7 +10,9 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 //MODALS
 import AssetRepairModal from './RequestModals/AssetRepairModal';
 import AssetViewModal from './AssetModals/AssetViewModal';
-// import AssetRequestFormModal from './RequestModals/AssetRequestFormModal';
+import AssetRequestFormModal from './RequestModals/AssetRequestFormModal';
+
+import MyAssetRequest from './MyAssetRequest';
 
 import { backendUrl } from "../../../backendConfig.js";
 
@@ -96,8 +98,7 @@ function MyAssets2() {
     const employeeAssets =assets.filter((asset) => {
     return asset.employee_id == employeeId;
     });
-    // console.log("Employe", employeeAssets)
-    // console.log("Employee ID from local storage:", employeeId);
+
   
     //PAGINATION
     const [page, setPage] = useState(0);
@@ -151,7 +152,7 @@ function MyAssets2() {
                             <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Condition</Typography></th> 
                             <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Quantity</Typography></th>  
                             <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Department</Typography></th>
-                            <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Staff</Typography></th>                        
+                            <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Employee</Typography></th>                        
                             <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Purchase Value </Typography></th>
                             <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Current value </Typography></th>          
                         </tr>
@@ -204,6 +205,8 @@ function MyAssets2() {
                         onRowsPerPageChange={handleChangeRowsPerPage}
                         className="text-blue-500" />
                 </div>
+                <MyAssetRequest />
+
             </CardBody>
         </Card>
         <AssetViewModal 
@@ -211,9 +214,9 @@ function MyAssets2() {
             onClose={closeViewModal}
             asset={selectedAssetForView}
             departmentNames={departmentNames} />
-        {/* <AssetRequestFormModal
+        <AssetRequestFormModal
                 isOpen={showRequestModal}
-                onClose={closeRequestModal}  /> */}
+                onClose={closeRequestModal}  />
 
         <AssetRepairModal
                    isOpen={showRepairModal}
