@@ -20,9 +20,26 @@ function AssetEditModal({showEditModal, setShowEditModal, selectedAsset, editedA
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Asset Category</label>
-                    <input type="text" value={editedAsset.asset_category}
-                        onChange={e => setEditedAsset({ ...editedAsset, asset_category: e.target.value })}
-                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
+                    <select
+                        value={editedAsset.asset_category}
+                        onChange={(e) => setEditedAsset({ ...editedAsset, asset_category: e.target.value })}
+                        className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                    >
+                        <option value="" disabled className="text-grey-100" style={{ opacity: 0.6 }}>
+                            Select
+                        </option>
+                        <option value="Furniture & Fittings">Furniture & Fittings</option>
+                        <option value="Computers and Accessories">Computers and Accessories</option>
+                        <option value="Mobile Phones">Mobile Phones</option>
+                        <option value="Vehicles">Vehicles</option>
+                        <option value="Kitchen Appliances">Kitchen Appliances</option>
+                        <option value="Office Supplies">Office Supplies</option>
+                        <option value="Tools">Tools</option>
+                        <option value="Machinery">Machinery</option>
+                        <option value="Land and Building">Land and Building</option>
+                        <option value="Software">Software</option>
+                        <option value="Others">Others</option>
+                    </select>
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Asset Condition</label>
