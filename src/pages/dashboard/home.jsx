@@ -1,35 +1,68 @@
-import React from "react";
 import { Typography, Card, CardHeader, CardBody, IconButton, Menu, MenuHandler, MenuList, MenuItem, Avatar, Tooltip, Progress, } from "@material-tailwind/react";
 import { ClockIcon, CheckIcon, EllipsisVerticalIcon, ArrowUpIcon, } from "@heroicons/react/24/outline";
 import StatisticsChart from "/src/widgets/charts/statistics-chart";
-import { // statisticsCardsData, 
-  statisticsChartsData,
-  // projectsTableData,
-  // ordersOverviewData,
-} from "/src/data/statistics-charts-data.js";
+import {  statisticsChartsData,} from "/src/data/statistics-charts-data.js";
 import { TokenOutlined } from "@mui/icons-material";
+import axios from 'axios';
+import { backendUrl } from "../../../backendConfig";
+import React, { useState, useEffect } from 'react';
 
 export function Home() {
-    const first_name = localStorage.getItem("first_name");
-  const last_name = localStorage.getItem("last_name");
-  const userImage = localStorage.getItem("employee_image");
-  const token = localStorage.getItem("token");
 
-  console.log("Tokens", token);
+    const [totalCost, setTotalCost] = useState(0); 
+      const [isHovered, setIsHovered] = useState(false);
+useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${backendUrl}/assetz`, {
+          headers: {
+            'Authorization': 'Bearer your_token',
+            'Content-Type': 'application/json',
+          },
+        });
+        const assets = response.data;
+
+        const calculatedTotalCost = assets.reduce((total, asset) => {
+          const assetValue = parseFloat(asset.current_value);
+          if (!isNaN(assetValue)) {
+            return total + assetValue;
+          }
+          return total;
+        }, 0);
+        
+        setTotalCost(calculatedTotalCost);
+      } catch (error) {
+        console.error('Error fetching asset data: ', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="mt-12">
-      {/* <h1>Welcome {first_name} {last_name}</h1>
-       <div>
-        <Typography variant="h6" color="black">{`${first_name} ${last_name}`}</Typography>
-        <div className="flex items-center"><img src="{userImage}" alt="image" className="h-10 w-10 rounded-full object-cover" /></div>
 
-
-
-        </div> */}
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+    <Card className="bg-white p-4 w-96 mx-auto shadow-lg">
+      <Card
+        className={`bg-blue-500 cursor-pointer p-4 transition duration-300 relative ${
+          isHovered ? 'w-96 -mt-4 hover:bg-blue-600' : ''
+        }`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div>
+          <Typography variant="h6" color="white" className="mb-1 font-bold">
+            Total Asset Value:
+          </Typography>
+          <p className="text-2xl font-bold text-white hover:text-yellow-300 transition duration-300">
+            {totalCost.toLocaleString('en-US', { style: 'currency', currency: 'KES', minimumFractionDigits: 2 })}
+          </p>
+        </div>
+      </Card>
+    </Card>
       </div>
-      <div className="mb-6 grid grid-cols-1 gap-y-12 gap-x-6 md:grid-cols-2 xl:grid-cols-3">
+      {/* <div className="mb-6 grid grid-cols-1 gap-y-12 gap-x-6 md:grid-cols-2 xl:grid-cols-3">
         {statisticsChartsData.map((props) => (
           <StatisticsChart
             key={props.title}
@@ -41,7 +74,7 @@ export function Home() {
               </Typography>
             } />
         ))}
-      </div>
+      </div> */}
       <div className="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
         <Card className="overflow-hidden xl:col-span-2">
           <CardHeader
@@ -87,7 +120,7 @@ export function Home() {
             </table>
           </CardBody>
         </Card>
-        <Card>
+        {/* <Card>
           <CardHeader floated={false} shadow={false} color="transparent" className="m-0 p-6" >
             <Typography variant="h6" color="blue-gray" className="mb-2">Asset Requests Overview</Typography>
             <Typography variant="small" className="flex items-center gap-1 font-normal text-blue-gray-600"  >
@@ -95,7 +128,7 @@ export function Home() {
               <strong>24%</strong> this month
             </Typography>
           </CardHeader>
-        </Card>
+        </Card> */}
       </div>
     </div>
   );

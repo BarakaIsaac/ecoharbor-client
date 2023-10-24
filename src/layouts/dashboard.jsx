@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+
 import {DashboardNavbar} from "../widgets/layout/dashboard-navbar";
 import {  Sidenav } from "../widgets/layout/sidenav";
 import routes from "../routes";
@@ -8,6 +9,7 @@ import Configurator from "../widgets/layout/configurator";
 export function Dashboard() {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
+
 
   return (
     <div className="min-h-screen bg-blue-gray-50/50">
@@ -28,6 +30,7 @@ export function Dashboard() {
         </Routes>
         <div className="text-blue-gray-600">
         </div>
+
       </div>
     </div>
   );
