@@ -8,7 +8,6 @@ import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import { redirect } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 //MODALS
@@ -27,23 +26,22 @@ const Api_Url_emp = `${backendUrl}/employees`;
 Modal.setAppElement('#root');
 
 function AssetDirectory() {
+    //ROLE BASED AUTHENTICATION [0] Employee [1] Procurement Manager [2] Finance Manager [3] Admin
+    const role = localStorage.getItem('employee_role');
+    const navigate = useNavigate();
+    useEffect(() => {        
+        if (role !== "1" && role !== "2"){
+            navigate("/not-allowed");
+            }
+        else {
+            return;
+            }
+        }, []);
+   
     //ASSETS FETCH API
     const [assets, setAssets] = useState([]);
     const [departmentNames, setDepartmentNames] = useState({});
     const [employeeNames, setEmployeeNames] = useState({});
-    const role = localStorage.getItem('employee_role');
-      const navigate = useNavigate();
-
-     useEffect(() => {
-        
-        if (role !== "1"){
-            navigate("/not-allowed");
-            }
-            else {
-            return;
-            }
-        }, []);
-
     useEffect(() => {
         axios.get(Api_Url)
             .then(response => {

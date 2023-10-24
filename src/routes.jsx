@@ -282,7 +282,6 @@ export const routes = [
 export function getEmployeeRole() {
   const role = localStorage.getItem("employee_role"); //check if window is undefined. 
 
-  // console.log("Employee_rolecccccccccc", role)  
   if (role === "0") {
     return "Employee";
   } else if (role === "2") {

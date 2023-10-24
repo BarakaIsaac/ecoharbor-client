@@ -3,7 +3,7 @@ import Dashboard from "./layouts/dashboard.jsx";
 import { useNavigate } from "react-router-dom";
 import Auth from "./layouts/auth.jsx";
 import { useEffect } from 'react';
-import Modal from 'react-modal';
+import { useNavigate } from "react-router-dom";
 import ErrorPage from "./pages/dashboard/404.jsx";
 import "./App.css";
 

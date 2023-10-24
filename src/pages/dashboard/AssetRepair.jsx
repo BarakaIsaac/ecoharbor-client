@@ -6,6 +6,7 @@ import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react
 import { backendUrl } from "../../../backendConfig.js";
 import RepairCommentModal from './RepairModals/RepairCommentModal.jsx';
 import TireRepairIcon from '@mui/icons-material/TireRepair';
+import { useNavigate } from "react-router-dom";
 
 Modal.setAppElement('#root');
 
@@ -15,6 +16,18 @@ const Api_Url_dep = `${backendUrl}/departments`;
 const Api_Url_emp = `${backendUrl}/employees`;
 
 const AssetRepair = () => {
+  //ROLE BASED AUTHENTICATION [0] Employee [1] Procurement Manager [2] Finance Manager [3] Admin
+  const role = localStorage.getItem('employee_role');
+  const navigate = useNavigate();
+  useEffect(() => {        
+      if (role !== "1"){
+          navigate("/not-allowed");
+          }
+      else {
+          return;
+          }
+      }, []);
+  //FETCH REQUESTS
   const [repairs, setRepairs] = useState([]);
   const [editedRepair, setEditedRepair] = useState({
     request_id: '',

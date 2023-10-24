@@ -6,13 +6,25 @@ import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react
 import { backendUrl } from "../../../backendConfig.js";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
-
+import { useNavigate } from "react-router-dom";
 
 // const backendUrl = 'http://127.0.0.1:3000/departments';
 
 Modal.setAppElement('#root'); 
 
 const DepartmentList = () => {
+  //ROLE BASED AUTHENTICATION [0] Employee [1] Procurement Manager [2] Finance Manager [3] Admin
+  const role = localStorage.getItem('employee_role');
+  const navigate = useNavigate();
+  useEffect(() => {        
+      if (role !== "3"){
+          navigate("/not-allowed");
+          }
+      else {
+          return;
+          }
+      }, []);
+
     //DEPARTMENT FETCH API
     const [departments, setDepartments] = useState([]);
     useEffect(() => {

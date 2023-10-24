@@ -5,7 +5,7 @@ import TablePagination from '@mui/material/TablePagination';
 import { Card, CardHeader, CardBody, Typography, } from "@material-tailwind/react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
-
+import { useNavigate } from "react-router-dom";
 //CRUD MODALS
 import EmployeeEditModal from './EmployeeModals/EmployeeEditModal';
 import EmployeeDeleteModal from './EmployeeModals/EmployeeDeleteModal';
@@ -16,7 +16,18 @@ import {backendUrl} from "../../../backendConfig.js";
 Modal.setAppElement('#root'); 
 
 const EmployeeList = () => {
-    //FETCH EMPLOYEE DATA
+  //ROLE BASED AUTHENTICATION [0] Employee [1] Procurement Manager [2] Finance Manager [3] Admin
+  const role = localStorage.getItem('employee_role');
+  const navigate = useNavigate();
+  useEffect(() => {        
+      if (role !== "3"){
+          navigate("/not-allowed");
+          }
+      else {
+          return;
+          }
+      }, []);
+//FETCH EMPLOYEE DATA
 const [employees, setEmployees] = useState([]);
 const [departmentNames, setDepartmentNames] = useState({});
 const [employeeCreated, setEmployeeCreated] = useState(false);

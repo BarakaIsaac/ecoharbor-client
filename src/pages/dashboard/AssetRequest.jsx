@@ -7,7 +7,7 @@ import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { backendUrl } from "../../../backendConfig.js";
-
+import { useNavigate } from "react-router-dom";
 //REQUEST CRUD MODALS
 import RequestApproveModal from './RequestModals/RequestApproveModal';
 import RequestRejectModal from './RequestModals/RequestRejectModal';
@@ -22,6 +22,18 @@ const Api_Url_emp = `${backendUrl}/employees`;
 Modal.setAppElement('#root'); 
 
 const AssetRequest = () => {
+    //ROLE BASED AUTHENTICATION [0] Employee [1] Procurement Manager [2] Finance Manager [3] Admin
+    const role = localStorage.getItem('employee_role');
+    const navigate = useNavigate();
+    useEffect(() => {        
+        if (role !== "1"){
+            navigate("/not-allowed");
+            }
+        else {
+            return;
+            }
+        }, []);
+
     //REQUEST FETCH API
     const [requests, setRequests] = useState([]);
     const [employeeNames, setEmployeeNames] = useState({});
