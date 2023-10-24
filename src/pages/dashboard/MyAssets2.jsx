@@ -10,7 +10,7 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 //MODALS
 import AssetRepairModal from './RequestModals/AssetRepairModal';
 import AssetViewModal from './AssetModals/AssetViewModal';
-import AssetRequestFormModal from './RequestModals/AssetRequestFormModal';
+// import AssetRequestFormModal from './RequestModals/AssetRequestFormModal';
 
 import { backendUrl } from "../../../backendConfig.js";
 
@@ -86,13 +86,21 @@ function MyAssets2() {
 
     //REQUEST ASSET REPAIR
     const [showRepairModal, setShowRepairModal] = useState(false);
-    const openRepairModal = () => {
-        setShowRepairModal(true);
-    }
-    const closeRepairModal = () => {
-        setShowRepairModal(false);
-    }
-
+    const openRepairModal = () => { setShowRepairModal(true); }
+    const closeRepairModal = () => { setShowRepairModal(false); }
+   
+       //TO GET ASSETS FOR EMPLOYEES
+    // Function to get the employee ID from local storage
+    const employeeId = localStorage.getItem("employee_id");
+    // console.log("LOGGED IN EMPLOYEE ID", employeeId);
+    const employeeAssets =assets.filter((asset) => {
+    // console.log('Asset:', asset);
+    // console.log('Employee ID:', employeeId);
+    return asset.employee_id == employeeId;
+    });
+    // console.log("Employe", employeeAssets)
+    // console.log("Employee ID from local storage:", employeeId);
+  
     //PAGINATION
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -103,8 +111,11 @@ function MyAssets2() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-    const paginatedAssets = assets.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
-    
+  
+
+
+  const paginatedAssets = employeeAssets.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+    // console.log('Filtered Assets:', employeeAssets);
     //SUCCESS MESSAGE
     const [successMessage, setSuccessMessage] = useState(null);
     const showSuccessMessage = (message) => {
@@ -202,9 +213,9 @@ function MyAssets2() {
             onClose={closeViewModal}
             asset={selectedAssetForView}
             departmentNames={departmentNames} />
-        <AssetRequestFormModal
-                    isOpen={showRequestModal}
-                    onClose={closeRequestModal} />
+        {/* <AssetRequestFormModal
+                isOpen={showRequestModal}
+                onClose={closeRequestModal}  /> */}
 
         <AssetRepairModal
                    isOpen={showRepairModal}
