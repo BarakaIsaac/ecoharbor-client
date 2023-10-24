@@ -24,21 +24,66 @@ Modal.setAppElement('#root');
 const AssetRequest = () => {
     //REQUEST FETCH API
     const [requests, setRequests] = useState([]);
+    const [employeeNames, setEmployeeNames] = useState({});
+    const [departmentNames, setDepartmentNames] = useState({});
+    const [assetNames, setAssetNames] = useState({});
     useEffect(() => {
         axios.get(Api_Url).then((response) => {
-        const requestsWithNames = response.data.map((request) => {
-            axios.get(`${Api_Url_asset}/${request.asset_id}`).then((assetResponse) => {
-                request.asset_name = assetResponse.data.asset_name;
+            const requestsWithNames = response.data.map((request) => {
+                axios.get(`${Api_Url_asset}/${request.asset_id}`).then((assetResponse) => {
+                    request.asset_name = assetResponse.data.asset_name;
+                });
+                axios.get(`${Api_Url_emp}/${request.employee_id}`).then((employeeResponse) => {
+                    const employee = employeeResponse.data;
+                    request.employee_name = `${employee.first_name} ${employee.last_name}`;
+                });
+                axios.get(`${Api_Url_dep}/${request.department_id}`).then((departmentResponse) => {
+                    request.department_name = departmentResponse.data.department_name;
+                });
+                axios.get(Api_Url_emp)
+                    .then(response => {
+                        const employeeNameMap = {};
+                        response.data.forEach(employee => {
+                            employeeNameMap[employee.id] = employee.first_name;
+                        });
+                        setEmployeeNames(employeeNameMap);
+                        })
+                    .catch(error => {
+                        console.error('Error fetching employee data: ', error);
+                    });
+               axios.get(Api_Url_dep)
+                    .then(response => {
+                        const departmentNameMap = {};
+                        response.data.forEach(department => {
+                            departmentNameMap[department.id] = department.department_name;
+                        });
+                        setDepartmentNames(departmentNameMap);
+                        })
+                    .catch(error => {
+                        console.error('Error fetching department data: ', error);
+                    });
+               axios.get(Api_Url_asset)
+                    .then(response => {
+                        const assetNameMap = {};
+                        response.data.forEach(asset => {
+                            assetNameMap[asset.id] = asset.asset_name;
+                        });
+                        setAssetNames(assetNameMap);
+                        })
+                    .catch(error => {
+                        console.error('Error fetching asset data: ', error);
+                    });
+
+
+
+
+
+                return request;
             });
-            axios.get(`${Api_Url_emp}/${request.employee_id}`).then((employeeResponse) => {
-                const employee = employeeResponse.data;
-                request.employee_name = `${employee.first_name} ${employee.last_name}`;
-            });
-            return request;
-        });
-        setRequests(requestsWithNames);
+            setRequests(requestsWithNames);
         });
     }, []);
+    
     
     // EDIT REQUEST - APPROVAL, REJECTION
     const [showEditApproveModal, setShowEditApproveModal] = useState(false);
@@ -145,10 +190,10 @@ const AssetRequest = () => {
                 <thead>
                     <tr>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Request Date</Typography></th>
-                        <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Asset</Typography></th>
+                        <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Department</Typography></th>                        
+                        {/* <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Asset</Typography></th> */}
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Asset (new)</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Employee</Typography></th>
-                        <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Department</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Request Type</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Quantity</Typography></th>
                         <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Urgency</Typography></th>
@@ -160,19 +205,19 @@ const AssetRequest = () => {
                 <tbody>
                     {paginatedRequests.map((request) => (
                         <tr key={request.id} className="border-t">
-                            <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{request.request_date}</Typography></td>
-                            <td><Typography color="blue-gray" className="pl-2 font-semibold text-xs text-blue-gray-500 uppercase">{request.asset_id}</Typography></td>
+                            <td><Typography className="text-left text-xs font-semibold text-blue-gray-600">{request.request_date}</Typography></td>
+                            <td><Typography className="text-xs font-semibold text-blue-gray-600">{departmentNames[request.department_id] ? departmentNames[request.department_id].toUpperCase() : ''}</Typography></td>
+                            {/* <td><Typography className="text-left text-xs font-semibold text-blue-gray-600 uppercase">{assetNames[request.asset_id]}</Typography></td> */}
                             <td><Typography color="blue-gray" className="pl-2 font-semibold text-xs text-blue-gray-500 uppercase">{request.new_asset_name}</Typography></td>
-                            <td><Typography className="text-xs font-semibold text-blue-gray-600">{request.employee_id}</Typography></td>
-                            <td><Typography className="text-xs font-semibold text-blue-gray-600">{request.department_id}</Typography></td>
+                            <td><Typography className="text-xs font-semibold text-blue-gray-600">{employeeNames[request.employee_id]}</Typography></td>
                             <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{request.request_type}</Typography></td>
                             <td><Typography className="text-xs font-semibold text-blue-gray-600">{request.quantity}</Typography></td>
                             <td><Typography className={`text-xs font-bold ${
                                     request.urgency === "High" || request.urgency === "Critical" ? 'text-red-500' :
                                     request.urgency === "Medium" ? 'text-blue-500' : 'text-black'
                                 }`}>{request.urgency}</Typography></td>
-                            <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{request.approval_date}</Typography></td>
-                            <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{request.request_status}</Typography></td>
+                            <td><Typography className="text-left text-xs font-semibold text-blue-gray-600">{request.approval_date}</Typography></td>
+                            <td><Typography className="text-left text-xs font-semibold text-blue-gray-600">{request.request_status}</Typography></td>
                             <td><button onClick={() => handleViewClick(request)} className="py-1 px-3 rounded-md mb-2 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="View Request">
                                 <VisibilityOutlinedIcon /></button>                                
                                 {/* <button onClick={() => handleDeleteClick(request)} className="bg-red-500 text-white py-1 px-3 rounded-md">Delete</button> */}

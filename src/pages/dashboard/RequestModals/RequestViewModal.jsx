@@ -1,6 +1,6 @@
 import React from 'react'
 import Modal from 'react-modal';
-import { Card } from "@material-tailwind/react";
+import { Card, CardHeader } from "@material-tailwind/react";
 import { Typography } from "@material-tailwind/react";
 
 Modal.setAppElement('#root');
@@ -33,21 +33,23 @@ function RequestViewModal({isOpen, onClose, request, }) {
             {request && (
                 <div className="bg-white w-2/3 p-6 rounded-lg " >
                     <Card>
-                        <h2 className="text-2xl font-semibold mb-4 text-center">Asset Request View {" "} </h2>
-                        <div className="flex items-center"><h2 className="text-center text-2xl font-semibold mb-4"style={{ textAlign: 'center' }}>{request.asset_name}</h2></div>
+                        <CardHeader variant="gradient" color="blue" className="mb-2 p-2 text-center">
+                            <div className="flex items-center"><h2 className="text-center text-2xl font-semibold mb-4"style={{ textAlign: 'center' }}>Asset Request View - <span style={{ color: '#2F3E45' }}>{request.asset_name}</span></h2></div>
+                        </CardHeader>   
                         <div className="flex items-center justify-center">
                             {request.asset_image && (
                                 <img src={request.asset_image} alt="Asset Image" className="max-w-[500px] max-h-[500px] my-4 border-4 border-blue-500 rounded-lg shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out"  />
                             )}
                         </div>
                         <div className="grid grid-cols-2 gap-4">
-                            <div>
+                            <div className="flex flex-col justify-center">
                                 <Typography className="text-sm text-[#2F3D44] mb-2"><strong style={{ fontWeight: 'bold' }} >Request Date:</strong> {request.request_date}</Typography>
                                 <Typography className="text-sm text-[#2F3D44] mb-2"><strong style={{ fontWeight: 'bold' }}>Employee:</strong> {request.employee_id}</Typography>
                                 <Typography className="text-sm text-[#2F3D44] mb-2"><strong style={{ fontWeight: 'bold' }}>Department:</strong> {request.department_id}</Typography>
                                 <Typography className="text-sm text-[#2F3D44] mb-2"><strong style={{ fontWeight: 'bold' }}>Quantity:</strong> {request.quantity}</Typography>                               
                             </div>                            
-                            <div>
+                            <div className="flex flex-col justify-center">
+                                <Typography className="text-xs text-[#2F3D44] mb-2"><strong style={{ fontWeight: 'bold' }}>Reason of Request:</strong> {request.reason}</Typography>
                                 <Typography className="text-sm text-[#2F3D44] mb-2"><strong style={{ fontWeight: 'bold' }}>Request Type:</strong> {request.request_type}</Typography>                                                               
                                 <Typography className="text-sm text-[#2F3D44] mb-2"><strong style={{ fontWeight: 'bold' }}>Quantity:</strong> {request.quantity}</Typography>
                                 <Typography className={`text-sm font-bold ${
@@ -57,12 +59,9 @@ function RequestViewModal({isOpen, onClose, request, }) {
                             </div>
                         </div>
                         <div>
-                            <div>
-                                <Typography className="text-xs text-[#2F3D44] mb-2"><strong style={{ fontWeight: 'bold' }}>Reason of Request:</strong> {request.reason}</Typography>
-                            </div>
                             <hr class="border-3" ></hr>
                             <div>
-                                <h1 className="text-[#399EF1]" style={{ fontWeight: 'bold' }}>Official</h1>
+                                <h1 className="text-[#399EF1]" style={{ fontWeight: 'bold', fontSize: '18px' }}>Official</h1>
                                 <Typography className={`text-sm text-[#2F3D44] mb-2 font-bold ${ 
                                         request.request_status === "Approved" ? 'text-[#399EF1]' : 
                                         request.request_status === "Rejected" ? 'text-red-500' : 'text-black'}`}>

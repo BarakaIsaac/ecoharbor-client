@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import { Card, CardHeader } from "@material-tailwind/react";
 
 Modal.setAppElement('#root');
 
@@ -27,27 +28,30 @@ const RepairCommentModal = ({ isOpen, onClose, repair, editedRepairComment, setE
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onClose} contentLabel="Repair Comment Modal" style={customModalStyles}>
-      <h2 className="text-2xl font-semibold mb-4">Repair Comments</h2>
-      <div>
-        <p>Asset Name: {asset_name }</p>
-        <p>Department: {department_name }</p>
+      <CardHeader variant="gradient" color="blue" className="mb-2 p-2 text-center">
+        <div className="flex items-center"><h2 className="text-center text-2xl font-semibold mb-4"style={{ textAlign: 'center' }}>Repair Comments</h2></div>
+      </CardHeader>  
+      <div><p><span style={{ fontWeight: 'bold', color: '#303E45' }}>Asset Name: </span>  
+          <span style={{ fontWeight: 'bold', color: '#2C94EB' }}>{asset_name}</span></p>
+        <p>
+          <span style={{ fontWeight: 'bold', color: '#303E45' }}>Department: </span> 
+          <span style={{ fontWeight: 'bold', color: '#2C94EB' }}>{department_name}</span>
+        </p>
       </div>
       <div>
         <label className="block text-sm font-medium text-gray-700">Checkout Date</label>
         <input
           type="date"
-          value={editedRepairComment.checkout_date} 
+          value={new Date().toISOString().split('T')[0]} 
           onChange={(e) => setEditedRepairComment({ ...editedRepairComment, checkout_date: e.target.value })}      
-          className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-        />
+          className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
       </div>
       <div>
         <label className="block text-sm font-medium text-gray-700">Repair Comments</label>
         <textarea
           value={editedRepairComment.repair_comments}
           onChange={(e) => setEditedRepairComment({ ...editedRepairComment, repair_comments: e.target.value })}
-          className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-        />
+          className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" />
       </div>
       <div className="flex justify-between">
         <button onClick={() => { onUpdateClick(); onClose(); }} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none">

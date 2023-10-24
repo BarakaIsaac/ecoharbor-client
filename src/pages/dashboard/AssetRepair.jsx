@@ -29,6 +29,7 @@ const AssetRepair = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [employeeNames, setEmployeeNames] = useState({});
 
 useEffect(() => {
   axios.get(Api_Url).then((response) => {
@@ -58,6 +59,18 @@ useEffect(() => {
       return repair;
     });
 
+        axios.get(Api_Url_emp)
+            .then(response => {
+                const employeeNameMap = {};
+                response.data.forEach(employee => {
+                    employeeNameMap[employee.id] = employee.first_name;
+                });
+                setEmployeeNames(employeeNameMap);
+                })
+            .catch(error => {
+                console.error('Error fetching employee data: ', error);
+            });
+
     Promise.all(repairsWithNames).then((repairsWithNamesData) => {
       setRepairs(repairsWithNamesData);
     });
@@ -74,7 +87,7 @@ useEffect(() => {
   const handleUpdateClick = (repair) => {
     setSelectedRepair(repair);
     setEditedRepairComment({
-      checkout_date: '', // Provide a default value for checkout_date
+      checkout_date: '', 
       repair_comments: '',
     });
     setShowCommentModal(true);
@@ -92,6 +105,7 @@ useEffect(() => {
     axios.put(`${Api_Url}/${selectedRepair.id}`, editedRepairComment)
       .then(response => {
         setRepairs(repairs.map(req => req.id === selectedRepair.id ? response.data : req));
+        setRepairs(prevRepairs => prevRepairs.map(req => req.id === selectedRepair.id ? response.data : req));
         setShowCommentModal(false);
         showSuccessMessage('Repair record updated successfully!');
       })
@@ -141,11 +155,11 @@ useEffect(() => {
               <tr>
                 <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Repair id</Typography></th>
                 <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Department</Typography></th>
-                <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Name</Typography></th>
+                <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Employee</Typography></th>
                 <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Asset Name</Typography></th>
                 <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Quantity</Typography></th>
                 <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Check In Date</Typography></th>
-                <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Check Out Date</Typography></th>
+                {/* <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Check Out Date</Typography></th> */}
                 <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Repairs Comments</Typography></th>
                 <th><Typography variant="small" className="text-sm font-bold uppercase text-blue-gray-400 text-left">Actions</Typography></th>
               </tr>
@@ -154,13 +168,13 @@ useEffect(() => {
               {paginatedRepairs.map((repair) => (
                 <tr key={repair.id} className="border-t">
                   <td><Typography color="blue-gray" className="pl-2 font-semibold text-xs text-blue-gray-500 uppercase">{repair.id}</Typography></td>
-                  <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{repair.department_name}</Typography></td>
-                  <td><Typography className="text-xs font-normal text-blue-gray-500">{repair.employee_name}</Typography></td>
+                  <td><Typography className="text-left text-xs font-semibold text-blue-gray-600">{repair.department_name.toUpperCase()}</Typography></td>
+                  <td><Typography className="text-xs font-normal text-blue-gray-500">{employeeNames[repair.employee_id]}</Typography></td>
                   <td><Typography className="text-xs font-normal text-blue-gray-500">{repair.asset_name}</Typography></td>
                   <td><Typography className="text-xs font-semibold text-blue-gray-600">{repair.quantity}</Typography></td>
-                  <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{repair.checkin_date}</Typography></td>
-                  <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{repair.checkout_date}</Typography></td>
-                  <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{repair.repair_comments}</Typography></td>
+                  <td><Typography className="text-left text-xs font-semibold text-blue-gray-600">{repair.checkin_date}</Typography></td>
+                  {/* <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{repair.checkout_date}</Typography></td> */}
+                  <td><Typography className="text-left text-xs font-semibold text-blue-gray-600">{repair.repair_comments}</Typography></td>
                   <td><button onClick={() => handleUpdateClick(repair)} 
                     className="py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Repair Comments"><TireRepairIcon /></button>
                   </td>

@@ -108,7 +108,7 @@ export function SignIn() {
                 variant="small"
                 color="blue"
                 className="ml-1 font-bold">
-                Talk to Ecoharbour Admin to create an account for you
+                Ecoharbour Admin will create an account for you.
               </Typography>
               {/* </Link> */}
             </Typography>
