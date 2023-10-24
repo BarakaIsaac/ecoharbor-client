@@ -94,8 +94,6 @@ function MyAssets2() {
     const employeeId = localStorage.getItem("employee_id");
     // console.log("LOGGED IN EMPLOYEE ID", employeeId);
     const employeeAssets =assets.filter((asset) => {
-    // console.log('Asset:', asset);
-    // console.log('Employee ID:', employeeId);
     return asset.employee_id == employeeId;
     });
     // console.log("Employe", employeeAssets)
