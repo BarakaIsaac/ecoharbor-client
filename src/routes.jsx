@@ -16,9 +16,10 @@ import DepartmentList from "./pages/dashboard/DepartmentList";
 import AssetRepair from "./pages/dashboard/AssetRepair.jsx";
 import AssetRequest from "./pages/dashboard/AssetRequest.jsx";
 import InventoryIcon from '@mui/icons-material/Inventory';
-import MyAssets from "./pages/dashboard/MyAssets";
+// import MyAssets from "./pages/dashboard/MyAssets";
 import EmployeeList from "./pages/dashboard/EmployeeList";
 import AssetDirectory from "./pages/dashboard/AssetDirectory";
+import MyAssets2 from "./pages/dashboard/MyAssets2";
 // import AssetValuation from "./pages/dashboard/AssetValuation";
 
 const icon = {
@@ -42,11 +43,17 @@ export const routes = [
       //   path: "/Profile",
       //   element: <Profile />,
       // },
+      // {
+      //   icon: <InventoryIcon {...icon} />,
+      //   name: "My Assets",
+      //   path: "/MyAssets",
+      //   element: <MyAssets />,
+      // },
       {
         icon: <InventoryIcon {...icon} />,
         name: "My Assets",
-        path: "/MyAssets",
-        element: <MyAssets />,
+        path: "/MyAssets2",
+        element: <MyAssets2 />,
       },
       {
         icon: <PeopleAltIcon {...icon} />,
