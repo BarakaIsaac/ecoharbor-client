@@ -233,10 +233,10 @@ const AssetRequest = () => {
                             <td><button onClick={() => handleViewClick(request)} className="py-1 px-3 rounded-md mb-2 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="View Request">
                                 <VisibilityOutlinedIcon /></button>                                
                                 {/* <button onClick={() => handleDeleteClick(request)} className="bg-red-500 text-white py-1 px-3 rounded-md">Delete</button> */}
-                                <button onClick={() => handleEditApproveClick(request)} className="py-1 px-3 rounded-md mb-2 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Approve Request">
+                                <button onClick={() => handleEditApproveClick(request)} className={`py-1 px-3 rounded-md mb-2 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === '1' ? '' : 'opacity-50 pointer-events-none'}`} title="Approve Request">
                                     <TaskAltIcon /></button>
-                                <button onClick={() => handleEditRejectClick(request)} className="py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white " title="Reject Request">
-                                    <ThumbDownOffAltIcon style={{ color: '#BC544B' }} /></button></td>
+                                <button onClick={() => handleEditRejectClick(request)} className={`py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === '1' ? '' : 'opacity-50 pointer-events-none'}`} title="Reject Request">
+                                    <ThumbDownOffAltIcon style={{ color: '#BC544B' }} /> </button></td>
                         </tr>
                     ))}
                     </tbody>

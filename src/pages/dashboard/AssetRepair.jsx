@@ -189,7 +189,10 @@ useEffect(() => {
                   {/* <td><Typography className="text-center text-xs font-semibold text-blue-gray-600">{repair.checkout_date}</Typography></td> */}
                   <td><Typography className="text-left text-xs font-semibold text-blue-gray-600">{repair.repair_comments}</Typography></td>
                   <td><button onClick={() => handleUpdateClick(repair)} 
-                    className="py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Repair Comments"><TireRepairIcon /></button>
+        className={`py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === '1' ? '' : 'opacity-50 pointer-events-none'}`} 
+        title="Repair Comments">
+  <TireRepairIcon />
+</button>
                   </td>
                 </tr>
               ))}
