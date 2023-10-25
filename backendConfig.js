@@ -1,1 +1,1 @@
-export const backendUrl = 'https://ecoharbor-server.up.railway.app';
+export const backendUrl = 'https://ecoharbor-development.up.railway.app';
