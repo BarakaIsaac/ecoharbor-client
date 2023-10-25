@@ -63,7 +63,7 @@ export function DashboardNavbar() {
       <div className="flex justify-between">
         <div>
           <img
-            src={userImage ?? defaultImage}
+            src={defaultImage}
             alt="Image"
             className="h-10 w-10 rounded-full object-cover"
           />

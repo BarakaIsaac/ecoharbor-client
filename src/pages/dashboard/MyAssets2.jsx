@@ -8,7 +8,7 @@ import ConstructionIcon from '@mui/icons-material/Construction';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import AddTaskIcon from '@mui/icons-material/AddTask';
 //MODALS
-import AssetRepairModal from './RequestModals/AssetRepairModal';
+import AssetRepairRequestModal from './RequestModals/AssetRepairRequestModal';
 import AssetViewModal from './AssetModals/AssetViewModal';
 import AssetRequestFormModal from './RequestModals/AssetRequestFormModal';
 
@@ -20,6 +20,7 @@ const Api_Url = `${backendUrl}/assetz`;
 const Api_Url_dep = `${backendUrl}/departments`;
 const Api_Url_emp = `${backendUrl}/employees`;
 const Api_Url_req= `${backendUrl}/requests`;
+const Api_Url_rep= `${backendUrl}/repairs`;
 
 Modal.setAppElement('#root');
 
@@ -218,7 +219,7 @@ function MyAssets2() {
                 isOpen={showRequestModal}
                 onClose={closeRequestModal}  />
 
-        <AssetRepairModal
+        <AssetRepairRequestModal
                    isOpen={showRepairModal}
                     onClose={closeRepairModal} />
 
