@@ -86,22 +86,22 @@ export const routes = [
     ],
   },
   {
-    title: "auth pages",
+    // title: "auth pages",
     layout: "auth",
     pages: [
       {
-        icon: <LoginIcon {...icon} />,
-        name: "sign in",
+        // icon: <LoginIcon {...icon} />,
+        // name: "sign in",
         path: "/sign-in",
         element: <SignIn />,
       },
-      {
-        icon: <LogoutIcon {...icon} />,
-        name: "Log Out",
-        path: "/sign-up",
-        element: <SignUp />,
-      
-      },
+      // {
+      //   icon: <LogoutIcon {...icon} />,
+      //   name: "Log Out",
+      //   path: "/sign-up",
+      //   element: <SignUp />,
+      //
+      // },
     ],
   },
 ];
