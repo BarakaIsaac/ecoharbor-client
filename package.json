@@ -27,7 +27,8 @@
     "react-hook-form": "^7.47.0",
     "react-modal": "^3.16.1",
     "react-paginate": "^8.2.0",
-    "react-router-dom": "^6.4.2"
+    "react-router-dom": "^6.4.2",
+    "react-tooltip": "^5.21.6"
   },
   "devDependencies": {
     "@hookform/devtools": "github:react-hook-form/devtools",

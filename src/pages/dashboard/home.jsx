@@ -10,7 +10,7 @@ import React, { useState, useEffect } from 'react';
 export function Home() {
 
     const [totalCost, setTotalCost] = useState(0); 
-      const [isHovered, setIsHovered] = useState(false);
+
 useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,16 +44,10 @@ useEffect(() => {
 
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
     <Card className="bg-white p-4 w-96 mx-auto shadow-lg">
-      <Card
-        className={`bg-blue-500 cursor-pointer p-4 transition duration-300 relative ${
-          isHovered ? 'w-96 -mt-4 hover:bg-blue-600' : ''
-        }`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+      <Card className="bg-blue-500 hover:bg-blue-600 cursor-pointer p-4 transition duration-300 -mt-4 relative">
         <div>
           <Typography variant="h6" color="white" className="mb-1 font-bold">
-            Total Asset Value:
+            Total Assets Value:
           </Typography>
           <p className="text-2xl font-bold text-white hover:text-yellow-300 transition duration-300">
             {totalCost.toLocaleString('en-US', { style: 'currency', currency: 'KES', minimumFractionDigits: 2 })}

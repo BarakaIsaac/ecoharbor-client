@@ -13,11 +13,11 @@ import { useNavigate } from "react-router-dom";
 Modal.setAppElement('#root'); 
 
 const DepartmentList = () => {
-  //ROLE BASED AUTHENTICATION [0] Employee [1] Procurement Manager [2] Finance Manager [3] Admin
+  //ROLE BASED AUTHENTICATION [0] Employee [1] Procurement Manager [2] Finance Manager [3] Admin [5] SuperAdmin
   const role = localStorage.getItem('employee_role');
   const navigate = useNavigate();
   useEffect(() => {        
-      if (role !== "3"){
+      if (role !== "3" && role !== "5"){
           navigate("/not-allowed");
           }
       else {

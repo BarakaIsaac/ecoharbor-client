@@ -46,6 +46,7 @@ function EmployeeCreateModal({showCreateModal, setShowCreateModal, handleCreateE
                         <option value="0">Employee</option>
                         <option value="2">Finance</option>
                         <option value="3">Admin</option>
+                        <option value="5">Super Admin</option>
                     </select>
                 </div>
                 <div>

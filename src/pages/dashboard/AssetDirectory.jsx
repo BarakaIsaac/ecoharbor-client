@@ -26,17 +26,19 @@ const Api_Url_emp = `${backendUrl}/employees`;
 Modal.setAppElement('#root');
 
 function AssetDirectory() {
-    //ROLE BASED AUTHENTICATION [0] Employee [1] Procurement Manager [2] Finance Manager [3] Admin
+    //ROLE BASED AUTHENTICATION [0] Employee [1] Procurement Manager [2] Finance Manager [3] Admin [5] SuperAdmin
     const role = localStorage.getItem('employee_role');
     const navigate = useNavigate();
     useEffect(() => {        
-        if (role !== "1" && role !== "2"){
+        if (role !== "1" && role !== "2" && role !== "5"){
             navigate("/not-allowed");
             }
         else {
             return;
             }
         }, []);
+
+     const [showNotAuthorizedModal, setShowNotAuthorizedModal] = useState(false);
    
     //ASSETS FETCH API
     const [assets, setAssets] = useState([]);
@@ -298,18 +300,23 @@ function AssetDirectory() {
                                             maximumFractionDigits: 2,
                                             })
                                         : '0.00'}</Typography></td>
-                                <td><button onClick={() => handleViewClick(asset)} className="py-1 px-3 rounded-md mb-2 border-black border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="View Asset">
-                                    <VisibilityOutlinedIcon /></button>
-                                    <button onClick={() => handleEditClick(asset)} 
-                                    className="py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white"title="Edit Asset">
-                                        <CreateOutlinedIcon /></button>
-                                    <button onClick={() => handleDeleteClick(asset)} className="py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Delete Asset">
-                                        <DeleteIcon style={{ color: '#BC544B' }}/></button>
-                                    <button onClick={() => handleEditValuationClick(asset)} className="py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Asset Valuation">
-                                        <CurrencyExchangeIcon /></button> 
-                                    <button onClick={() => handleEditAllocationClick(asset)} className="py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="Asset Allocation">
-                                        <AssignmentIndIcon /></button>                                
-                                </td>
+                            <td>
+                                <button onClick={() => handleViewClick(asset)} className="py-1 px-3 rounded-md mb-2 border-black border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="View Asset">
+                                    <VisibilityOutlinedIcon />
+                                </button>
+                                <button onClick={() => handleEditClick(asset)} className={`py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === '1' ? '' : 'opacity-50 pointer-events-none'}`} title="Edit Asset">
+                                    <CreateOutlinedIcon />
+                                </button>
+                                <button onClick={() => handleDeleteClick(asset)} className={`py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === '1' ? '' : 'opacity-50 pointer-events-none'}`} title="Delete Asset">
+                                    <DeleteIcon style={{ color: '#BC544B' }} />
+                                </button>
+                                <button onClick={() => handleEditValuationClick(asset)} className={`py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === '2' ? '' : 'opacity-50 pointer-events-none'}`} title="Asset Valuation">
+                                    <CurrencyExchangeIcon />
+                                </button>
+                                <button onClick={() => handleEditAllocationClick(asset)} className={`py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === '1' ? '' : 'opacity-50 pointer-events-none'}`} title="Asset Allocation">
+                                    <AssignmentIndIcon />
+                                </button>
+                            </td>
                             </tr>
                         ))}
                         </tbody>
@@ -326,6 +333,10 @@ function AssetDirectory() {
                 </div>
             </CardBody>
         </Card>
+
+        <Modal isOpen={showNotAuthorizedModal} > <div> <p>You are not authorized to perform this action.</p> </div>
+            </Modal>
+            
 
         <AssetEditModal 
             showEditModal={showEditModal}

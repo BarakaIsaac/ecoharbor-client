@@ -3,16 +3,11 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import TablePagination from '@mui/material/TablePagination';
 import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react";
-import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { backendUrl } from "../../../backendConfig.js";
 
 //REQUEST CRUD MODALS
-import RequestApproveModal from './RequestModals/RequestApproveModal';
-import RequestRejectModal from './RequestModals/RequestRejectModal';
 import RequestViewModal from './RequestModals/RequestViewModal';
-
 
 const Api_Url = `${backendUrl}/requests`;
 const Api_Url_asset = `${backendUrl}/assetz`;
@@ -73,10 +68,6 @@ const MyAssetRequest = () => {
                     .catch(error => {
                         console.error('Error fetching asset data: ', error);
                     });
-
-
-
-
 
                 return request;
             });
