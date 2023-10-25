@@ -1,6 +1,7 @@
 import { Typography, Card, } from "@material-tailwind/react";
 import axios from 'axios';
 import { backendUrl } from "../../../backendConfig";
+import React, { useState, useEffect } from 'react';
 
 export function Home() {
 
