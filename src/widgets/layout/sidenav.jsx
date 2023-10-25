@@ -62,7 +62,8 @@ export function Sidenav({ brandImg, brandName, routes }) {
                 </Typography>
               </li>
             )}
-            {pages.filter((page) => page.path !== "/sign-in) // Exclude the "Sign Out" route
+            {pages.filter((page) => page.path !== "/sign-in)") // filter out sign in page
+              .filter((page) => page.path !== "/sign-in")
                 .map(({ icon, name, path }) => (
                     <li key={name}>
                       <NavLink to={`/${layout}${path}`}>
