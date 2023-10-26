@@ -16,11 +16,11 @@ const Api_Url_dep = `${backendUrl}/departments`;
 const Api_Url_emp = `${backendUrl}/employees`;
 
 const AssetRepair = () => {
-  //ROLE BASED AUTHENTICATION [0] Employee [1] Procurement Manager [2] Finance Manager [3] Admin [5] SuperAdmin
+  //ROLE BASED AUTHENTICATION normal_employee: 0, procurement_manager: 1, finance_manager: 2, admin: 3, super_admin: 5
   const role = localStorage.getItem('employee_role');
   const navigate = useNavigate();
   useEffect(() => {        
-      if (role !== "1" && role !== "5"){
+      if (role !== "procurement_manager" && role !== "super_admin"){
           navigate("/not-allowed");
           }
       else {

@@ -56,7 +56,7 @@ export function SignIn() {
   return (
     <>
       <img
-        src="../public/img/Login.svg"
+        src="/img/Login.svg"
         className="absolute inset-0 z-0 h-full w-full object-cover"
       />
     <div className="absolute inset-0 z-0 h-full w-full bg-black/50" />

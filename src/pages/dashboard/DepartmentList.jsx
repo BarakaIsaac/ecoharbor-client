@@ -17,7 +17,7 @@ const DepartmentList = () => {
   const role = localStorage.getItem('employee_role');
   const navigate = useNavigate();
   useEffect(() => {        
-      if (role !== "3" && role !== "super_admin"){
+      if (role !== "admin" && role !== "super_admin"){
           navigate("/not-allowed");
           }
       else {
