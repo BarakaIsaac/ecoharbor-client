@@ -301,7 +301,7 @@ function AssetDirectory() {
                                             })
                                         : '0.00'}</Typography></td>
                             <td>
-                                <button onClick={() => handleViewClick(asset)} className="py-1 px-3 rounded-md mb-2 border-black border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="View Asset">  
+                                <button onClick={() => handleViewClick(asset)} className="py-1 px-3 rounded-md mb-2 border-black border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white" title="View Asset">
                                     <VisibilityOutlinedIcon />
                                 </button>
                                 <button onClick={() => handleEditClick(asset)} className={`py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === 'procurement_manager' && role === 'super_admin' ? '' : 'opacity-50 pointer-events-none'}`} title="Edit Asset">
