@@ -142,15 +142,15 @@ const [employeeCreated, setEmployeeCreated] = useState(false);
     };
     //ROLE NAMES
     const getRoleName = (role) => {
-            // console.log('Role Value:', role); 
+            // console.log('Role Value:', role); normal_employee: 0, procurement_manager: 1, finance_manager: 2, admin: 3, super_admin: 5
         switch (role) {
-            case "0":
+            case "normal_employee":
             return 'Employee';
-            case "1":
+            case "procurement_manager":
             return 'Procurement Manager';
-            case "2":
+            case "finance_manager":
             return 'Finance Manager';
-            case "3":
+            case "admin":
             return 'Admin';
             default:
             return 'Unknown Role';

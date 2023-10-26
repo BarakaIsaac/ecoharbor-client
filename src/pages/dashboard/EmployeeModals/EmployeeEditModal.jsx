@@ -73,11 +73,11 @@ function EmployeeEditModal({ showEditModal, setShowEditModal, setEditedEmployee,
                         onChange={e => setEditedEmployee({ ...editedEmployee, employee_role: e.target.value })}
                         className="block w-full mt-1 p-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300" >
                         <option value="" disabled className="text-grey-100" style={{ opacity: 0.6 }}>Select a Role</option>
-                        <option value="1">Procurement Manager</option>
-                        <option value="0">Employee</option>
-                        <option value="2">Finance</option>
-                        <option value="3">Admin</option>
-                        <option value="5">Super Admin</option>
+                        <option value="procurement_manager">Procurement Manager</option>
+                        <option value="normal_employee">Employee</option>
+                        <option value="finance_manager">Finance</option>
+                        <option value="admin">Admin</option>
+                        <option value="super_admin">Super Admin</option>
                     </select>                    
                 </div>
                 <div className="flex justify-between">

@@ -44,16 +44,16 @@ const [departmentNames, setDepartmentNames] = useState({});
     const getRoleName = (role) => {
             // console.log('Role Value:', role); 
         switch (role) {
-            case "0":
-            return 'Employee';
-            case "1":
-            return 'Procurement Manager';
-            case "2":
-            return 'Finance Manager';
-            case "3":
-            return 'Admin';
+            case "normal_employee":
+                return 'Employee';
+            case "procurement_manager":
+                return 'Procurement Manager';
+            case "finance_manager":
+                return 'Finance Manager';
+            case "admin":
+                return 'Admin';
             default:
-            return 'Unknown Role';
+                return 'Unknown Role';
         }
         };
   return (
