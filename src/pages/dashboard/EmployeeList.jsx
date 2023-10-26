@@ -222,7 +222,7 @@ const [employeeCreated, setEmployeeCreated] = useState(false);
                                 <td><button onClick={() => handleEditClick(employee)} 
                                     className={`py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === 'admin' || role === 'super_admin' ? '' : 'opacity-50 pointer-events-none'}`} title="Edit Employee"><CreateOutlinedIcon /></button>
                                     <button onClick={() => handleDeleteClick(employee)} 
-                                    className={`py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === 'admin' && role === 'super_admin' ? '' : 'opacity-50 pointer-events-none'}`} title="Delete Employee"><DeleteIcon style={{ color: '#BC544B' }}/></button>
+                                    className={`py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === 'admin' || role === 'super_admin' ? '' : 'opacity-50 pointer-events-none'}`} title="Delete Employee"><DeleteIcon style={{ color: '#BC544B' }}/></button>
                                 </td>
                             </tr>
                         ))}

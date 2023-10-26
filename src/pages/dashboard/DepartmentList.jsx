@@ -153,10 +153,10 @@ const DepartmentList = () => {
                                 <td><Typography color="blue-gray" className="pl-2 font-semibold text-xs text-blue-gray-500 uppercase">{department.department_name}</Typography></td>
                                 <td><Typography className="text-xs font-normal text-blue-gray-500">{department.department_code}</Typography></td>
                                 <td><button onClick={() => handleEditClick(department)} 
-                                className={`py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === 'admin' && role === 'super_admin' ? '' : 'opacity-50 pointer-events-none'}`} title="Edit Department">
+                                className={`py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === 'admin' || role === 'super_admin' ? '' : 'opacity-50 pointer-events-none'}`} title="Edit Department">
                                         <CreateOutlinedIcon /></button>
                                     <button onClick={() => handleDeleteClick(department)}  // normal_employee: 0, procurement_manager: 1, finance_manager: 2, admin: 3, super_admin: 5
-                                    className={`py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === 'admin' && role === 'super_admin' ? '' : 'opacity-50 pointer-events-none'}`} title="Delete Department">
+                                    className={`py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === 'admin' || role === 'super_admin' ? '' : 'opacity-50 pointer-events-none'}`} title="Delete Department">
                                         <DeleteIcon style={{ color: '#BC544B' }}/></button> </td>
                             </tr>
                         ))}
