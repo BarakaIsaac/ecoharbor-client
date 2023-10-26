@@ -152,8 +152,9 @@ const [employeeCreated, setEmployeeCreated] = useState(false);
             return 'Finance Manager';
             case "admin":
             return 'Admin';
-            default:
-            return 'Unknown Role';
+            case "super_admin":
+            return 'Super Admin';
+          
         }
         };
 
