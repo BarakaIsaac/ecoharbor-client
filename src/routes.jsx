@@ -11,7 +11,6 @@ import LoginIcon from '@mui/icons-material/Login';
 import { Profile } from "./pages/dashboard/Profile";
 import { Home } from "./pages/dashboard/home";
 import { SignIn } from "./pages/auth/sign-in";
-import { SignUp } from "./pages/auth/sign-up";
 import DepartmentList from "./pages/dashboard/DepartmentList";
 import AssetRepair from "./pages/dashboard/AssetRepair.jsx";
 import AssetRequest from "./pages/dashboard/AssetRequest.jsx";
