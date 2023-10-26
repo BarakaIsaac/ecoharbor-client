@@ -154,7 +154,7 @@ const [employeeCreated, setEmployeeCreated] = useState(false);
             return 'Admin';
             case "super_admin":
             return 'Super Admin';
-          
+
         }
         };
 
@@ -220,7 +220,7 @@ const [employeeCreated, setEmployeeCreated] = useState(false);
                                 <td><Typography className="text-xs font-semibold text-blue-gray-600">{departmentNames[employee.department_id]}</Typography></td>
                                 <td><Typography className="text-xs font-semibold text-blue-gray-600">{getRoleName(employee.employee_role)}</Typography></td>
                                 <td><button onClick={() => handleEditClick(employee)} 
-                                    className={`py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === 'admin' && role === 'super_admin' ? '' : 'opacity-50 pointer-events-none'}`} title="Edit Employee"><CreateOutlinedIcon /></button>
+                                    className={`py-1 px-3 rounded-md mb-2 border-gray-300 border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === 'admin' || role === 'super_admin' ? '' : 'opacity-50 pointer-events-none'}`} title="Edit Employee"><CreateOutlinedIcon /></button>
                                     <button onClick={() => handleDeleteClick(employee)} 
                                     className={`py-1 px-3 rounded-md border-black expand-button hover:scale-105 hover:bg-[#2F3D44] hover:text-white ${role === 'admin' && role === 'super_admin' ? '' : 'opacity-50 pointer-events-none'}`} title="Delete Employee"><DeleteIcon style={{ color: '#BC544B' }}/></button>
                                 </td>
