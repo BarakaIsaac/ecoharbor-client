@@ -19,14 +19,6 @@ const AssetRepair = () => {
   //ROLE BASED AUTHENTICATION normal_employee: 0, procurement_manager: 1, finance_manager: 2, admin: 3, super_admin: 5
   const role = localStorage.getItem('employee_role');
   const navigate = useNavigate();
-  useEffect(() => {        
-      if (role !== "procurement_manager" && role !== "super_admin"){
-          navigate("/not-allowed");
-          }
-      else {
-          return;
-          }
-      }, []);
   //FETCH REQUESTS
   const [repairs, setRepairs] = useState([]);
   const [editedRepair, setEditedRepair] = useState({
