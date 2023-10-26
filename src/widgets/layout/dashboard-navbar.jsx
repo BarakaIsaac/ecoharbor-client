@@ -73,7 +73,7 @@ export function DashboardNavbar() {
           <Typography variant="h6" color="black" className="ml-2">
             {`${first_name} ${last_name}`}
           </Typography>
-            <Typography variant="h6" color="inherit" className="ml-2">{employee_role}</Typography>
+            <Typography variant="h6" color='#369BF0' className="ml-2">{employee_role}</Typography>
         </div>
       </div>
         <div className="flex items-center">
