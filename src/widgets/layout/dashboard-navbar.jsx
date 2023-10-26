@@ -31,15 +31,9 @@ export function DashboardNavbar() {
     }
   }
 
-    const handleSignOut = async () => {
-          try {
-              await axios.delete(`${backendUrl}/signout`, options);
+    const handleSignOut = () => {
           clearTokens();
               navigate('/auth/sign-in');
-          } catch (error) {
-              // Handle any errors that occur during sign-out, e.g., network errors.
-              console.error('Error during sign-out:', error);
-          }
       };
 
   return (
